@@ -51,6 +51,13 @@ class UserModel extends Model
         $builder->where('id', $id)->update($data);
     }
 
+    public function deleteUser($id)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbluser');
+        $builder->where('id', $id)->delete();
+    }
+
 
     public function getStatusUser()
     {

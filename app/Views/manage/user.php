@@ -333,7 +333,7 @@
 
         });
 
-        $(document).delegate('#btnHapusMenu', 'click', function() {
+        $(document).delegate('#btnHapusUser', 'click', function() {
 
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -346,23 +346,36 @@
                 confirmButtonText: 'Hapus Data!'
             }).then((result) => {
                 if (result.value) {
+                    debugger;
                     $.ajax({
-                        url: '<?= base_url() ?>/manage/menu/delete/' + $(this).data('id'),
+                        url: '<?= base_url() ?>/manage/user/delete/' + $(this).data('id'),
                         type: 'GET',
                         data: {
-                            'idmenu': $(this).data('id')
+                            'id': $(this).data('id')
                         },
                         success: function(result) {
-                            Swal.fire({
-                                title: 'Sukses',
-                                text: "Sukses hapus data",
-                                type: 'success',
-                            }).then((result) => {
+                            if (result == 'success') {
+                                Swal.fire({
+                                    title: 'Sukses',
+                                    text: "Sukses hapus data",
+                                    type: 'success',
+                                }).then((result) => {
 
-                                if (result.value) {
-                                    location.reload();
-                                }
-                            });
+                                    if (result.value) {
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Gagal hapus data",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        location.reload();
+                                    }
+                                });
+                            }
                         },
                         error: function(jqxhr, status, exception) {
                             Swal.fire({

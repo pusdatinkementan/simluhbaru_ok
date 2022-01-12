@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 use App\Models\WilayahModel;
 use Config\Services;
+use Exception;
 
 class User extends BaseController
 {
@@ -116,5 +117,16 @@ class User extends BaseController
         ];
 
         $this->model1->updateUser($id, $data);
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->model1->deleteUser($id);
+            return 'success';
+        } catch (\Exception $e) {
+            return 'error';
+        }
+        //return $id;
     }
 }
