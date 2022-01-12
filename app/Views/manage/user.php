@@ -19,13 +19,11 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Nama User</th>
                         <th scope="col">Status</th>
-                        <th scope="col">IdProp</th>
-                        <th scope="col">kodeBakor</th>
-                        <th scope="col">kodeBapel</th>
-                        <th scope="col">kodeBpp</th>
-                        <th scope="col">p_oke</th>
+                        <th scope="col">BPP</th>
+                        <th scope="col">Satker</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -40,7 +38,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newSubMenuModalLabel">Add New User</h5>
@@ -48,23 +46,70 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('manage/user/saveUser'); ?>" method="post">
+            <form>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="nama">Nama User</label>
                         <input type="text" class="form-control" id="namauser" name="namauser" placeholder="Nama User">
                     </div>
-
                     <div class="form-group">
+                        <label for="prov">Provinsi</label>
+                        <select name="prov" id="prov" class="form-control">
+                            <option value="">Pilih</option>
+                            <?php
+                            foreach ($prov as $row) {
+                            ?>
+                                <option value="<?= $row['id_prop']; ?>"><?= $row['nama_prop']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kab">Kabupaten</label>
+                        <select name="kab" id="kab" class="form-control">
+                            <option value="">Pilih</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kec">Kecamatan</label>
+                        <select name="kec" id="kec" class="form-control">
+                            <option value="">Pilih</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="desa">Desa</label>
+                        <select name="desa" id="desa" class="form-control">
+                            <option value="">Pilih</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="username">
                     </div>
-
                     <div class="form-group">
+                        <label for="password">Password</label>
                         <input type="text" class="form-control" id="password" name="password" placeholder="password">
                     </div>
+                    <div class="form-group">
+                        <label for="tel">Telepon</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">HP</label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Hp">
+                    </div>
 
-                    <select name="status" id="status" class="form-control">
-                        <option value="3">Admin Pusat</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="nama">Status</label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="">Pilih</option>
+                            <?php
+                            foreach ($stsuser as $row) {
+                            ?>
+                                <option value="<?= $row['statusid']; ?>"><?= $row['name']; ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <div class="form-check">
@@ -74,10 +119,12 @@
                             </label>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control" name="iduser" id="iduser">
+                    <input type="hidden" class="form-control" id="created_at" name="created_at" value="<?php echo date('dmY:His'); ?>">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="btnSave" class="btn btn-primary">Tambah</button>
+                    <button type="button" id="btnSave" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
@@ -123,22 +170,35 @@
 
         $(document).delegate('#btnSave', 'click', function() {
 
-            var judul = $('#title').val();
-            var menu_id = $('#menu_id').val();
-            var url = $('#url').val();
-            var icon = $('#icon').val();
+            var namauser = $('#namauser').val();
+            var prov = $('#prov').val();
+            var kab = $('#kab').val();
+            var kec = $('#kec').val();
+            var desa = $('#desa').val();
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var phone = $('#phone').val();
+            var mobile = $('#mobile').val();
+            var status = $('#status').val();
             var is_active = $('#is_active').val();
+            var joindate = $('#created_at').val();
 
-            //debugger;
+            debugger;
             $.ajax({
-                url: '<?= base_url() ?>/manage/menu/submenu_save/',
+                url: '<?= base_url() ?>/manage/user/saveUser/',
                 type: 'POST',
                 data: {
-                    'judul': judul,
-                    'menu_id': menu_id,
-                    'url': url,
-                    'icon': icon,
-                    'is_active': is_active
+                    'username': username,
+                    'password': password,
+                    'name': namauser,
+                    'joiningdate': joindate,
+                    'status': status,
+                    'phone': phone,
+                    'mobile': mobile,
+                    'idprop': prov,
+                    'kodebakor': prov,
+                    'kodebapel': kab,
+                    'kodebpp': kec
                 },
                 success: function(result) {
                     Swal.fire({
@@ -146,7 +206,6 @@
                         text: "Sukses tambah data",
                         type: 'success',
                     }).then((result) => {
-
                         if (result.value) {
                             location.reload();
                         }
@@ -173,41 +232,69 @@
 
         //Update
 
-        $(document).delegate('#btnEditMenu', 'click', function() {
+        $(document).delegate('#btnEditUser', 'click', function() {
             $.ajax({
-                url: '<?= base_url() ?>/manage/menu/edit/' + $(this).data('id'),
+                url: '<?= base_url() ?>/manage/user/edit/' + $(this).data('id'),
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(result) {
                     // console.log(result);
+                    $('#iduser').val(result.id);
+                    $('#namauser').val(result.name);
+                    $('#prov').val(result.idProp);
+                    $('#kab').val(result.kodeBapel);
+                    $('#kec').val(result.kodeBpp);
+                    $('#username').val(result.username);
+                    $('#password').val(result.p_oke);
+                    $('#phone').val(result.phone);
+                    $('#mobile').val(result.mobile);
+                    $('#status').val(result.status);
+                    // $('#is_active').val();
+                    $('#created_at').val(result.joiningdate);
 
-                    $('#idmenu').val(result.id);
-                    $('#menu').val(result.menu);
-
-                    $('#modalMenu').modal('show');
+                    $('#newUserModal').modal('show');
 
                     $("#btnSave").attr("id", "btnDoEdit");
-                    $("#exampleModalLabel").text("Edit Menu");
+                    $("#newSubMenuModalLabel").text("Edit User");
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
-                        console.log('ok');
-
-                        var idmenu = $('#idmenu').val();
-                        var menu = $('#menu').val();
+                        var iduser = $('#iduser').val();
+                        var namauser = $('#namauser').val();
+                        var prov = $('#prov').val();
+                        var kab = $('#kab').val();
+                        var kec = $('#kec').val();
+                        var desa = $('#desa').val();
+                        var username = $('#username').val();
+                        var password = $('#password').val();
+                        var phone = $('#phone').val();
+                        var mobile = $('#mobile').val();
+                        var status = $('#status').val();
+                        var is_active = $('#is_active').val();
+                        var joindate = $('#created_at').val();
 
                         let formData = new FormData();
-                        formData.append('idmenu', idmenu);
-                        formData.append('menu', menu);
+                        formData.append('namauser', namauser);
+                        formData.append('prov', prov);
+                        formData.append('kab', kab);
+                        formData.append('kec', kec);
+                        formData.append('desa', desa);
+                        formData.append('username', username);
+                        formData.append('password', password);
+                        formData.append('phone', phone);
+                        formData.append('mobile', mobile);
+                        formData.append('status', status);
+
+                        debugger;
 
                         $.ajax({
-                            url: '<?= base_url() ?>/manage/menu/update/' + idmenu,
+                            url: '<?= base_url() ?>/manage/user/update/' + iduser,
                             type: "POST",
                             data: formData,
                             cache: false,
                             processData: false,
                             contentType: false,
                             success: function(result) {
-                                $('#modalMenu').modal('hide');
+
                                 Swal.fire({
                                     title: 'Sukses',
                                     text: "Sukses edit data",
@@ -292,6 +379,55 @@
                 }
             });
 
+        });
+
+        $('#prov').on('change', function() {
+            $('#kec').html('');
+            $('#desa').html('');
+            const id = $('#prov').val();
+            var kdprov = id.substring(0, 2);
+
+            $.ajax({
+                url: "<?= base_url() ?>/master/wilayah/showKab/" + kdprov + "",
+                success: function(response) {
+                    console.log(response);
+                    $("#kab").html(response);
+                },
+                dataType: "html"
+            });
+            return false;
+        });
+
+
+        $('#kab').on('change', function() {
+            $('#desa').html('');
+            const id = $('#kab').val();
+            var kdkab = id.substring(0, 4);
+
+            $.ajax({
+                url: "<?= base_url() ?>/master/wilayah/showKec/" + kdkab + "",
+                success: function(response) {
+                    console.log(response);
+                    $("#kec").html(response);
+                },
+                dataType: "html"
+            });
+            return false;
+        });
+
+        $('#kec').on('change', function() {
+
+            const id = $('#kec').val();
+            var kdkec = id.substring(0, 6);
+
+            $.ajax({
+                url: "<?= base_url() ?>/master/wilayah/showDesa/" + kdkec + "",
+                success: function(response) {
+                    $("#desa").html(response);
+                },
+                dataType: "html"
+            });
+            return false;
         });
 
     });

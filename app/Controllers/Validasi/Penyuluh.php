@@ -26,9 +26,15 @@ class Penyuluh extends BaseController
         if (session()->get('username') == "") {
             return redirect()->to('login');
         }
+        $dataPenyuluh = $this->model1->getAllNikUnmatch();
+        $dataPenyuluh2 = $this->model1->getAllNoHpEmpty();
+        $dataPenyuluh3 = $this->model1->getAllNipUnmatch();
 
         $data = [
             'title' => 'Validasi Data Penyuluh',
+            'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+            'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+            'jmlnip' => $dataPenyuluh3['jmlnip'],
         ];
 
         return view('validasi/indexpenyuluh', $data);
@@ -45,7 +51,7 @@ class Penyuluh extends BaseController
         //dd($jabatan);
 
         $data = [
-            'title' => 'Validasi Penyuluh',
+            'title' => 'Validasi NIK Kosong / tidak sesuai standar / tidak terdaftar dukcapil',
             'dt' => $dataPenyuluh['table_data'],
             'jmlnoktp' => $dataPenyuluh['jmlnoktp']
         ];
@@ -78,7 +84,7 @@ class Penyuluh extends BaseController
         //dd($jabatan);
 
         $data = [
-            'title' => 'Validasi Penyuluh',
+            'title' => 'Validasi No HP kosong',
             'dt' => $dataPenyuluh['table_data']
         ];
 
@@ -104,7 +110,7 @@ class Penyuluh extends BaseController
         //dd($jabatan);
 
         $data = [
-            'title' => 'Validasi Penyuluh',
+            'title' => 'Validasi Penyuluh PNS tidak punya NIP/tidak valid',
             'dt' => $dataPenyuluh['table_data']
         ];
 
@@ -117,5 +123,22 @@ class Penyuluh extends BaseController
             'id' => $idpns,
             'nip' => $this->request->getPost('nip')
         ]);
+    }
+
+    public function pelatihan()
+    {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+        //$penyuluhModel = new MasterModel();
+        // $dataPenyuluh = $this->model1->getAllNipUnmatch();
+
+        //dd($jabatan);
+
+        $data = [
+            'title' => 'Validasi Penyuluh yang belum mendapatkan pelatihan',
+        ];
+
+        return view('validasi/penyuluhpelatihan', $data);
     }
 }

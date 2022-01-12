@@ -944,7 +944,8 @@ $data = $json[0];
                                                 <select class="form-select" name="kondisi_bangunan" id="kondisi_bangunan" aria-label="Default select example">
                                                     <option selected value="<?= $dt['kondisi_bangunan']; ?>"><?= $dt['kondisi_bangunan']; ?></option>
                                                     <option value="baik">Baik</option>
-                                                    <option value="rusak">Rusak</option>
+                                                    <option value="rusak">Rusak Ringan</option>
+                                                    <option value="berat">Rusak Berat</option>
                                                 </select>
                                             </div>
                                             <label>Koordinat BPP</label>

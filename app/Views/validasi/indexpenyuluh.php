@@ -21,19 +21,19 @@
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
-                        <td><a href="<?= base_url('validasi/penyuluh/nik'); ?>">NIK kosong, tidak sesuai standar dan nik yang tidak terdaftar di dukcapil</a></td>
+                        <td><a href="<?= base_url('validasi/penyuluh/nik'); ?>">NIK kosong, tidak sesuai standar dan nik yang tidak terdaftar di dukcapil <span class="badge bg-gradient-info"><?= $jmlnoktp; ?></span> </a></td>
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <td><a href="<?= base_url('validasi/penyuluh/nohp'); ?>">No HP kosong</a></td>
+                        <td><a href="<?= base_url('validasi/penyuluh/nohp'); ?>">No HP kosong <span class="badge bg-gradient-info"><?= $jmlnohp; ?></span></a></td>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
-                        <td><a href="<?= base_url('validasi/penyuluh/nip'); ?>">Penyuluh PNS yang tidak punya nip/tidak valid</a></td>
+                        <td><a href="<?= base_url('validasi/penyuluh/nip'); ?>">Penyuluh PNS yang tidak punya nip/tidak valid <span class="badge bg-gradient-info"><?= $jmlnip; ?></span></a></td>
                     </tr>
                     <tr>
                         <th scope="row">4</th>
-                        <td><a href="<?= base_url('validasi/penyuluh/nip'); ?>">Penyuluh yang belum mendapatkan pelatihan</a></td>
+                        <td><a href="<?= base_url('validasi/penyuluh/pelatihan'); ?>">Penyuluh yang belum mendapatkan pelatihan <span class="badge bg-gradient-info">0</span></a></td>
                     </tr>
                 </tbody>
             </table>

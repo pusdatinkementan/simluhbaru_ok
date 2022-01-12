@@ -8,8 +8,9 @@ class UserModel extends Model
 {
 
     // protected $table      = 'penyuluh';
-    protected $table = 'tbluser';
-    protected $column_order = ['id', 'username', 'password', 'name', 'status', 'lastlogin', 'idprop', 'kodebakor', 'kodebapel', 'kode_lembaga', 'kodebpp', 'p_oke'];
+    protected $table = 'useradmin';
+    protected $primaryKey = 'id';
+    protected $column_order = ['id', 'username', 'password', 'name', 'namastatus', 'nama_bpp', 'satminkal', 'idProp', 'kodeBakor', 'kodeBapel', 'kodeBpp'];
     protected $column_search = ['name', 'username'];
     protected $order = ['id' => 'ASC'];
     protected $request;
@@ -34,6 +35,37 @@ class UserModel extends Model
         $this->db = db_connect();
         //$this->request = $request;
         $this->dt = $this->db->table($this->table);
+    }
+
+    public function saveUser($data)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbluser');
+        $builder->insert($data);
+    }
+
+    public function updateUser($id, $data)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbluser');
+        $builder->where('id', $id)->update($data);
+    }
+
+
+    public function getStatusUser()
+    {
+
+        $query = $this->db->query("SELECT * FROM tblstatus");
+
+        $row   = $query->getResultArray();
+        return $row;
+    }
+
+    public function getUserById($id)
+    {
+        $query = $this->db->query("SELECT * FROM tbluser WHERE `tbluser`.`id` = $id");
+        $row = $query->getRow();
+        return json_encode($row);
     }
 
     private function getDatatablesQuery($request)
