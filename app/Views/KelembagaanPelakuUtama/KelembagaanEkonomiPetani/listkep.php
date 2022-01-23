@@ -12,13 +12,19 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
     $kode = session()->get('kodebpp');
 }
 ?>
-<center><h2> Daftar Kelembagaan Ekonomi Petani di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h2></center>
 
-
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button>
+<center>
+    <h3>Daftar Kelembagaan Ekonomi Petani di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?>  </h3>
+	 <p>Data ditemukan <?= ucwords(strtolower($jum)) ?></p>
+</center>
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>
 <div class="card">
     <div class="table-responsive">
-        <table class="table align-items-center mb-0">
+        <table id="listkep" class="table align-items-center mb-0">
             <thead>
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
@@ -45,25 +51,25 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_kep'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jenis_kep'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_direktur'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['alamat'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['no_telp'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['email'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
@@ -72,13 +78,13 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     <td class="align-middle text-center text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['badan_hukum'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum_anggota'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum_poktan'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum_gapoktan'] ?></p>
                     </td>
                    
@@ -90,10 +96,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                 <button class="btn btn-danger btn-sm" id="btnHapus" data-id_kep="<?= $row['id_kep'] ?>" type="button" >
                                 <i class="fas fa-trash"></i> Hapus</button>
 
-                                <button type="button" class="btn bg-gradient-info btn-sm">
-                            <a href="<?= base_url('/kegiatanbun?id_kep=' . $row['id_kep']) ?>"> 
-                                 +Tambah Kegiatan Usaha
-                            </button>
+                                <!-- <button type="button" class="btn bg-gradient-success btn-sm"> -->
+                            <a class="btn bg-gradient-success btn-sm" href="<?= base_url('/kegiatanbun?id_kep=' . $row['id_kep']) ?>"> 
+                                 +Tambah Kegiatan Usaha</a>
+                            <!-- </button> -->
                         </td>
                 </tr>
             <?php
@@ -122,7 +128,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                             </div>
                                             <label>Nama Kelembagaan Ekonomi</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" id="nama_kep" name="nama_kep" placeholder="Nama Poktan" aria-label="Password" aria-describedby="password-addon">
+                                                <input type="text" class="form-control" id="nama_kep" name="nama_kep" placeholder="Nama KEP" aria-label="Password" aria-describedby="password-addon">
                                             </div>
                                             <label>Jenis Kelembagaan Ekonomi</label>
                                             <div class="input-group mb-3">
@@ -347,7 +353,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                 
                                                 <input type="hidden" id="id_kep" name="id_kep" >
                                                     <div class="text-center">
-                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button> -->
                                                     </div>
                                                 
                                             </form>
@@ -361,6 +369,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
     </div>
 </div>   
     </div>
+</div>
+    </div>
+</div>
 </div>
     </div>
 </div>
@@ -378,7 +389,12 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <script>
     $(document).ready(function() {
-
+		 $('#listkep').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             var kode_kec = $('#kode_kec').val();

@@ -95,21 +95,23 @@
 
                                         </div>
 
+                                        <!--
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                                             <label class="form-check-label" for="rememberMe">Ingat saya</label>
                                         </div>
+										-->
                                         <div class="text-center">
                                             <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Masuk</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <!-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
                                         Tidak punya akun ?
                                         <a href="javascript:;" class="text-info text-gradient font-weight-bold">Cek Data</a>
                                     </p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-6">

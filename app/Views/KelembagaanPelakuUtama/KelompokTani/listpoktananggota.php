@@ -17,13 +17,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 <br>
 <p> Catatan:</p>
 <p>Harap download ulang data petani dalam format excel, dikareakan ada tambahan kolom isian tempat lahir,no HP dan titik koordinat
-Penulisan titik koordinat menggunakan format decimal, contoh : -7.303972903946691, 111.19991775514895
+Penulisan titik koordinat menggunakan format decimal degree, contoh : -7.303972903946691, 111.19991775514895
+<br>Tutorial mendapatkan titik koordinat dapat melihat <a href="<?= base_url('assets/Panduan%20Decimal%20Degree%20Google%20Maps.pptx') ?>"><b>panduan berikut</b></a>. 
 </p>
 <p> Informasi:</p>
 <p>Untuk menjaga kelancaran aliran data dimana telah dimulai input ERDKK pada bulan juni s/d oktober 2021 yang terintegrasi dengan data SIMLUHTAN,
 maka perbaikan/input data petani disarankan dilakukan melalui form input diatas
     </p>
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Anggota Kelompok</button>
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Anggota Kelompok</button>
 <div class="card">
     <div class="table-responsive">
         <table class="table align-items-center mb-0">
@@ -60,56 +61,56 @@ maka perbaikan/input data petani disarankan dilakukan melalui form input diatas
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
                     
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_anggota'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['no_ktp'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['tempat_lahir'] ?>, <?= $row['tgl_lahir'] ?>-<?= $row['bln_lahir'] ?>-<?= $row['thn_lahir'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['alamat_ktp'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jenis_kelamin'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['no_hp'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['status_anggota'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['kode_komoditas1'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['volume'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['kode_komoditas2'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['volume2'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['kode_komoditas3'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['volume3'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['lainnya'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['luas_lahan_ternak_diusahakan'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['luas_lahan_ternak_dimiliki'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
@@ -251,6 +252,9 @@ maka perbaikan/input data petani disarankan dilakukan melalui form input diatas
                                             <label>Titik Koordinat Lahan</label>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="titik_koordinat_lahan" name="titik_koordinat_lahan" placeholder="Penulisan dengan format decimal degree" onkeypress="return Angka(event)">
+                                                <label style="font-weight: normal">Format titik koordinat adalah Decimal Degree, contoh : <b>-6.2924034, 106.820540</b>
+                                                    <br>Tutorial mendapatkan titik koordinat dapat melihat <a href="#"><b>panduan berikut</b></a>.
+                                                </label>
                                             </div>
                                             <label>Kategori Petani</label>
                                             <div class="input-group mb-3">
@@ -286,7 +290,9 @@ maka perbaikan/input data petani disarankan dilakukan melalui form input diatas
                                                 <input type="hidden" id="id_anggota" name="id_anggota" >
                                                 <input type="hidden" id="id_poktan" name="id_poktan" value="<?= $id_poktan;?>">
                                                     <div class="text-center">
-                                                        <button type="button" id="btnSaveA" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSaveA" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <button type="button" id="btnSaveA" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button> -->
                                                     </div>
                                                 </div>
                                                 </div>
@@ -531,7 +537,21 @@ $(document).delegate('#btnSaveA', 'click', function() {
                         }
                     });
                     return false;
-                }
+                }else {
+                            var koord_array = titik_koordinat_lahan.split(",");
+                            if(koord_array.length!=2 || !(validateLatLng(koord_array[0].trim(), koord_array[1].trim()))){
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Titik Koordinat Lahan harus format Decimal Degree, contoh : -6.2924034, 106.820540",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                        }
  if (kategori_petani_penggarap == 0) {
                 Swal.fire({
                         title: 'Error',
@@ -951,6 +971,20 @@ $(document).delegate('#btnSaveA', 'click', function() {
                         }
                     });
                     return false;
+                }else {
+                    var koord_array = titik_koordinat_lahan.split(",");
+                    if(koord_array.length!=2 || !(validateLatLng(koord_array[0].trim(), koord_array[1].trim()))){
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Titik Koordinat Lahan harus format Decimal Degree, contoh : -6.2924034, 106.820540",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                return false;
+                            }
+                        });
+                        return false;
+                    }
                 }
  if (kategori_petani_penggarap == 0) {
                 Swal.fire({

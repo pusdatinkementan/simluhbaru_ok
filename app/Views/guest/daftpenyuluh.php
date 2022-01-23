@@ -50,7 +50,9 @@ $tahun_today = date('Y'); ?>
                             <p class="text-xs font-weight-bold mb-0">- <?= $item['wilker']; ?><br>- <?= $item['wilker2']; ?><br>- <?= $item['wilker3']; ?><br>- <?= $item['wilker4']; ?><br>- <?= $item['wilker5']; ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['hp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?php
+                                                                        echo str_replace(substr($item['hp'], 6, 4), "****", $item['hp']);
+                                                                        ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['email']; ?></p>
@@ -103,7 +105,8 @@ $tahun_today = date('Y'); ?>
                             <p class="text-xs font-weight-bold mb-0">- <?= $item['wilker']; ?><br>- <?= $item['wilker2']; ?><br>- <?= $item['wilker3']; ?><br>- <?= $item['wilker4']; ?><br>- <?= $item['wilker5']; ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['hp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?php
+                                                                        echo str_replace(substr($item['hp'], 6, 4), "****", $item['hp']); ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['email']; ?></p>
@@ -156,7 +159,7 @@ $tahun_today = date('Y'); ?>
                             <p class="text-xs font-weight-bold mb-0">- <?= $item['wilker']; ?><br>- <?= $item['wilker2']; ?><br>- <?= $item['wilker3']; ?><br>- <?= $item['wilker4']; ?><br>- <?= $item['wilker5']; ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['telp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo str_replace(substr($item['telp'], 6, 4), "****", $item['telp']); ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['email']; ?></p>
@@ -209,7 +212,7 @@ $tahun_today = date('Y'); ?>
                             <p class="text-xs font-weight-bold mb-0">- <?= $item['wilker']; ?><br>- <?= $item['wilker2']; ?><br>- <?= $item['wilker3']; ?><br>- <?= $item['wilker4']; ?><br>- <?= $item['wilker5']; ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['telp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo str_replace(substr($item['telp'], 6, 4), "****", $item['telp']); ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['email']; ?></p>
@@ -262,7 +265,7 @@ $tahun_today = date('Y'); ?>
                             <p class="text-xs font-weight-bold mb-0">- <?= $item['wilker']; ?><br>- <?= $item['wilker2']; ?><br>- <?= $item['wilker3']; ?><br>- <?= $item['wilker4']; ?><br>- <?= $item['wilker5']; ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['telp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo str_replace(substr($item['telp'], 6, 4), "****", $item['telp']); ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['email']; ?></p>

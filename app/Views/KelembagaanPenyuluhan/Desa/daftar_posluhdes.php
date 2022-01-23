@@ -14,15 +14,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 ?>
 
 <center>
-    <h4> Daftar Posluhdes di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h4>
+    <h3> Daftar Posluhdes di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h3>
     <p> Ditemukan <?= ucwords(strtolower($jum_kec)) ?> Data </p>
 </center>
 
-<button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#modal-form">+ Tambah Data</button>
+<button type="button" class="btn bg-gradient-success" data-bs-toggle="modal" data-bs-target="#modal-form">+ Tambah Data</button>
 
 <div class="card">
     <div class="table-responsive">
-        <table class="table align-items-center mb-0">
+        <table id="tblposluhdes" class="table align-items-center mb-0">
             <thead>
                 <tr>
                     <td width="5" class="text-uppercase text-secondary text-xxs font-weight-bolder">No</td>
@@ -44,7 +44,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 foreach ($tabel_data as $row => $item) {
                 ?>
                     <tr>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                         </td>
                         <td width="50">
@@ -56,22 +56,22 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['alamat'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['ketua'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['sekretaris'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['bendahara'] ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['tahun_berdiri'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['jum_anggota'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['penyuluh_swadaya'] ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
@@ -172,7 +172,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" id="btnSave" class="btn bg-gradient-primary">Simpan Data</button>
+                                            <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
                                         </div>
                                     </div>
                                 </form>
@@ -203,6 +203,12 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         return true;
     }
     $(document).ready(function() {
+		 $('#tblposluhdes').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             var kode_desa = $('#kode_desa').val();
@@ -341,7 +347,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             //var myModal = new bootstrap.Modal(document.getElementById('modal-edit'), options);
             // alert(id);
             $.ajax({
-                url: '<?= base_url() ?>/kelembagaanpenyuluhan/desa/desa/detailPosluhdes/' + $(this).data('idpos'),
+                url: '<?= base_url() ?>/KelembagaanPenyuluhan/Desa/desa/detail_posluhdes/' + $(this).data('idpos'),
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(res) {

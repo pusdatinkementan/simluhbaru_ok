@@ -291,7 +291,8 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-round bg-gradient-warning btn-sm w-100 mt-4 mb-0">Simpan Data</button>
+                                            <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn bg-gradient-warning btn-sm">Simpan Data</button>
                                         </div>
                                 </form>
                             </div>

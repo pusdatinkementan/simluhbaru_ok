@@ -23,7 +23,14 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+    <style>
+        .modal-body {
+            max-height: 90vh; overflow-y: auto;
+        }
+        .rupiah {
+            text-align: right;
+        }
+    </style>
 </head>
 
 
@@ -75,6 +82,41 @@
     </script>
 
     <script>
+        function validateLatLng(lat, lng) {    
+            // let pattern = new RegExp('^-?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,6}');
+            // return pattern.test(lat) && pattern.test(lng);
+
+            var regexLat = new RegExp('^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$');
+            var regexLong = new RegExp('^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$');
+
+            return regexLat.test(lat) && regexLong.test(lng);
+        }
+
+        function LatLngOnly(input){
+            var angka = (event.which) ? event.which : event.keyCode
+            if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+                return false;
+            return true;
+        }
+
+        function AngkaOnly(input){
+            let value = input.value;
+            let numbers = value.replace(/[^0-9]/g, "");
+            input.value = numbers;
+        }
+
+        function NikOnly(input){
+            let value = input.value;
+            let numbers = value.replace(/[^0-9]/g, "");
+            input.value = numbers.substring(0, 16);
+        } 
+
+        function NipOnly(input){
+            let value = input.value;
+            let numbers = value.replace(/[^0-9]/g, "");
+            input.value = (numbers).substring(0, 18);
+        }
+
         $(document).ready(function() {
 
 
@@ -141,6 +183,20 @@
     <?= $this->renderSection('script') ?>
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+	
+	
+	
+
+
+
+
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 

@@ -3,7 +3,8 @@
 <?= $this->section('content') ?>
 
 
-<center><h2> Daftar Kelompok Binaan BP3K (<?= ucwords(strtolower($nama_bp3k)) ?>) </h2></center>
+<center><h2> Daftar Kelompok Binaan <?= ucwords(strtolower($nama_bp3k)) ?> </h2></center>
+<br />
 <div class="card">
     <div class="table-responsive">
         <table class="table align-items-center mb-0">

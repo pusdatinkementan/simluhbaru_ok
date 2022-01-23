@@ -6,16 +6,15 @@
 <?php $sessnama = session()->get('kodebpp'); ?>
 
 <center><h2> Daftar Gapoktan di Kab <?= ucwords(strtolower($nama_kabupaten)) ?> </h2></center>
+<br />
 <div class="card">
     <div class="table-responsive">
         <table class="table align-items-center mb-0">
             <thead>
                 <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center; width: 10%;">No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Kecamatan</th>
-                   
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Jumlah<br>Gapoktan</th>
-                   
                     <th class="text-secondary opacity-7"></th>
                 </tr>
             </thead>
@@ -26,14 +25,14 @@
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                     <a href="<?= base_url('/listgapoktan?kode_kec=' . $row['id_daerah']) ?>">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
                     </td></a>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum'] ?></p>
                   
                        
@@ -51,7 +50,7 @@
                     <th class="align-middle text-center text-sm">
                         <p class="text-xs font-weight-bold mb-0">JUMLAH</p>
                     </th>
-                    <th class="align-middle text-center text-sm">
+                    <th class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $jum_gapoktan ?></p>
                     </th>
                 

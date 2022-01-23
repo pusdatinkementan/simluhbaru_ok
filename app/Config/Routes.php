@@ -70,7 +70,6 @@ $routes->get('/ThlApbd', 'Profil/Guest::thlapbd');
 $routes->get('/Swadaya', 'Profil/Guest::swadaya');
 $routes->get('/dk_kab', 'Profil/Guest::daftarketenagaankec');
 $routes->get('/dk_kec', 'Profil/Guest::daftarpenyuluh');
-$routes->get('/dk_kec', 'Profil/Guest::daftarpenyuluh');
 $routes->get('/rk_umur', 'Profil/Guest::rekaptngumur');
 $routes->get('/rekaptngumur_pst', 'Profil/Guest::rktenagapusat');
 $routes->get('/rekaptngumur_prov', 'Profil/Guest::rktenagaprov');
@@ -147,6 +146,7 @@ $routes->get('/rekap_jumlahanggotapoktandesalist', 'profil/Guest::rekapjumlahang
 
 
 $routes->get('/penyuluhpns', 'Penyuluh/PenyuluhPns::penyuluhpns');
+$routes->post('/penyuluhpns/showdesaadv', 'Penyuluh/PenyuluhPns::showDesaAdv');
 $routes->get('/penyuluhcpns', 'Penyuluh/PenyuluhCpns::penyuluhcpns');
 $routes->get('/penyuluhthlapbn', 'Penyuluh/PenyuluhTHLAPBN::penyuluhthlAPBN');
 $routes->get('/penyuluhthlapbd', 'Penyuluh/PenyuluhTHLAPBD::penyuluhthlAPBD');

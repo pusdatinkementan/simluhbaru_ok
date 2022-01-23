@@ -75,7 +75,8 @@
                                     <!-- <input type="hidden" name="kode_kec" value=""> -->
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Ubah Data</button>
+                                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Ubah Data</button>
                                 </div>
                             </div>
                         </form>

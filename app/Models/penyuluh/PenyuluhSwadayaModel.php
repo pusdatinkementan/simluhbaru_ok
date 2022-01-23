@@ -118,6 +118,13 @@ a.nm_pelatihan6, a.tgl_update, a.wil_kerja2, a.wil_kerja3, a.wil_kerja4, a.wil_k
         return $row;
     }
 
+    public function getStatus()
+    {
+        $query = $this->db->query("select * from tblstatus_penyuluh a where kode ='0' OR kode = '8' OR kode = '2' OR kode = '1'");
+        $row   = $query->getResultArray();
+        return $row;
+    }
+
     public function getTugas($kode_kab)
     {
         $query = $this->db->query("select * from tbldaerah a 
@@ -139,6 +146,19 @@ a.nm_pelatihan6, a.tgl_update, a.wil_kerja2, a.wil_kerja3, a.wil_kerja4, a.wil_k
         $query = $this->db->query("SELECT * FROM tbldesa WHERE id_desa LIKE '" . $id_swa . "%' ORDER BY id_desa");
         $row = $query->getResultArray();
         return $row;
+    }
+
+    public function getDetailEditStatus($id)
+    {
+        $query = $this->db->query("select a.id_swa as id, a.noktp, a.nama, a.tgl_update, a.status_kel, a.tgl_status, a.ket_status, c.nama_status
+                              
+                                from tbldasar_swa a
+                                left join tblsatminkal b on a.satminkal=b.kode
+                                left join tblstatus_penyuluh c on a.status_kel=c.kode
+                               
+        where a.id_swa = '" . $id . "'");
+        $row = $query->getRow();
+        return json_encode($row);
     }
 
     public function getDetailEdit($id_swa)

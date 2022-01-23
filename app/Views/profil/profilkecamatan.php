@@ -14,6 +14,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 }
 
 $api = 'https://api.pertanian.go.id/api/simantap/dashboard/list?&api-key=f13914d292b53b10936b7a7d1d6f2406&kode=' . $kode;
+//echo 'https://api.pertanian.go.id/api/simantap/dashboard/list?&api-key=f13914d292b53b10936b7a7d1d6f2406&kode=' . $kode;
 $result = file_get_contents($api, false);
 $json = json_decode($result, true);
 $data = $json[0];
@@ -31,7 +32,7 @@ $data = $json[0];
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah BPP</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        <?= number_format($data['jumbpp']); ?>
+                                        <?= number_format($data['jumbpp']);  ?>
                                     </h5>
                                 </div>
                             </div>
@@ -155,7 +156,7 @@ $data = $json[0];
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Penyuluh Swatahuna</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Penyuluh Swadaya</p>
                                     <h5 class="font-weight-bolder mb-0">
                                         <?= number_format($data['jumpenyuluhswadaya']); ?>
                                     </h5>
@@ -192,6 +193,119 @@ $data = $json[0];
                 </div>
             </div>
 
+            
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Penyuluh P3K</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        <?= number_format($data['jumpenyuluhp3k']); ?>
+                                    </h5>
+                                </div>
+                            </div> 
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah KEP</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        <?= number_format($data['jumkep']); ?>
+                                    </h5>
+                                </div>
+                            </div> 
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Gapoktan Bersama</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        <?= number_format($data['jumgapoktanbersama']); ?>
+                                    </h5>
+                                </div>
+                            </div> 
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Kelembagaan Lainnya</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        <?= number_format($data['jumpenyuluhswasta']); ?>
+                                    </h5>
+                                </div>
+                            </div> 
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah P2L</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        <?= number_format($data['jumpoktanp2l']); ?>
+                                    </h5>
+                                </div>
+                            </div> 
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
 
         </div>
 
@@ -220,7 +334,14 @@ $data = $json[0];
                             <div class="card">
                                 <div class="card-body p-3">
                                     <div class="row">
-                                        <h1 class="h3 mb-4 text-gray-800"><?= $title; ?><i class="fas fa-edit" style="float: right;" data-bs-toggle="modal" data-bs-target="#modal-form" id="btn-edit" data-id="<?= $dt['id']; ?>"></i></a></h1>
+                                        <h1 class="h3 mb-4 text-gray-800">
+											<?= $title; ?>
+											
+											<div style="float:right">
+												<a data-bs-toggle="modal" data-bs-target="#modal-form" id="btn-edit" data-id="<?= $dt['id']; ?>"><i class="fas fa-edit"></i></a>&nbsp; &nbsp;
+												<a href="<?php echo site_url('/profil/cetaklembaga'); ?>" target="_blank" id="btn-edit"><i class="fas fa-file-pdf"></i></a>
+											</div>
+										</h1>
                                         <div class="col-lg-12">
 
                                             <table class="table">
@@ -233,7 +354,7 @@ $data = $json[0];
                                                         <td><?= $dt['nama_bpp']; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Klasifikasi BP3K</td>
+                                                        <td>Klasifikasi BPP</td>
                                                         <td>:</td>
                                                         <td><?= $dt['klasifikasi']; ?></td>
                                                     </tr>
@@ -278,66 +399,82 @@ $data = $json[0];
                                                         <td><?= $dt['telp_hp']; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Email</td>
-                                                        <td>:</td>
-                                                        <td><?= $dt['email']; ?></td>
-                                                    </tr>
-                                                    <tr>
                                                         <td>Kecamatan wilayah Kerja</td>
                                                         <td>:</td>
                                                         <td>- <?= $dt['deskripsi'];  ?></td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td>:</td>
+                                                        <td><?= $dt['email']; ?></td>
+                                                    </tr>
+                                                   <tr>
+														<td>Akun Instagram Lembaga</td>
+														<td>:</td>
+														<td><?php echo ($dt['instagram'] <> '') ? '<a href="http://instagram.com/'.$dt['instagram'].'" target="_blank"><i class="fab fa-instagram"></i> '.$dt['instagram'].'</a>' : '' ; ?></td>
+													</tr>
+													<tr>
+														<td>Akun Facebook Lembaga</td>
+														<td>:</td>
+														<td><?php echo ($dt['facebook'] <> '') ? '<a href="http://facebook.com/'.$dt['facebook'].'" target="_blank"><i class="fab fa-facebook"></i> '.$dt['facebook'].'</a>' : '' ; ?></td>
+													</tr>
+													<tr>
+														<td>Akun Twitter Lembaga</td>
+														<td>:</td>
+														<td><?php echo ($dt['twitter'] <> '') ? '<a href="http://twitter.com/'.$dt['twitter'].'" target="_blank"><i class="fab fa-twitter"></i> '.$dt['twitter'].'</a>' : '' ; ?></td>
+													</tr>
 
-                                                </tbody>
 
-                                            </table>
-                                        </div>
+                                              </tbody>
 
-                                    </div>
-                                </div>
+                                          </table>
+                                      </div>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-lg-3 mb-lg-0 mb-4 text-center">
+                        <div class="card">
+                            <div class="card-body p-3 ">
+                                <img src="<?= base_url('assets/img/' . $dt['foto']) ?>" width="150px" class="img-thumbnail" alt="profil">
                             </div>
                         </div>
-
-                        <div class="col-lg-3 mb-lg-0 mb-4 text-center">
-                            <div class="card">
-                                <div class="card-body p-3 ">
-                                    <img src="<?= base_url('assets/img/' . $dt['foto']) ?>" width="150px" class="img-thumbnail" alt="profil">
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+
                 </div>
+            </div>
 
-                <div class="tab-pane fade" id="nav-penyuluh" role="tabpanel" aria-labelledby="nav-penyuluh-tab">
-                    <div class="row">
+            <div class="tab-pane fade" id="nav-penyuluh" role="tabpanel" aria-labelledby="nav-penyuluh-tab">
+                <div class="row">
 
-                        <div class="col-lg-12 mb-lg-0 mb-4">
-                            <div class="card">
-                                <div class="card-body p-3">
+                    <div class="col-lg-12 mb-lg-0 mb-4">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <h4 class="h3 mb-4 text-gray-800">Data Ketenagaan Penyuluhan</h4>
+                                    <div class="col-sm-4">
+                                        <h5><span>Penyuluh PNS</span></h5>
+                                    </div>
                                     <div class="row">
-                                        <h4 class="h3 mb-4 text-gray-800">Data Ketenagaan Penyuluhan</h4>
                                         <div class="col-sm-4">
-                                            <h5><span>Penyuluh PNS</span></h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <table class="table align-items-center mb-0">
-                                                    <tbody>
-                                                        <?php
-                                                        $i = 1;
-                                                        foreach ($pns_kec as $row => $pns) {
+                                            <table class="table align-items-center mb-0">
+                                                <tbody>
+                                                    <?php
+                                                    $i = 1;
+                                                    foreach ($pns_kec as $row => $pns) {
                                                         ?>
-                                                            <tr>
-                                                                <td class="align-middle text-center text-sm">
-                                                                    <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
-                                                                </td>
-                                                                <td class="align-middle text-sm">
-                                                                    <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $pns['nip']) ?>"><?= $pns['nama'] ?></p>
+                                                        <tr>
+                                                            <td class="align-middle text-center text-sm">
+                                                                <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
+                                                            </td>
+                                                            <td class="align-middle text-sm">
+                                                                <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $pns['nip']) ?>"><?= $pns['nama'] ?></p>
 
                                                                 </td>
                                                             </tr>
-                                                        <?php
+                                                            <?php
                                                         }
                                                         ?>
                                                     </tbody>
@@ -357,7 +494,7 @@ $data = $json[0];
                                                             <?php
                                                             $i = 1;
                                                             foreach ($thl_kec as $row => $thl) {
-                                                            ?>
+                                                                ?>
                                                                 <tr>
                                                                     <td class="align-middle text-center text-sm">
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
@@ -366,7 +503,7 @@ $data = $json[0];
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $thl['nama'] ?></p>
                                                                     </td>
                                                                 </tr>
-                                                            <?php
+                                                                <?php
                                                             }
                                                             ?>
                                                         </tbody>
@@ -387,7 +524,7 @@ $data = $json[0];
                                                             <?php
                                                             $i = 1;
                                                             foreach ($swa_kec as $row => $swa) {
-                                                            ?>
+                                                                ?>
                                                                 <tr>
                                                                     <td class="align-middle text-center text-sm">
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
@@ -396,7 +533,7 @@ $data = $json[0];
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $swa['nama'] ?></p>
                                                                     </td>
                                                                 </tr>
-                                                            <?php
+                                                                <?php
                                                             }
                                                             ?>
                                                         </tbody>
@@ -415,7 +552,7 @@ $data = $json[0];
                                                             <?php
                                                             $i = 1;
                                                             foreach ($swasta_kec as $row => $swasta) {
-                                                            ?>
+                                                                ?>
                                                                 <tr>
                                                                     <td class="align-middle text-center text-sm">
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
@@ -424,7 +561,7 @@ $data = $json[0];
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $swasta['nama'] ?></p>
                                                                     </td>
                                                                 </tr>
-                                                            <?php
+                                                                <?php
                                                             }
                                                             ?>
                                                         </tbody>
@@ -443,7 +580,7 @@ $data = $json[0];
                                                             <?php
                                                             $i = 1;
                                                             foreach ($p3k_kec as $row => $p3k) {
-                                                            ?>
+                                                                ?>
                                                                 <tr>
                                                                     <td class="align-middle text-center text-sm">
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
@@ -452,7 +589,7 @@ $data = $json[0];
                                                                         <p class="text-xs font-weight-bold mb-0"><?= $p3k['nama'] ?></p>
                                                                     </td>
                                                                 </tr>
-                                                            <?php
+                                                                <?php
                                                             }
                                                             ?>
                                                         </tbody>
@@ -479,7 +616,7 @@ $data = $json[0];
                                     <div class="row">
                                         <h4 class="h3 mb-4 text-gray-800">Foto Bangunan<i class="fas fa-edit" style="float: right;" data-bs-toggle="modal" data-bs-target="#modal-foto" id="btn-edit" data-id="<?= $dt['id']; ?>"></i></a></h4>
                                         <div class="col">
-                                            <label>Foto BPP</label><br>
+                                            <label>Foto BPP (Primary)</label><br>
                                             <img src="<?= base_url('assets/img/' . $dt['foto']) ?>" width="150px" height="150px" class="img-thumbnail" alt="profil">
                                         </div>
                                         <div class="col">
@@ -528,7 +665,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($wilkec as $row => $val_wk) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td width="50">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $val_wk['nama_kec'] ?></p>
@@ -547,7 +684,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -583,7 +720,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($klas as $row => $val_klas) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td width="50">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $val_klas['tahun'] ?></p>
@@ -605,7 +742,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -638,7 +775,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($fasdata as $row => $value) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td width="50">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $value['tahun'] ?></p>
@@ -660,7 +797,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -696,7 +833,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($penghargaan as $row => $award) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td class="align-middle text-sm">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $award['nama_penghargaan'] ?></p>
@@ -721,7 +858,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -752,7 +889,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($dana as $row => $dak) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td width="50">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $dak['tahun_dak'] ?></p>
@@ -768,7 +905,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -802,7 +939,7 @@ $data = $json[0];
                                                 <tbody>
                                                     <?php
                                                     foreach ($potensi as $row => $powil) {
-                                                    ?>
+                                                        ?>
                                                         <tr>
                                                             <td width="50">
                                                                 <p class="text-xs font-weight-bold mb-0"><?= $powil['nama_subsektor'] . ' - ' . $powil['nama_komoditas'] ?></p>
@@ -821,7 +958,7 @@ $data = $json[0];
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                    <?php
+                                                        <?php
                                                     }
                                                     ?>
                                                 </tbody>
@@ -864,10 +1001,10 @@ $data = $json[0];
                                             <div class="input-group mb-3">
                                                 <select class="form-select" name="bentuk_lembaga" id="bentuk_lembaga" aria-label="Default select example">
                                                     <option selected value="<?= $dt['bentuk_lembaga']; ?>"><?php if ($dt['bentuk_lembaga'] == "20") {
-                                                                                                                echo "Balai Penyuluhan Pertanian";
-                                                                                                            } elseif ($dt['bentuk_lembaga'] == "40") {
-                                                                                                                echo "UPTD";
-                                                                                                            } ?></option>
+                                                        echo "Balai Penyuluhan Pertanian";
+                                                    } elseif ($dt['bentuk_lembaga'] == "40") {
+                                                        echo "UPTD";
+                                                    } ?></option>
                                                     <option value="20">Balai Penyuluhan Pertanian</option>
                                                     <option value="40">UPTD</option>
                                                 </select>
@@ -891,424 +1028,267 @@ $data = $json[0];
                                                     ?>
                                                 </select>
                                             </div>
-                                            <label for="ketua">Tanggal Pembentukan</label>
+                                            <label for="ketua">Tanggal Pembentukan </label>
                                             <div class="input-group mb-3">
                                                 <select id="day" name="tgl_berdiri" class="form-select tgl_berdiri" aria-label="Default select example" required>
-                                                    <option value="<?= $dt['tgl_berdiri']; ?>"><?= $dt['tgl_berdiri']; ?></option>
-                                                </select>
-                                                <select id="month" name="bln_berdiri" class="form-select bln_berdiri" aria-label="Default select example" required>
-                                                    <option value="<?= $dt['bln_berdiri']; ?>"><?php
-                                                                                                if ($dt['bln_berdiri'] == "1") {
-                                                                                                    echo "Januari";
-                                                                                                } elseif ($dt['bln_berdiri'] == "2") {
-                                                                                                    echo "Pebruari";
-                                                                                                } elseif ($dt['bln_berdiri'] == "3") {
-                                                                                                    echo "Maret";
-                                                                                                } elseif ($dt['bln_berdiri'] == "4") {
-                                                                                                    echo "April";
-                                                                                                } elseif ($dt['bln_berdiri'] == "5") {
-                                                                                                    echo "Mei";
-                                                                                                } elseif ($dt['bln_berdiri'] == "6") {
-                                                                                                    echo "Juni";
-                                                                                                } elseif ($dt['bln_berdiri'] == "7") {
-                                                                                                    echo "Juli";
-                                                                                                } elseif ($dt['bln_berdiri'] == "8") {
-                                                                                                    echo "Agustus";
-                                                                                                } elseif ($dt['bln_berdiri'] == "9") {
-                                                                                                    echo "September";
-                                                                                                } elseif ($dt['bln_berdiri'] == "10") {
-                                                                                                    echo "Oktober";
-                                                                                                } elseif ($dt['bln_berdiri'] == "11") {
-                                                                                                    echo "Nopember";
-                                                                                                } elseif ($dt['bln_berdiri'] == "12") {
-                                                                                                    echo "Desember";
-                                                                                                }
-                                                                                                ?></option>
-                                                </select>
-                                                <select id="year" name="thn_berdiri" class="form-select thn_berdiri" aria-label="Default select example" required>
-                                                    <option value="<?= $dt['thn_berdiri']; ?>"><?= $dt['thn_berdiri']; ?></option>
-                                                </select>
-                                            </div>
-                                            <label>Status Gedung</label>
-                                            <div class="input-group mb-3">
-                                                <select class="form-select" name="status_gedung" id="status_gedung" aria-label="Default select example">
-                                                    <option selected value="<?= $dt['status_gedung']; ?>"><?= $dt['status_gedung']; ?></option>
-                                                    <option value="milik sendiri">Milik sendiri</option>
-                                                    <option value="sewa/pinjam">Sewa/Pinjam</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <label>kondisi Bangunan</label>
-                                            <div class="input-group mb-3">
-                                                <select class="form-select" name="kondisi_bangunan" id="kondisi_bangunan" aria-label="Default select example">
-                                                    <option selected value="<?= $dt['kondisi_bangunan']; ?>"><?= $dt['kondisi_bangunan']; ?></option>
-                                                    <option value="baik">Baik</option>
-                                                    <option value="rusak">Rusak Ringan</option>
-                                                    <option value="berat">Rusak Berat</option>
-                                                </select>
-                                            </div>
-                                            <label>Koordinat BPP</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="koordinat_lokasi_bpp" id="koordinat_lokasi_bpp" value="<?= $dt['koordinat_lokasi_bpp']; ?>" required>
-                                            </div>
-                                            <label>No.Telepon/Fax</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="No. Telepon" name="telp_bpp" id="telp_bpp" value="<?= $dt['telp_bpp']; ?>" onkeypress="return Angka(event)" required>
-                                            </div>
-                                            <label>Alamat Email</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="Email" name="email" id="email" value="<?= $dt['email']; ?>" required>
-                                            </div>
-                                            <label>Alamat Website/Blog</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="Website" name="website" id="website" value="<?= $dt['website']; ?>">
-                                            </div>
-                                            <label>Nama Pimpinan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="Nama" name="ketua" id="ketua" value="<?= $dt['ketua']; ?>" required>
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">No. HP</label>&nbsp; &nbsp;
-                                                <input type="text" class="form-control" name="telp_hp" id="telp_hp" placeholder="No. HP" value="<?= $dt['telp_hp']; ?>" onkeypress="return Angka(event)" required>
-                                            </div>
-                                            <label>Koordinator Penyuluh</label>
-                                            <div class="input-group mb-3">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio1" value="1" <?php echo ($dt["kode_koord_penyuluh"] == "1" ? 'checked="checked"' : '') ?> required>
-                                                    <label class="form-check-label" for="inlineRadio1">PNS</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio2" value="2" <?php echo ($dt["kode_koord_penyuluh"] == "2" ? 'checked="checked"' : '') ?> required>
-                                                    <label class="form-check-label" for="inlineRadio2">THL</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio3" value="3" <?php echo ($dt["kode_koord_penyuluh"] == "3" ? 'checked="checked"' : '') ?> required>
-                                                    <label class="form-check-label" for="inlineRadio2">Struktural</label>
-                                                </div><br>
-                                            </div>
-                                            <div class="input-group mb-3" id="divPNS">
-                                                <label style="margin-top: 10px;">PNS:</label>
-                                                <select name="nama_koord_penyuluh" id="nama_koord_penyuluh" class="form-control input-lg" style="margin-left: 15px;">
-                                                    <option value="<?= $dt['nama_koord_penyuluh']; ?>"><?= $dt['nip']; ?> - <?= $dt['nama']; ?></option>
-                                                    <?php
-                                                    foreach ($penyuluhPNS as $row) {
-                                                        echo '<option value="' . $row["nip"] . '">' . $row["nip"] . ' - ' . $row["nama"] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="input-group mb-3" id="divTHL">
-                                                <label>THL:</label>
-                                                <select name="nama_koord_penyuluh_thl" id="nama_koord_penyuluh_thl" class="form-control input-lg" style="margin-left: 5px;">
-                                                    <option value="<?= $dt['nama_koord_penyuluh_thl']; ?>"><?= $dt['noktp']; ?> - <?= $dt['nama']; ?></option>
-                                                    <?php
-                                                    foreach ($penyuluhTHL as $row2) {
-                                                        echo '<option value="' . $row2["noktp"] . '">' . $row2["noktp"] . ' - ' . $row2["nama"] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="input-group mb-3" id="divST">
-                                                <label style="margin-top: 10px;">NIP:</label>
-                                                <input type="text" class="form-control" style="margin-left: 10px;" id="koord_lainya_nip" placeholder="ketua" name="koord_lainya_nip" value="<?= $dt['koord_lainya_nip']; ?>" onkeypress="return Angka(event)">
-                                                <label style="margin-top: 10px;">Nama</label>
-                                                <input type="text" class="form-control" style="margin-left: 10px;" id="koord_lainya_nama" placeholder="ketua" name="koord_lainya_nama" value="<?= $dt['koord_lainya_nama']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <h5>Sarana & Prasarana</h5>
-                                            <label>Kendaraan Roda 4</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbn" id="roda_4_apbn" placeholder="" value="<?= $dt['roda_4_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbd" id="roda_4_apbd" placeholder="" value="<?= $dt['roda_4_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Kendaraan Roda 2</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbn" id="roda_2_apbn" placeholder="" value="<?= $dt['roda_2_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbd" id="roda_2_apbd" placeholder="" value="<?= $dt['roda_2_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Alat Pengolah Data (PC)</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbn" id="pc_apbn" placeholder="" value="<?= $dt['pc_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbd" id="pc_apbd" placeholder="" value="<?= $dt['pc_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Alat Pengolah Data (Laptop)</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbn" id="laptop_apbn" placeholder="" value="<?= $dt['laptop_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbd" id="laptop_apbd" placeholder="" value="<?= $dt['laptop_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Alat Pengolah Data (Printer)</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbn" id="printer_apbn" placeholder="" value="<?= $dt['printer_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbd" id="printer_apbd" placeholder="" value="<?= $dt['printer_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Alat Pengolah Data (Modem)</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbn" id="modem_apbn" placeholder="" value="<?= $dt['modem_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbd" id="modem_apbd" placeholder="" value="<?= $dt['modem_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>LCD Proyektor</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbn" id="lcd_apbn" placeholder="" value="<?= $dt['lcd_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbd" id="lcd_apbd" placeholder="" value="<?= $dt['lcd_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Soil Tester</label>
-                                            <div class="input-group mb-3">
-                                                <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbn" id="soil_apbn" placeholder="" value="<?= $dt['soil_apbn']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                                <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbd" id="soil_apbd" placeholder="" value="<?= $dt['soil_apbd']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <h5>Potensi Ekonomi</h5>
-                                            <label>Kios saprotan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="kios_saprotan" id="kios_saprotan" placeholder="" value="<?= $dt['kios_saprotan']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Pedagang pengepul</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pedagang_pengepul" id="pedagang_pengepul" placeholder="" value="<?= $dt['pedagang_pengepul']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Gudang pangan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="gudang_pangan" id="gudang_pangan" placeholder="" value="<?= $dt['gudang_pangan']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Perbankan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="perbankan" id="perbankan" placeholder="" value="<?= $dt['perbankan']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Industri Pertanian</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="industri_penyuluhan" id="industri_penyuluhan" placeholder="" value="<?= $dt['industri_penyuluhan']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
-                                            </div>
-                                            <h5>Lahan Percontohan</h5>
-                                            <label>Di BPP</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_bp3k" id="luas_lahan_bp3k" placeholder="" value="<?= $dt['luas_lahan_bp3k']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
-                                            </div>
-                                            <label>Di Petani</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_petani" id="luas_lahan_petani" placeholder="" value="<?= $dt['luas_lahan_petani']; ?>" onkeypress="return Angka(event)">
-                                                &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" id="btnSave" class="btn bg-gradient-primary">Simpan Data</button>
-                                        </div>
+                                                 <?php 
+                                                 for ($d=1;$d<=31;$d++){	
+                                                   $select = ($d == intval($dt['tgl_berdiri'])) ? " selected='selected' " : "";
+                                                   echo "<option value='".$d."' ".$select.">".$d."</option>";	
+                                               }?>
+
+                                           </select>
+                                           <select id="month" name="bln_berdiri" class="form-select bln_berdiri" aria-label="Default select example" required>
+                                            <option value="<?= $dt['bln_berdiri']; ?>"><?php
+                                            if ($dt['bln_berdiri'] == "1") {
+                                                echo "Januari";
+                                            } elseif ($dt['bln_berdiri'] == "2") {
+                                                echo "Pebruari";
+                                            } elseif ($dt['bln_berdiri'] == "3") {
+                                                echo "Maret";
+                                            } elseif ($dt['bln_berdiri'] == "4") {
+                                                echo "April";
+                                            } elseif ($dt['bln_berdiri'] == "5") {
+                                                echo "Mei";
+                                            } elseif ($dt['bln_berdiri'] == "6") {
+                                                echo "Juni";
+                                            } elseif ($dt['bln_berdiri'] == "7") {
+                                                echo "Juli";
+                                            } elseif ($dt['bln_berdiri'] == "8") {
+                                                echo "Agustus";
+                                            } elseif ($dt['bln_berdiri'] == "9") {
+                                                echo "September";
+                                            } elseif ($dt['bln_berdiri'] == "10") {
+                                                echo "Oktober";
+                                            } elseif ($dt['bln_berdiri'] == "11") {
+                                                echo "Nopember";
+                                            } elseif ($dt['bln_berdiri'] == "12") {
+                                                echo "Desember";
+                                            }
+                                            ?></option>
+                                        </select>
+                                        <select id="year" name="thn_berdiri" class="form-select thn_berdiri" aria-label="Default select example" required>
+                                            <option value="<?= $dt['thn_berdiri']; ?>"><?= $dt['thn_berdiri']; ?></option>
+                                        </select>
                                     </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modal-foto" tabindex="-1" role="dialog" aria-labelledby="modal-foto" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="card card-plain">
-                            <div class="card-header pb-0 text-left">
-                                <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
-                            </div>
-                            <div class="card-body">
-
-                                <form role="form text-left" action="<?= base_url('profil/Lembaga/update_foto/' . $dt['id']) ?>" method="post" enctype="multipart/form-data">
-                                    <? csrf_field(); ?>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $dt['kode_prop']; ?>">
-                                            <input type="hidden" name="satminkal" id="satminkal" value="<?= $dt['satminkal']; ?>">
-                                            <input type="hidden" name="urut" id="urut" value="<?= $dt['urut']; ?>">
-                                            <input type="hidden" name="kode_bp3k" id="kode_bp3k" value="<?= $dt['kode_bp3k']; ?>">
-                                            <input type="hidden" name="id" value="<?= $dt['id']; ?>">
-                                            <input type="hidden" name="fotolama" value="<?= $dt['foto']; ?>">
-                                            <input type="hidden" name="fotolama2" value="<?= $dt['foto_depan']; ?>">
-                                            <input type="hidden" name="fotolama3" value="<?= $dt['foto_belakang']; ?>">
-                                            <input type="hidden" name="fotolama4" value="<?= $dt['foto_samping']; ?>">
-                                            <input type="hidden" name="fotolama5" value="<?= $dt['foto_dalam']; ?>">
-                                            <label>Foto BPP</label>
-                                            <div class="input-group mb-3">
-                                                <div class="col-lg-4">
-                                                    <img src="<?= base_url('/assets/img/' . $dt['foto']); ?>" class="img-thumbnail img-preview">
-                                                </div>
-                                                <input type="file" class="custom-file-input" id="foto" name="foto" onchange="previewImg()">
-                                                <label class="custom-file-label" for="foto"><?= $dt['foto']; ?></label>
-                                            </div>
-                                            <label>Foto Tampak Depan BPP</label>
-                                            <div class="input-group mb-3">
-                                                <div class="col-lg-4">
-                                                    <img src="<?= base_url('/assets/img/' . $dt['foto_depan']); ?>" class="img-thumbnail img-preview2">
-                                                </div>
-                                                <input type="file" class="custom-file-input" id="foto_depan" name="foto_depan" onchange="previewImg2()">
-                                                <label class="custom-file-label2" for="foto_depan"><?= $dt['foto_depan']; ?></label>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <label>Foto Tampak Belakang BPP</label>
-                                            <div class="input-group mb-3">
-                                                <div class="col-lg-4">
-                                                    <img src="<?= base_url('/assets/img/' . $dt['foto_belakang']); ?>" class="img-thumbnail img-preview3">
-                                                </div>
-                                                <input type="file" class="custom-file-input" id="foto_belakang" name="foto_belakang" onchange="previewImg3()">
-                                                <label class="custom-file-label3" for="foto_belakang"><?= $dt['foto_belakang']; ?></label>
-                                            </div>
-                                            <label>Foto Tampak Samping BPP</label>
-                                            <div class="input-group mb-3">
-                                                <div class="col-lg-4">
-                                                    <img src="<?= base_url('/assets/img/' . $dt['foto_samping']); ?>" class="img-thumbnail img-preview4">
-                                                </div>
-                                                <input type="file" class="custom-file-input" id="foto_samping" name="foto_samping" onchange="previewImg4()">
-                                                <label class="custom-file-label4" for="foto_samping"><?= $dt['foto_samping']; ?></label>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <label>Foto Tampak Dalam BPP</label>
-                                            <div class="input-group mb-3">
-                                                <div class="col-lg-4">
-                                                    <img src="<?= base_url('/assets/img/' . $dt['foto_dalam']); ?>" class="img-thumbnail img-preview5">
-                                                </div>
-                                                <input type="file" class="custom-file-input" id="foto_dalam" name="foto_dalam" onchange="previewImg5()">
-                                                <label class="custom-file-label5" for="foto_dalam"><?= $dt['foto_dalam']; ?></label>
-                                            </div>
-                                        </div>
+                                    <label>Status Gedung</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-select" name="status_gedung" id="status_gedung" aria-label="Default select example">
+                                            <option selected value="<?= $dt['status_gedung']; ?>"><?= $dt['status_gedung']; ?></option>
+                                            <option value="milik sendiri">Milik sendiri</option>
+                                            <option value="sewa/pinjam">Sewa/Pinjam</option>
+                                        </select>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn bg-gradient-primary">Simpan Data</button>
+                                    <label>kondisi Bangunan</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-select" name="kondisi_bangunan" id="kondisi_bangunan" aria-label="Default select example">
+                                            <option selected value="<?= $dt['kondisi_bangunan']; ?>"><?= $dt['kondisi_bangunan']; ?></option>
+                                            <option value="baik">Baik</option>
+                                            <option value="rusak">Rusak</option>
+                                        </select>
                                     </div>
-                            </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-wilkec" tabindex="-1" role="dialog" aria-labelledby="modal-wilkec" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-l" role="document">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="card card-plain">
-                        <div class="card-header pb-0 text-left">
-                            <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
-                        </div>
-                        <div class="card-body">
-
-                            <form role="form text-left" action="<?= base_url('KelembagaanPenyuluhan/Kecamatan/Kecamatan/save_wilkec'); ?>">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="hidden" name="id" id="id">
-                                        <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $dt['kode_prop']; ?>">
-                                        <input type="hidden" name="satminkal" id="satminkal" value="<?= $dt['satminkal']; ?>">
-                                        <input type="hidden" name="kode_bp3k" id="kode_bp3k" value="<?= $dt['kode_bp3k']; ?>">
-                                        <input type="hidden" name="kecamatan" id="kec" value="<?= $dt['kecamatan']; ?>">
-
-                                        <label for="jum_petani">Jumlah Petani</label>
-                                        <div class="input-group mb-3">
-                                            <input type="number" class="form-control" id="jum_petani" placeholder="Jumlah Petani" name="jum_petani" onkeypress="return Angka(event)">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="btnSaveWilkec" class="btn bg-gradient-primary">Simpan Data</button>
+                                    <label>Koordinat BPP</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="koordinat_lokasi_bpp" id="koordinat_lokasi_bpp" value="<?= $dt['koordinat_lokasi_bpp']; ?>" required>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col">
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                    <label>No.Telepon/Fax</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="No. Telepon" name="telp_bpp" id="telp_bpp" value="<?= $dt['telp_bpp']; ?>" onkeypress="return Angka(event)" required>
+                                    </div>
+                                    <label>Alamat Email</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Email" name="email" id="email" value="<?= $dt['email']; ?>" required>
+                                    </div>
+                                    <label>Alamat Website/Blog</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Website" name="website" id="website" value="<?= $dt['website']; ?>">
+                                    </div>
 
-    <div class="modal fade" id="modal-klas" tabindex="-1" role="dialog" aria-labelledby="modal-klas" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-l" role="document">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="card card-plain">
-                        <div class="card-header pb-0 text-left">
-                            <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
-                        </div>
-                        <div class="card-body">
+                                    <label for="ketua">Akun Instagram Lembaga</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="instagram" placeholder="Akun Instagram" name="instagram">
+                                    </div>
+                                    <label for="ketua">Akun Facebook Lembaga</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="facebook" placeholder="Akun Facebook" name="facebook">
+                                    </div>
+                                    <label for="ketua">Akun Twitter Lembaga</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="twitter" placeholder="Akun Twitter" name="twitter">
+                                    </div>
 
-                            <form role="form text-left" action="<?= base_url('profil/Lembaga/save'); ?>">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="hidden" name="id" id="id">
-                                        <input type="hidden" name="id_bpp" id="id_bpp" value="<?= $dt['id']; ?>">
-                                        <label for="tahun_beridiri">Tahun</label>
-                                        <div class="input-group mb-3">
-                                            <select id="tahun_klas" name="tahun" class="form-select tahun" aria-label="Default select example">
-                                                <option value="">Pilih Tahun</option>
-                                            </select>
+                                    <label>Nama Pimpinan</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Nama" name="ketua" id="ketua" value="<?= $dt['ketua']; ?>" required>
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">No. HP</label>&nbsp; &nbsp;
+                                        <input type="text" class="form-control" name="telp_hp" id="telp_hp" placeholder="No. HP" value="<?= $dt['telp_hp']; ?>" onkeypress="return Angka(event)" required>
+                                    </div>
+                                    <label>Koordinator Penyuluh</label>
+                                    <div class="input-group mb-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio1" value="1" <?php echo ($dt["kode_koord_penyuluh"] == "1" ? 'checked="checked"' : '') ?> required>
+                                            <label class="form-check-label" for="inlineRadio1">PNS</label>
                                         </div>
-                                        <label for="penyuluh_swadaya">Klasifikasi</label>
-                                        <div class="input-group mb-3">
-                                            <select name="klasifikasi" id="klasifikasi" class="form-control input-lg">
-                                                <option value="">Pilih Klasifikasi</option>
-                                                <?php
-                                                foreach ($klasifikasi as $klas) {
-                                                    echo '<option value="' . $klas["klasifikasi"] . '">' . $klas["klasifikasi"] . '</option>';
-                                                }
-                                                ?>
-                                            </select>
-
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio2" value="2" <?php echo ($dt["kode_koord_penyuluh"] == "2" ? 'checked="checked"' : '') ?> required>
+                                            <label class="form-check-label" for="inlineRadio2">THL</label>
                                         </div>
-                                        <label for="alamat">Skor</label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="skor" placeholder="Skor" name="skor" onkeypress="return Angka(event)">
-                                        </div>
-
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input pen" type="radio" name="kode_koord_penyuluh" id="inlineRadio3" value="3" <?php echo ($dt["kode_koord_penyuluh"] == "3" ? 'checked="checked"' : '') ?> required>
+                                            <label class="form-check-label" for="inlineRadio2">Struktural</label>
+                                        </div><br>
+                                    </div>
+                                    <div class="input-group mb-3" id="divPNS">
+                                        <label style="margin-top: 10px;">PNS:</label>
+                                        <select name="nama_koord_penyuluh" id="nama_koord_penyuluh" class="form-control input-lg" style="margin-left: 15px;">
+                                            <option value="<?= $dt['nama_koord_penyuluh']; ?>"><?= $dt['nip']; ?> - <?= $dt['nama']; ?></option>
+                                            <?php
+                                            foreach ($penyuluhPNS as $row) {
+                                                echo '<option value="' . $row["nip"] . '">' . $row["nip"] . ' - ' . $row["nama"] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3" id="divTHL">
+                                        <label>THL:</label>
+                                        <select name="nama_koord_penyuluh_thl" id="nama_koord_penyuluh_thl" class="form-control input-lg" style="margin-left: 5px;">
+                                            <option value="<?= $dt['nama_koord_penyuluh_thl']; ?>"><?= $dt['noktp']; ?> - <?= $dt['nama']; ?></option>
+                                            <?php
+                                            foreach ($penyuluhTHL as $row2) {
+                                                echo '<option value="' . $row2["noktp"] . '">' . $row2["noktp"] . ' - ' . $row2["nama"] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3" id="divST">
+                                        <label style="margin-top: 10px;">NIP:</label>
+                                        <input type="text" class="form-control" style="margin-left: 10px;" id="koord_lainya_nip" placeholder="ketua" name="koord_lainya_nip" value="<?= $dt['koord_lainya_nip']; ?>" onkeypress="return Angka(event)">
+                                        <label style="margin-top: 10px;">Nama</label>
+                                        <input type="text" class="form-control" style="margin-left: 10px;" id="koord_lainya_nama" placeholder="ketua" name="koord_lainya_nama" value="<?= $dt['koord_lainya_nama']; ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5>Sarana & Prasarana</h5>
+                                    <label>Kendaraan Roda 4</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbn" id="roda_4_apbn" placeholder="" value="<?= $dt['roda_4_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbd" id="roda_4_apbd" placeholder="" value="<?= $dt['roda_4_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Kendaraan Roda 2</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbn" id="roda_2_apbn" placeholder="" value="<?= $dt['roda_2_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbd" id="roda_2_apbd" placeholder="" value="<?= $dt['roda_2_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Alat Pengolah Data (PC)</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbn" id="pc_apbn" placeholder="" value="<?= $dt['pc_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbd" id="pc_apbd" placeholder="" value="<?= $dt['pc_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Alat Pengolah Data (Laptop)</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbn" id="laptop_apbn" placeholder="" value="<?= $dt['laptop_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbd" id="laptop_apbd" placeholder="" value="<?= $dt['laptop_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Alat Pengolah Data (Printer)</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbn" id="printer_apbn" placeholder="" value="<?= $dt['printer_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbd" id="printer_apbd" placeholder="" value="<?= $dt['printer_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Alat Pengolah Data (Modem)</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbn" id="modem_apbn" placeholder="" value="<?= $dt['modem_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbd" id="modem_apbd" placeholder="" value="<?= $dt['modem_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>LCD Proyektor</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbn" id="lcd_apbn" placeholder="" value="<?= $dt['lcd_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbd" id="lcd_apbd" placeholder="" value="<?= $dt['lcd_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Soil Tester</label>
+                                    <div class="input-group mb-3">
+                                        <label style="margin-top: 10px;">APBN</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbn" id="soil_apbn" placeholder="" value="<?= $dt['soil_apbn']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                        <label style="margin-top: 10px;">APBD</label>
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbd" id="soil_apbd" placeholder="" value="<?= $dt['soil_apbd']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5>Potensi Ekonomi</h5>
+                                    <label>Kios saprotan</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="kios_saprotan" id="kios_saprotan" placeholder="" value="<?= $dt['kios_saprotan']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Pedagang pengepul</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="pedagang_pengepul" id="pedagang_pengepul" placeholder="" value="<?= $dt['pedagang_pengepul']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Gudang pangan</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="gudang_pangan" id="gudang_pangan" placeholder="" value="<?= $dt['gudang_pangan']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Perbankan</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="perbankan" id="perbankan" placeholder="" value="<?= $dt['perbankan']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Industri Pertanian</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="industri_penyuluhan" id="industri_penyuluhan" placeholder="" value="<?= $dt['industri_penyuluhan']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
+                                    </div>
+                                    <h5>Lahan Percontohan</h5>
+                                    <label>Di BPP</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_bp3k" id="luas_lahan_bp3k" placeholder="" value="<?= $dt['luas_lahan_bp3k']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
+                                    </div>
+                                    <label>Di Petani</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_petani" id="luas_lahan_petani" placeholder="" value="<?= $dt['luas_lahan_petani']; ?>" onkeypress="return Angka(event)">
+                                        &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="btnSaveKlas" class="btn bg-gradient-primary">Simpan Data</button>
+                                    <button type="submit" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
                                 </div>
-                        </div>
+                            </div>
                         </form>
                     </div>
 
@@ -1316,6 +1296,182 @@ $data = $json[0];
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modal-foto" tabindex="-1" role="dialog" aria-labelledby="modal-foto" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card card-plain">
+                    <div class="card-header pb-0 text-left">
+                        <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <form role="form text-left" action="<?= base_url('profil/Lembaga/update_foto/' . $dt['id']) ?>" method="post" enctype="multipart/form-data">
+                            <? csrf_field(); ?>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $dt['kode_prop']; ?>">
+                                    <input type="hidden" name="satminkal" id="satminkal" value="<?= $dt['satminkal']; ?>">
+                                    <input type="hidden" name="urut" id="urut" value="<?= $dt['urut']; ?>">
+                                    <input type="hidden" name="kode_bp3k" id="kode_bp3k" value="<?= $dt['kode_bp3k']; ?>">
+                                    <input type="hidden" name="id" value="<?= $dt['id']; ?>">
+                                    <input type="hidden" name="fotolama" value="<?= $dt['foto']; ?>">
+                                    <input type="hidden" name="fotolama2" value="<?= $dt['foto_depan']; ?>">
+                                    <input type="hidden" name="fotolama3" value="<?= $dt['foto_belakang']; ?>">
+                                    <input type="hidden" name="fotolama4" value="<?= $dt['foto_samping']; ?>">
+                                    <input type="hidden" name="fotolama5" value="<?= $dt['foto_dalam']; ?>">
+                                    <label>Foto BPP (Primary)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="col-lg-4">
+                                            <img src="<?= base_url('/assets/img/' . $dt['foto']); ?>" class="img-thumbnail img-preview">
+                                        </div>
+                                        <input type="file" class="custom-file-input" id="foto" name="foto" onchange="previewImg()">
+                                        <label class="custom-file-label" for="foto"><?= $dt['foto']; ?></label>
+                                    </div>
+                                    <label>Foto Tampak Depan BPP</label>
+                                    <div class="input-group mb-3">
+                                        <div class="col-lg-4">
+                                            <img src="<?= base_url('/assets/img/' . $dt['foto_depan']); ?>" class="img-thumbnail img-preview2">
+                                        </div>
+                                        <input type="file" class="custom-file-input" id="foto_depan" name="foto_depan" onchange="previewImg2()">
+                                        <label class="custom-file-label2" for="foto_depan"><?= $dt['foto_depan']; ?></label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label>Foto Tampak Belakang BPP</label>
+                                    <div class="input-group mb-3">
+                                        <div class="col-lg-4">
+                                            <img src="<?= base_url('/assets/img/' . $dt['foto_belakang']); ?>" class="img-thumbnail img-preview3">
+                                        </div>
+                                        <input type="file" class="custom-file-input" id="foto_belakang" name="foto_belakang" onchange="previewImg3()">
+                                        <label class="custom-file-label3" for="foto_belakang"><?= $dt['foto_belakang']; ?></label>
+                                    </div>
+                                    <label>Foto Tampak Samping BPP</label>
+                                    <div class="input-group mb-3">
+                                        <div class="col-lg-4">
+                                            <img src="<?= base_url('/assets/img/' . $dt['foto_samping']); ?>" class="img-thumbnail img-preview4">
+                                        </div>
+                                        <input type="file" class="custom-file-input" id="foto_samping" name="foto_samping" onchange="previewImg4()">
+                                        <label class="custom-file-label4" for="foto_samping"><?= $dt['foto_samping']; ?></label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label>Foto Tampak Dalam BPP</label>
+                                    <div class="input-group mb-3">
+                                        <div class="col-lg-4">
+                                            <img src="<?= base_url('/assets/img/' . $dt['foto_dalam']); ?>" class="img-thumbnail img-preview5">
+                                        </div>
+                                        <input type="file" class="custom-file-input" id="foto_dalam" name="foto_dalam" onchange="previewImg5()">
+                                        <label class="custom-file-label5" for="foto_dalam"><?= $dt['foto_dalam']; ?></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn bg-gradient-info">Simpan Data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="modal-wilkec" tabindex="-1" role="dialog" aria-labelledby="modal-wilkec" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-l" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card card-plain">
+                    <div class="card-header pb-0 text-left">
+                        <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <form role="form text-left" action="<?= base_url('KelembagaanPenyuluhan/Kecamatan/Kecamatan/save_wilkec'); ?>">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="hidden" name="id" id="id">
+                                    <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $dt['kode_prop']; ?>">
+                                    <input type="hidden" name="satminkal" id="satminkal" value="<?= $dt['satminkal']; ?>">
+                                    <input type="hidden" name="kode_bp3k" id="kode_bp3k" value="<?= $dt['kode_bp3k']; ?>">
+                                    <input type="hidden" name="kecamatan" id="kec" value="<?= $dt['kecamatan']; ?>">
+
+                                    <label for="jum_petani">Jumlah Petani</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" id="jum_petani" placeholder="Jumlah Petani" name="jum_petani" onkeypress="return Angka(event)">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" id="btnSaveWilkec" class="btn bg-gradient-info">Simpan Data</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-klas" tabindex="-1" role="dialog" aria-labelledby="modal-klas" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-l" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card card-plain">
+                    <div class="card-header pb-0 text-left">
+                        <h4 class="font-weight-bolder text-warning text-gradient" id="judul_form">Tambah Data</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <form role="form text-left" action="<?= base_url('profil/Lembaga/save'); ?>">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="hidden" name="id" id="id">
+                                    <input type="hidden" name="id_bpp" id="id_bpp" value="<?= $dt['id']; ?>">
+                                    <label for="tahun_beridiri">Tahun</label>
+                                    <div class="input-group mb-3">
+                                        <select id="tahun_klas" name="tahun" class="form-select tahun" aria-label="Default select example">
+                                            <option value="">Pilih Tahun</option>
+                                        </select>
+                                    </div>
+                                    <label for="penyuluh_swadaya">Klasifikasi</label>
+                                    <div class="input-group mb-3">
+                                        <select name="klasifikasi" id="klasifikasi" class="form-control input-lg">
+                                            <option value="">Pilih Klasifikasi</option>
+                                            <?php
+                                            foreach ($klasifikasi as $klas) {
+                                                echo '<option value="' . $klas["klasifikasi"] . '">' . $klas["klasifikasi"] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+
+                                    </div>
+                                    <label for="alamat">Skor</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="skor" placeholder="Skor" name="skor" onkeypress="return Angka(event)">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" id="btnSaveKlas" class="btn bg-gradient-info">Simpan Data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="modal fade" id="modal-fk" tabindex="-1" role="dialog" aria-labelledby="modal-fk" aria-hidden="true">
@@ -1366,7 +1522,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveFas" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveFas" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1431,7 +1587,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveAw" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveAw" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1473,7 +1629,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveDak" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveDak" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1519,7 +1675,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveKom" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveKom" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1628,8 +1784,8 @@ $data = $json[0];
 </script>
 <script>
     var min = 2010,
-        max = 2030,
-        select = document.getElementById('tahun_klas');
+    max = 2030,
+    select = document.getElementById('tahun_klas');
 
     for (var i = min; i <= max; i++) {
         var opt = document.createElement('option');

@@ -2,12 +2,16 @@
 
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
+<center>
+    <h3>Daftar Penyuluh Swadaya Kab <?= ucwords(strtolower($nama_kabupaten)) ?></h3>
+	 <p>Ditemukan <?= $jml_data ?> data</p>
+</center>
 
-
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button>
-<br>
-<b>Daftar Penyuluh Swadaya Kab <?= ucwords(strtolower($nama_kabupaten)) ?></b>
-<p>Ditemukan <?= $jml_data ?> data</p>
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>
 <div class="card">
     <div class="table-responsive">
         <table id="tblswadaya" class="table align-items-center mb-0">
@@ -29,27 +33,30 @@
                 foreach ($tabel_data as $row) {
                 ?>
                     <tr>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluhswadaya/detail/' . $row['noktp']) ?>"><?= $row['noktp'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['nama'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['nama_bpp'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
                         </td>
                         <td class="align-middle text-sm">
-                            <p class="text-xs font-weight-bold mb-0">1. <?= $row['wil_ker'] ?><br>
-                                2. <?= $row['wil_ker2'] ?><br>
-                                3. <?= $row['wil_ker3'] ?><br>
-                                4. <?= $row['wil_ker4'] ?><br>
-                                5. <?= $row['wil_ker5'] ?></p>
+                            <p class="text-xs font-weight-bold mb-0">
+								<?php
+									for ($y=1;$y<=5;$y++){
+										$field = ($y=='1') ? 'wil_ker' : 'wil_ker'.$y;
+										echo ($row[$field] == '') ? '' : $y.'. '.$row[$field].'<br />';
+									}
+								?>
+							</p>								
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['tgl_update'] ?></p>
@@ -61,10 +68,17 @@
                                     <i class="fas fa-edit"></i> Ubah
                                 </button>
                             </a>
+                            <a href="#">
                             <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id_swa="<?= $row['id_swa']; ?>" type="submit" onclick="return confirm('Are you sure ?')">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
                             </a>
+                            
+                            <a href="#">
+                                            <button type="button" id="btnEditStatus" data-id_swa="<?= $row['id_swa']; ?>" class="btn bg-gradient-info btn-sm">
+                                                <i class="fas fa-edit"></i> Manajemen Status
+                                            </button>
+                                        </a>
                         </td>
                     </tr>
                 <?php
@@ -98,7 +112,7 @@
                                             </div>
                                             <label>No. KTP</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP">
+                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP" maxlength="16" oninput="NikOnly(this)">
                                             </div>
                                             <label>Nama</label>
                                             <div class="input-group mb-3">
@@ -167,8 +181,6 @@
                                             <div class="input-group mb-3">
                                                 <input type="text" id="no_sk_penetapan" name="no_sk_penetapan" class="form-control" placeholder="No. SK Penetapan" aria-label="Password" aria-describedby="password-addon">
                                             </div>
-                                        </div>
-                                        <div class="col">
 
 
                                             <label>Pejabat Yang Menetapkan</label>
@@ -216,6 +228,9 @@
                                                     </label>
                                                 </div>
                                             </div><input type="text" class="form-control" id="detail_lainnya" name="detail_lainnya" aria-label="Password" aria-describedby="password-addon">
+
+                                        </div>
+                                        <div class="col">
                                             <label>Unit Kerja (BPP Kecamatan)</label>
                                             <div class="input-group mb-3">
                                                 <select name="unit_kerja" id="unit_kerja" class="form-control input-lg unit_kerja">
@@ -250,8 +265,6 @@
                                                     <option selected>Pilih Desa</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col">
 
                                             <label>Wilayah Kerja 3</label>
                                             <div class="input-group mb-3">
@@ -305,55 +318,65 @@
                                         </div>
 
                                         <div class="col">
-                                            <label>Tahun Pelatihan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan1" name="tahun_pelatihan1" class="form-control">
+                                            <div class="row">
+                                                
+                                            <div class="col-4">
+                                                <div class="text-center">
+                                                <label>Tahun <br>Pelatihan</label>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan1" name="tahun_pelatihan1" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan2" name="tahun_pelatihan2" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan3" name="tahun_pelatihan3" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan4" name="tahun_pelatihan4" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan5" name="tahun_pelatihan5" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="tahun_pelatihan6" name="tahun_pelatihan6" class="form-control">
+                                                </div>
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan2" name="tahun_pelatihan2" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan3" name="tahun_pelatihan3" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan4" name="tahun_pelatihan4" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan5" name="tahun_pelatihan5" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="tahun_pelatihan6" name="tahun_pelatihan6" class="form-control">
-                                            </div>
-                                        </div>
 
-                                        <div class="col">
-                                            <label>Nama Pelatihan</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan1" name="nm_pelatihan1" class="form-control">
+                                            <div class="col-8">
+                                                <div class="text-center">
+                                                <label>Nama <br>Pelatihan</label>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan1" name="nm_pelatihan1" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan2" name="nm_pelatihan2" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan3" name="nm_pelatihan3" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan4" name="nm_pelatihan4" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan5" name="nm_pelatihan5" class="form-control">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="nm_pelatihan6" name="nm_pelatihan6" class="form-control">
+                                                </div>
+                                                <input type="hidden" name="kecamatan_tugas" class="form-control">
+                                                <input type="hidden" id="tgl_update" name="tgl_update" class="form-control">
+                                                <input type="hidden" id="id" name="id">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan2" name="nm_pelatihan2" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan3" name="nm_pelatihan3" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan4" name="nm_pelatihan4" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan5" name="nm_pelatihan5" class="form-control">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" id="nm_pelatihan6" name="nm_pelatihan6" class="form-control">
-                                            </div>
-                                            <input type="hidden" name="kecamatan_tugas" class="form-control">
-                                            <input type="hidden" id="tgl_update" name="tgl_update" class="form-control">
-                                            <input type="hidden" id="id" name="id">
                                         </div>
-
-                                        <div class="text-center">
-                                            <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
-                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                        <!-- <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center> -->
                                     </div>
                                 </form>
                             </div>
@@ -364,6 +387,62 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body p-0">
+                                    <div class="card card-plain">
+                                        <div class="card-header pb-0 text-left">
+                                            <h4 class="font-weight-bolder text-warning text-gradient">Manajemen Status</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <form method="POST" action="<?= base_url('Penyuluh/PenyuluhSwadaya/updatestatus'); ?>">
+                                                <? csrf_field(); ?>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input type="hidden" name="id" id="idd" class="form-control id">
+                                                        <label>Nama Penyuluh</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="nama" id="namaa" class="form-control nama" disabled>
+                                                        </div>
+                                                        <label>Per tanggal</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" id="tgl_status" name="tgl_status" class="form-control" placeholder="Tgl Status">
+                                                        </div>
+                                                    </div>
+                                                    <label>Status</label>
+                                                    <div class="input-group mb-3">
+                                                        <select name="status" id="statuss" class="form-control input-lg status">
+                                                            <option value="">Pilih Status</option>
+                                                            <?php
+                                                            foreach ($status as $row2) {
+                                                                echo '<option value="' . $row2["kode"] . '">' . $row2["nama_status"] . '</option>';
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <label>Keterangan</label>
+                                                    <div class="input-group mb-3">
+                                                        <textarea class="form-control ket_status" name="ket_status" id="ket_status" placeholder="Keterangan"></textarea>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSaveStatus" class="btn bg-gradient-warning">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSaveStatus" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center> -->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+    </div>
+</div></div>
+
     </div>
 </div>
 <?= $this->endSection() ?>
@@ -373,7 +452,12 @@
 <script>
     $(document).ready(function() {
 
-        $('#tblswadaya').DataTable();
+        $('#tblswadaya').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
 
         $(document).delegate('#btnSave', 'click', function() {
 
@@ -612,6 +696,90 @@
             });
         });
 
+        $(document).delegate('#btnEditStatus', 'click', function() {
+                $.ajax({
+                    url: '<?= base_url() ?>/Penyuluh/PenyuluhSwadaya/editstatus/' + $(this).data('id_swa'),
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(result) {
+                        // console.log(result);
+
+                        $('#idd').val(result.id);
+                        $('#namaa').val(result.nama);
+                        $('#statuss').val(result.status_kel);
+                        $('#tgl_status').val(result.tgl_status);
+                        $('#ket_status').val(result.nama_status);
+ 
+
+                        $('#modal-form-edit').modal('show');
+
+                        $("#btnSaveStatus").attr("id", "btnDoEditStatus");
+
+                        $(document).delegate('#btnDoEditStatus', 'click', function() {
+
+                            var id = $('#idd').val();
+                            var nama = $('#namaa').val();
+                            var status = $('#statuss').val();
+                            var tgl_status = $('#tgl_status').val();
+                            var ket_status = $('#ket_status').val();
+
+                            let formData = new FormData();
+                            formData.append('id', id);
+                            formData.append('nama', nama);
+                            formData.append('status', status);
+                            formData.append('tgl_status', tgl_status);
+                            formData.append('ket_status', ket_status);
+
+
+
+                            $.ajax({
+                                url: '<?= base_url() ?>/Penyuluh/PenyuluhSwadaya/updatestatus/' + id,
+                                type: "POST",
+                                data: formData,
+                                cache: false,
+                                processData: false,
+                                contentType: false,
+                                success: function(result) {
+                                    $('#modal-form-edit').modal('hide');
+                                    Swal.fire({
+                                        title: 'Sukses',
+                                        text: "Sukses edit data",
+                                        type: 'success',
+                                    }).then((result) => {
+
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
+
+                                },
+                                error: function(jqxhr, status, exception) {
+
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: "Gagal edit data",
+                                        type: 'Error',
+                                    }).then((result) => {
+
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
+
+                                }
+                            });
+                        });
+
+                    }
+                });
+
+                $('.modal').on('hidden.bs.modal', function() {
+                    $(this).find('form')[0].reset();
+                });
+
+            });
+
+
         $(document).delegate('#btnHapus', 'click', function() {
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -664,6 +832,9 @@
         var wil_kerjaa3 = null;
         var wil_kerjaa4 = null;
         var wil_kerjaa5 = null;
+
+
+        
 
         $(document).delegate('#btnEdit', 'click', function() {
             $.ajax({

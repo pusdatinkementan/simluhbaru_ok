@@ -55,7 +55,7 @@
                                                 <i class="fas fa-edit"></i> Ubah
                                             </button>
                                         </a>
-                                        <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id="<?= $row['id']; ?>" type="submit" onclick="return confirm('Are you sure ?')">
+                                        <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id="<?= $row['id']; ?>" type="submit" >
                                             <i class="fas fa-trash"></i> Hapus
                                         </button>
                                         </a>
@@ -69,7 +69,7 @@
 
                     <!-- modal -->
                     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
@@ -96,11 +96,11 @@
                                                         </div>
                                                         <label>Angka Kredit Unsur Utama</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="text" name="kredit_utama" id="kredit_utama" class="form-control kredit_utama" placeholder="Angka Kredit Unsur Utama">
+                                                            <input type="text" name="kredit_utama" id="kredit_utama" class="form-control kredit_utama rupiah" placeholder="Angka Kredit Unsur Utama">
                                                         </div>
                                                         <label>Angka Kredit Unsur Penunjang</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="text" name="kredit_penunjang" id="kredit_penunjang" class="form-control" placeholder="Angka Kredit Unsur Penunjang">
+                                                            <input type="text" name="kredit_penunjang" id="kredit_penunjang" class="form-control rupiah" placeholder="Angka Kredit Unsur Penunjang">
                                                         </div>
                                                         <label>Jenjang Jabatan / Golongan</label>
                                                         <div class="input-group mb-3">
@@ -108,7 +108,7 @@
                                                                 <option value="">Pilih Jabatan</option>
                                                                 <?php
                                                                 foreach ($pp as $row2) {
-                                                                    echo '<option value="' . $row2["kode"] . '">' . $row2["nama"] . '</option>';
+                                                                    echo '<option value="' . $row2["kode"] . '">' . $row2["nama"] . ' / ' .  $row2['gol_ruang']. '</option>';
                                                                 }
                                                                 ?>
                                                             </select>
@@ -127,7 +127,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
                                                     </div>
                                                 </div>
                                             </form>

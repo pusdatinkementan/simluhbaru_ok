@@ -40,7 +40,7 @@ class KecamatanKec extends BaseController
         $kode = $kode_model->getKodeWil(session()->get('kodebpp'));
 
         $data = [
-            //'jumpns' => $kec_data['jumpns'],
+            'jum_data' => count($kec_data['table_data']),
             'nama_kec' => $kec_data['nama_kec'],
             'tabel_data' => $kec_data['table_data'],
             // 'penyuluhPNS' => $penyuluhPNS,

@@ -1,20 +1,7 @@
 <?= $this->extend('layout/main_template') ?>
 
 <?= $this->section('content') ?>
-<style>
-    .modal {
-        display: block !important;
-    }
 
-    .modal-dialog {
-        overflow-y: initial !important
-    }
-
-    .modal-body {
-        height: 250px;
-        overflow-y: auto;
-    }
-</style>
 
 
 <?php
@@ -29,12 +16,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 }
 ?>
 <center>
-    <h4> Daftar Gapoktan di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h4>
+    <h3>Daftar Gapoktan di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h3>
+	 <p>Data ditemukan <?= ucwords(strtolower($jum)) ?></p>
 </center>
-<center>
-    <h4>Data ditemukan <?= ucwords(strtolower($jum)) ?> </h2>
-</center>
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm ">+ Tambah Data</button>
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm ">+ Tambah Data</button>
 <div class="card">
     <div class="table-responsive">
         <table id="tblGapoktan" class="table align-items-center mb-0">
@@ -58,25 +48,25 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 ?>
 
                     <tr>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['nm_desa'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['nama_gapoktan'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['ketua_gapoktan'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['simluh_bendahara'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['alamat'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <a href="<?= ('listgapoktandesa?kode_desa=' . $row['id_desa']) ?>">
                                 <p class="text-xs font-weight-bold mb-0"><?= $row['jumpok'] ?></p>
                         </td></a>
@@ -133,18 +123,18 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                             </div>
                                             <label>Nama Ketua</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" id="ketua_gapoktan" name="ketua_gapoktan" placeholder="Nama Ketua">
+                                                <input type="text" class="form-control" id="ketua_gapoktan" name="ketua_gapoktan" placeholder="Nama Ketua" required="">
                                             </div>
                                             <label>Nama Bendahara</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control " id="simluh_bendahara" name="simluh_bendahara" placeholder="Nama Bendahara">
+                                                <input type="text" class="form-control " id="simluh_bendahara" name="simluh_bendahara" placeholder="Nama Bendahara" required="">
                                             </div>
                                             <label>Nama Sekretaris</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control " id="simluh_sekretaris" name="simluh_sekretaris" placeholder="Nama Sekretaris">
+                                                <input type="text" class="form-control " id="simluh_sekretaris" name="simluh_sekretaris" placeholder="Nama Sekretaris" reguired>
                                             </div>
                                             <label>Alamat Lengkap Sekretariat</label>
-                                            <textarea class="form-control " id="alamat" placeholder="Alamat" name="alamat"></textarea>
+                                            <textarea class="form-control " id="alamat" placeholder="Alamat" name="alamat" required=""></textarea>
                                             <label>Tahun Pembentukan</label>
                                             <div class="input-group mb-3">
                                                 <select id="year" class="form-select " name="simluh_tahun_bentuk">
@@ -217,32 +207,32 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                             <label>Alat dan Mesin Pertanian Yang Dimiliki</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Traktor</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_traktor" name="simluh_alsin_traktor" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_traktor" name="simluh_alsin_traktor" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Hand Traktor</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_hand_tractor" name="simluh_alsin_hand_tractor" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_hand_tractor" name="simluh_alsin_hand_tractor" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Pompa Air</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_pompa_air" name="simluh_alsin_pompa_air" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_pompa_air" name="simluh_alsin_pompa_air" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Mesin Penggiling Padi</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_penggiling_padi" name="simluh_penggiling_padi" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_penggiling_padi" name="simluh_penggiling_padi" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Mesin Pengering</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_pengering" name="simluh_alsin_pengering" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_pengering" name="simluh_alsin_pengering" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Mesin Pencacah</label>
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_chooper" name="simluh_alsin_chooper" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_chooper" name="simluh_alsin_chooper" placeholder="isi dengan angka">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top : 10px;" class="form-check-label">Lainnya</label>
                                                 <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_lain_desc" name="simluh_alsin_lain_desc" placeholder="isi dengan nama alsin lain">
-                                                <input type="text" style="margin-left : 10px;" class="form-control" id="simluh_alsin_lain" name="simluh_alsin_lain" placeholder="isi dengan angka">
+                                                <input type="text" style="margin-left : 10px;" class="form-control rupiah" id="simluh_alsin_lain" name="simluh_alsin_lain" placeholder="isi dengan angka">
                                             </div>
                                         </div>
                                     </div>
@@ -256,7 +246,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                         <button type="button" class="btn btn-round bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
 
 
-                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm ">Simpan Data</button>
+                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-info btn-sm ">Simpan Data</button>
                                     </div>
                             </div>
 
@@ -267,6 +257,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         </div>
     </div>
 </div>
+
+</div>
+</div></div>
 
 </div>
 </div>
@@ -289,7 +282,13 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <script>
     $(document).ready(function() {
-        $('#tblGapoktan').DataTable();
+       
+		 $('#tblGapoktan').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             var kode_prop = $('#kode_prop').val();
@@ -348,6 +347,19 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 Swal.fire({
                     title: 'Error',
                     text: "Ketua Gapoktan Harus Diisi",
+                    type: 'error',
+                }).then((result) => {
+                    if (result.value) {
+                        return false;
+                    }
+                });
+                return false;
+            }
+
+             if (nama_gapoktan.length < 3) {
+                Swal.fire({
+                    title: 'Error',
+                    text: " Nama Gapoktan Mimnimal 3 Karakter",
                     type: 'error',
                 }).then((result) => {
                     if (result.value) {

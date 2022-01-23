@@ -14,10 +14,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
     $kode = session()->get('kodebpp');
 }
 ?>
-<center><h2> Daftar Kelompok di Tani Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h2></center>
-
-<center><h4>Data ditemukan <?= ucwords(strtolower($jum)) ?> </h2></center>
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button>
+<center>
+    <h3>Daftar Kelompok di Tani Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?></h3>
+	 <p>Data ditemukan <?= ucwords(strtolower($jum)) ?></p>
+</center>
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>
 <div class="card">
     <div class="table-responsive">
         <table id="tblPoktan" class="table align-items-center mb-0">
@@ -40,23 +45,23 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
                     
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['nm_desa'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['id_poktan'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_poktan'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['ketua_poktan'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['alamat'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
@@ -69,23 +74,17 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                 <button class="btn btn-danger btn-sm" id="btnHapus" data-id_poktan="<?= $row['id_poktan'] ?>" type="button" >
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
-                           
                             
-                            <button type="button" class="btn bg-gradient-primary btn-sm">
-                            <a href="<?= base_url('/listpoktananggota?ip=' . $row['id_poktan']) ?>">
-                                <i class="ni ni-fat-add"></i> +Tambah Anggota
-                            </button>
-                         
-                            
-                            <button type="button" class="btn bg-gradient-info btn-sm">
-                            <a href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>"> 
+                            <a  class="btn bg-gradient-success btn-sm" href="<?= base_url('/listpoktananggota?ip=' . $row['id_poktan']) ?>">
+                                +Tambah Anggota
+                            </a>
+                            <a class="btn bg-gradient-primary btn-sm" href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>"> 
                                  +Tambah Bantuan
-                            </button>
-
-                            <button type="button" class="btn bg-gradient-info btn-sm">
-                            <a href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>"> 
+                            </a>
+                                 
+                            <a class="btn bg-gradient-info btn-sm" href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>"> 
                                  +Tambah Komoditas
-                            </button>
+                            </a>
                             
                         </td>
                 </tr>
@@ -224,6 +223,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                              Tanaman Pangan
                                                          </label>
                                                 </div>
+
+                                            <label>Pilih Komoditas</label>
+                                                <div class="input-group mb-3">
+                                                <select class="form-select" id="komoditas_tp" name="komoditas_tp" aria-label="Default select example">
+                                                    <option selected>Pilih  </option>
+                                                    
+                                                </select>
+                                            </div>  
+
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="simluh_komo_lain_tp" name="simluh_komo_lain_tp" placeholder="Komoditas Tanaman Pangan Lainnya">
                                             </div>
@@ -233,14 +241,30 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                         Perkebunan
                                                          </label>
                                                 </div>
+                                                <label>Pilih Komoditas</label>
+                                                <div class="input-group mb-3">
+                                                <select class="form-select" id="komoditas_bun" name="komoditas_bun" aria-label="Default select example">
+                                                    <option selected>Pilih  </option>
+                                                    
+                                                </select>
+                                                </div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="simluh_komo_lain_bun" name="simluh_komo_lain_bun" placeholder="Komoditas Perkebunan Lainnya">
                                             </div>
+                                            
+
                                                 <div class="form-check">
                                                     <input class="form-check-input simluh_jenis_kelompok_hor" type="checkbox" value="hor" name="simluh_jenis_kelompok_hor" id="simluh_jenis_kelompok_hor" >
                                                         <label class="form-check-label" for="simluh_jenis_kelompok_hor">
                                                             Hortikultura
                                                          </label>
+                                                </div>
+                                                <label>Pilih Komoditas</label>
+                                                <div class="input-group mb-3">
+                                                <select class="form-select" id="komoditas_horti" name="komoditas_horti" aria-label="Default select example">
+                                                    <option selected>Pilih  </option>
+                                                    
+                                                </select>
                                                 </div>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="simluh_komo_lain_hor" name="simluh_komo_lain_hor" placeholder="Komoditas Hortikultura Lainnya">
@@ -251,6 +275,13 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                              Peternakan
                                                          </label>
                                                 </div>
+                                                <label>Pilih Komoditas</label>
+                                                <div class="input-group mb-3">
+                                                <select class="form-select" id="komoditas_nak" name="komoditas_nak" aria-label="Default select example">
+                                                    <option selected>Pilih  </option>
+                                                    
+                                                </select>
+                                                </div>
                                                 <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="simluh_komo_lain_nak" name="simluh_komo_lain_nak" placeholder="Komoditas Peternakan Lainnya">
                                             </div>
@@ -260,6 +291,13 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                              Pengolahan
                                                          </label>
                                                 </div>
+                                                <label>Pilih Komoditas</label>
+                                                <div class="input-group mb-3">
+                                                <select class="form-select" id="komoditas_olah" name="komoditas_olah" aria-label="Default select example">
+                                                    <option selected>Pilih  </option>
+                                                    
+                                                </select>
+                                                </div>
                                                 <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="simluh_komo_lain_olah" name="simluh_komo_lain_olah" placeholder="Komoditas Pengolahan Lainnya">
                                             </div>
@@ -267,13 +305,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                         </div>                 
                                     
 
-                                            <input type="hidden" name="kode_kab" id="kode_kab" value="<?= $kode; ?>">
-                                            <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $kode_prop; ?>">
-                                            <input type="hidden" name="kode_kec" id="kode_kec" value="<?= $kode_kec; ?>">
-                                                <input type="hidden" id="id_poktan" name="id_poktan" >
+                                                    <input type="hidden" name="kode_kab" id="kode_kab" value="<?= $kode; ?>">
+                                                    <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $kode_prop; ?>">
+                                                    <input type="hidden" name="kode_kec" id="kode_kec" value="<?= $kode_kec; ?>">
+                                                    <input type="hidden" id="id_poktan" name="id_poktan" >
                                                
                                                     <div class="text-center">
-                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button> -->
                                                     </div>
                                                 </div>
                                             </form>
@@ -285,6 +325,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         </div>
                     </div 
     </div>
+</div>   
+    </div>
+</div>
 </div>   
     </div>
 </div>
@@ -303,7 +346,13 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 <script>
     $(document).ready(function() {
       
-        $('#tblPoktan').DataTable();
+
+		  $('#tblPoktan').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             var kode_kec = $('#kode_kec').val();
@@ -354,10 +403,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     });
                     return false;
                 }
-                if (nama_poktan.length == 0) {
+                if (nama_poktan.length < 3) {
                 Swal.fire({
                         title: 'Error',
-                        text: "Nama Poktan Harus Diisi",
+                        text: "Nama Poktan Harus Diisi Minimal 3 Karakter",
                         type: 'error',
                     }).then((result) => {
                         if (result.value) {
@@ -711,10 +760,12 @@ if (kode_desa == 0) {
                     });
                     return false;
                 }
-                if (nama_poktan.length == 0) {
+                
+
+                if (nama_poktan.length < 3) {
                 Swal.fire({
                         title: 'Error',
-                        text: "Nama Poktan Harus Diisi",
+                        text: "Nama Poktan Harus Diisi Minimal 3 Karakter",
                         type: 'error',
                     }).then((result) => {
                         if (result.value) {
@@ -723,6 +774,7 @@ if (kode_desa == 0) {
                     });
                     return false;
                 }
+                
                 
             if (ketua_poktan.length == 0) {
                 Swal.fire({

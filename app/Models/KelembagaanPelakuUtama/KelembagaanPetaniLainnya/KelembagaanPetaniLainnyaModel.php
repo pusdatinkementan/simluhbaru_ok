@@ -38,7 +38,7 @@ class KelembagaanPetaniLainnyaModel extends Model
         
         $query3   = $db->query("select id_daerah, deskripsi, count(id_poktan) and simluh_jenis_kelompok='P2L' as jum 
                                 from tbldaerah a
-                                left join tb_poktan b on a.id_daerah=b.kode_kec and b.kode_kab='$kode_kab'
+                                left join tb_poktan b on a.id_daerah=b.kode_kec -- and b.kode_kab='$kode_kab'
                                 where id_dati2='$kode_kab'
                                 group by id_daerah, deskripsi
                                 order by deskripsi");

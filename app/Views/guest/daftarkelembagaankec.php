@@ -22,7 +22,7 @@
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Alamat Kantor</td>
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No Telp/Fax<br>Email<br>Website</td>
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">GPS Point</td>
-                    <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Pim[inan <br> No HP</td>
+                    <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Pimpinan <br> No HP</td>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +61,9 @@
                             <p class="text-xs font-weight-bold mb-0"><?= $item['koordinat_lokasi_bpp'] ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['ketua'] ?><br><?= $item['telp_hp']; ?></p>
+                            <p class="text-xs font-weight-bold mb-0"><?= $item['ketua'] ?><br>
+                                <?= $item['telp_hp']; ?>
+                            </p>
                         </td>
                     </tr>
                 <?php

@@ -182,6 +182,27 @@ class PenyuluhTHLAPBDModel extends Model
         return $row;
     }
 
+    public function getStatus()
+    {
+        $query = $this->db->query("select * from tblstatus_penyuluh a where kode ='0' OR kode = '8' OR kode = '2' OR kode = '1'");
+        $row   = $query->getResultArray();
+        return $row;
+    }
+    
+    public function getDetailEditStatus($id)
+    {
+        $query = $this->db->query("select a.id_thl as id, a.noktp, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_update, a.status_kel, a.tgl_status, a.ket_status, c.nama_status
+                              
+                                from tbldasar_thl a
+                                left join tblsatminkal b on a.satminkal=b.kode
+                                left join tblstatus_penyuluh c on a.status_kel=c.kode
+                                
+                               
+        where a.id_thl = '" . $id . "'");
+        $row = $query->getRow();
+        return json_encode($row);
+    } 
+
 
     public function getDetailEdit($id_thl)
     {

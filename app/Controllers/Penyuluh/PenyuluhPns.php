@@ -20,20 +20,55 @@ class PenyuluhPns extends BaseController
 
     public function penyuluhpns()
     {
-        if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
-            $kode = '00';
-        } elseif (session()->get('status_user') == '1') {
-            $kode = session()->get('kodebakor');
-        } elseif (session()->get('status_user') == '200') {
-            $kode = session()->get('kodebapel');
-        } elseif (session()->get('status_user') == '300') {
-            $kode = session()->get('kodebpp');
+        $penyuluh_model = new PenyuluhPNSModel();
+        $prov = $this->request->getPost('filter_prov');
+        $kabu = $this->request->getPost('filter_kab');
+        $keca = $this->request->getPost('filter_kec');
+        $list_prov = [];
+        $list_kab = [];
+        $list_kec = [];
+        $level = "";
+
+        if ($keca!="") {
+            $kode = $keca;
+            $level = "3";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } elseif ($kabu!="") {
+            $kode = $kabu;
+            $level = "2";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } elseif ($prov!="") {
+            $kode = $prov;
+            $level = "1";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } else {
+            if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
+                $kode = '00';
+                $list_prov = $penyuluh_model->getPropvinsi();
+                $level = "0";
+            } elseif (session()->get('status_user') == '1') {
+                $kode = session()->get('kodebakor');
+                $level = "1";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Filter($kode);
+            } elseif (session()->get('status_user') == '200') {
+                $kode = session()->get('kodebapel');
+                $level = "2";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Def($kode);
+                $list_kec = $penyuluh_model->getKec_Filter($kode);
+            } elseif (session()->get('status_user') == '300') {
+                $kode = session()->get('kodebpp');
+                $level = "3";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Def($kode);
+                $list_kec = $penyuluh_model->getKec_Def($kode);
+            }
         }
 
         //  d($kode);
 
-        $penyuluh_model = new PenyuluhPNSModel();
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
         $status = $penyuluh_model->getStatus();
 
         if (session()->get('username') == "") {
@@ -46,7 +81,7 @@ class PenyuluhPns extends BaseController
         // }
 
         $penyuluh_model = new PenyuluhPNSModel();
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
         $status = $penyuluh_model->getStatus();
         $namaprop = $penyuluh_model->getPropvinsi();
         $tingkatpen = $penyuluh_model->getTingkat();
@@ -60,6 +95,7 @@ class PenyuluhPns extends BaseController
 
 
         $data = [
+            'level' => $level,
             'jml_data' => $pns_data['jum'],
             'nama_kabupaten' => $pns_data['nama_kab'],
             'tabel_data' => $pns_data['table_data'],
@@ -67,11 +103,120 @@ class PenyuluhPns extends BaseController
             'tugas' => $tugas,
             'unitkerja' => $unitkerja,
             'namaprop' => $namaprop,
+            'list_prov' => $list_prov,
+            'list_kab' => $list_kab,
+            'list_kec' => $list_kec,
             'tingkatpen' => $tingkatpen,
             'bpp' => $bpp,
+            'getPostProv' => $prov,
+            'getPostKab' => $kabu,
+            'getPostKec' => $keca,
             'title' => 'Penyuluh PNS',
             'name' => 'PNS'
         ];
+        // var_dump($data);die();
+
+        return view('kab/penyuluh/penyuluhpns', $data);
+    }
+
+
+    public function viewfilter()
+    {
+        $penyuluh_model = new PenyuluhPNSModel();
+        $prov = $this->request->getPost('filter_prov');
+        $kabu = $this->request->getPost('filter_kab');
+        $keca = $this->request->getPost('filter_kec');
+        $list_prov = [];
+        $list_kab = [];
+        $list_kec = [];
+        $level = "";
+
+        if ($keca!="") {
+            $kode = $keca;
+            $level = "3";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } elseif ($kabu!="") {
+            $kode = $kabu;
+            $level = "2";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } elseif ($prov!="") {
+            $kode = $prov;
+            $level = "1";
+            $list_prov = $penyuluh_model->getProv_Filter($kode);
+        } else {
+            if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
+                $kode = '00';
+                $list_prov = $penyuluh_model->getPropvinsi();
+                $level = "0";
+            } elseif (session()->get('status_user') == '1') {
+                $kode = session()->get('kodebakor');
+                $level = "1";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Filter($kode);
+            } elseif (session()->get('status_user') == '200') {
+                $kode = session()->get('kodebapel');
+                $level = "2";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Def($kode);
+                $list_kab = $penyuluh_model->getKec_Filter($kode);
+            } elseif (session()->get('status_user') == '300') {
+                $kode = session()->get('kodebpp');
+                $level = "3";
+                $list_prov = $penyuluh_model->getProv_Filter($kode);
+                $list_kab = $penyuluh_model->getKab_Def($kode);
+                $list_kec = $penyuluh_model->getKec_Def($kode);
+            }
+        }
+
+        //  d($kode);
+
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $status = $penyuluh_model->getStatus();
+
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+        // if (session()->get('status_user') == '1') {
+        //     $kode = substr(session()->get('kodebakor'), 0, 2);
+        // } elseif (session()->get('status_user') == '200') {
+        //     $kode = session()->get('kodebapel');
+        // }
+
+        $penyuluh_model = new PenyuluhPNSModel();
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $status = $penyuluh_model->getStatus();
+        $namaprop = $penyuluh_model->getPropvinsi();
+        $tingkatpen = $penyuluh_model->getTingkat();
+        $tugas = $penyuluh_model->getTugas(session()->get('kodebapel'));
+        $bpp = $penyuluh_model->getBpp(session()->get('kodebapel'));
+        $unitkerja = $penyuluh_model->getUnitKerja(session()->get('kodebapel'));
+        // dd($pns_data);
+        // $namaprop = $penyuluh_model->getPropvinsi();
+        // $pendidikan = $penyuluh_model->getPendidikan();
+        // $tugas = $penyuluh_model->getTugas($kode);
+
+
+        $data = [
+            'level' => $level,
+            'jml_data' => $pns_data['jum'],
+            'nama_kabupaten' => $pns_data['nama_kab'],
+            'tabel_data' => $pns_data['table_data'],
+            'status' => $status,
+            'tugas' => $tugas,
+            'unitkerja' => $unitkerja,
+            'namaprop' => $namaprop,
+            'list_prov' => $list_prov,
+            'list_kab' => $list_kab,
+            'list_kec' => $list_kec,
+            'tingkatpen' => $tingkatpen,
+            'bpp' => $bpp,
+            'getPostProv' => $prov,
+            'getPostKab' => $kabu,
+            'getPostKec' => $keca,
+            'title' => 'Penyuluh PNS',
+            'name' => 'PNS'
+        ];
+        // var_dump($data);die();
 
         return view('kab/penyuluh/penyuluhpns', $data);
     }
@@ -80,6 +225,32 @@ class PenyuluhPns extends BaseController
     {
         $pns = $this->model->getDetailEditStatus($id);
         echo $pns;
+    }
+
+    public function getlistkab($provinsi)
+    {
+        $kab = $this->model->getKab_Filter($provinsi);
+        $data = [];
+        foreach($kab as $item){
+            array_push($data, [
+                'id_kab' => $item['id_dati2'],
+                'nama_kab' => $item['nama_dati2']
+            ]);
+        }
+        return json_encode($data);
+    }
+
+    public function getlistkec($kabupaten = '')
+    {
+        $kec = $this->model->getKec_Filter($kabupaten);
+        $data = [];
+        foreach($kec as $item){
+            array_push($data, [
+                'id_kec' => $item['id_daerah'],
+                'nama_kec' => $item['deskripsi']
+            ]);
+        }
+        return json_encode($data);
     }
 
     public function updatestatus($id)
@@ -121,6 +292,30 @@ class PenyuluhPns extends BaseController
         }
     }
 
+    public function showDesaAdv()
+        
+    {
+
+        ini_set("memory_limit", "912M");
+
+        $id_wil_arr = $this->request->getPost('wil_kerja_notin');
+
+        $jum_wil = $this->request->getPost('jum_wil');
+
+        $id_wil = $id_wil_arr;
+
+        $data['q'] = $this->model->getDesaAdv($id_wil,$jum_wil);
+
+        foreach ($data['q'] as $dtDesa) {
+
+            echo '<option value="' . $dtDesa['id_desa'] . '">' . $dtDesa['nm_desa'] . '</option>';
+
+        }
+
+
+        
+    }
+
     // public function getWilKer($tempat_tugas = null)
     // {
     //     $penyuluh_model = new PenyuluhSwadayaModel();
@@ -130,6 +325,8 @@ class PenyuluhPns extends BaseController
     //     ];
     //     return json_encode($data);
     // }
+
+    
 
     public function save()
     {

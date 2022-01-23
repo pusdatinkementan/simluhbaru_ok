@@ -518,7 +518,9 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                            <!-- <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center> -->
                                         </div>
                                     </div>
                                 </form>

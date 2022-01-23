@@ -4,6 +4,7 @@
 
 
 <center><h2> Daftar Kelompok Tani di Desa <?= ucwords(strtolower($nama_desa)) ?> </h2></center>
+<br />
 <div class="card">
     <div class="table-responsive">
         <table id="tblDes" class="table align-items-center mb-0">
@@ -144,7 +145,7 @@
 <button type="button" class="btn btn-round bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
 
 
-                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-info btn-sm">Simpan Data</button>
                                                     </div>
                                                      
     </div>

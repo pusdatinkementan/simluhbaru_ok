@@ -15,7 +15,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 ?>
 <center><h2> Daftar Bantuan Kegiatan yang di peroleh Kelompok <?= ucwords(strtolower($nama_poktan)) ?> </h2></center>
 
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button>
+<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>
 <div class="card">
     <div class="table-responsive">
         <table id="tblBan" class="table align-items-center mb-0">
@@ -35,14 +35,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             foreach ($tabel_data as $row) {
             ?>
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
                     
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['desckeg'] ?>-<?= $row['subitem'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['volume'] ?></p>
                     </td>
                     <td class="align-middle text-center text-sm">
@@ -69,7 +69,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             </tbody>
         </table>
         <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
@@ -80,7 +80,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                         <form role="form text-left" action="<?= base_url('/KelembagaanPelakuUtama/KelompokTani/ListBantu/save'); ?>" method="post" enctype="multipart/form-data">
                                             <? csrf_field(); ?>
                                     <div class="row">
-                                        <div class="col-5" mt-5>
+                                        <div class="col">
                                             <div class="input-group mb-3">
                                             <label>Kegiatan</label>
                                             <div class="input-group mb-3">
@@ -110,7 +110,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 <button type="button" class="btn btn-round bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
 
 
-                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" id="btnSave" class="btn btn-round bg-gradient-info btn-sm">Simpan Data</button>
                                                     </div>
                                                 </div>
                                             </form>

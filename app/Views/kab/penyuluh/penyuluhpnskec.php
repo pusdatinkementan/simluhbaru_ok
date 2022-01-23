@@ -1,15 +1,19 @@
 <?= $this->extend('layout/main_template') ?>
 
 <?= $this->section('content') ?>
+<center>
+    <h3> Data Penyuluh PNS Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?> </h3>
+	<p>Ditemukan <?= $jml_data ?> data</p>
+</center>
+
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-            <b>Kecamatan <?= $nama_kecamatan ?></b>
-            <p>Ditemukan <?= $jml_data ?> data</p>
+           
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table align-items-center mb-0">
+                    <table id="penyuluhkec" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
@@ -33,7 +37,7 @@
                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluhkec/detail/' . $row['nip']) ?>"><?= $row['nip'] ?> /<?= $row['nip_lama'] ?></p>
+                                        <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluhkec/detail/' . $row['nip']) ?>"><?= $row['nip'] ?> </p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['gelar_dpn'] ?> <?= $row['nama'] ?> <?= $row['gelar_blk'] ?></p>
@@ -46,16 +50,13 @@
                                     </td>
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            1. <?= $row['wil_kerja'] ?><br>
-                                            2. <?= $row['wil_kerja2'] ?><br>
-                                            3. <?= $row['wil_kerja3'] ?><br>
-                                            4. <?= $row['wil_kerja4'] ?><br>
-                                            5. <?= $row['wil_kerja5'] ?><br>
-                                            6. <?= $row['wil_kerja6'] ?><br>
-                                            7. <?= $row['wil_kerja7'] ?><br>
-                                            8. <?= $row['wil_kerja8'] ?><br>
-                                            9. <?= $row['wil_kerja9'] ?><br>
-                                            10. <?= $row['wil_kerja10'] ?></p>
+											<?php
+												for ($inc=1;$inc<=10;$inc++){
+													$field = ($inc == 1) ? 'wil_kerja' : 'wil_kerja'.$inc;
+													echo (trim($row[$field]) <> "") ? $inc.'. '.$row[$field].'<br />' : '';
+												}
+											?>
+                                            </p>
                                         </p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
@@ -67,6 +68,7 @@
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['tgl_update'] ?></p>
+										
                                     </td>
                                 </tr>
                             <?php
@@ -90,11 +92,11 @@
                                                     <div class="col">
                                                         <label>No KTP (16 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" aria-label="Password" aria-describedby="password-addon">
+                                                            <input type="number" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" maxlength="16" oninput="NikOnly(this)" aria-label="Password" aria-describedby="password-addon">
                                                         </div>
                                                         <label>NIP (18 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)" aria-label="Email" aria-describedby="email-addon">
+                                                            <input type="number" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)" maxlength="18" oninput="NipOnly(this)" aria-label="Email" aria-describedby="email-addon">
                                                         </div>
                                                         <label>Nama Penyuluh</label>
                                                         <div class="input-group mb-3">
@@ -301,7 +303,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-center">
-                                                        <button type="button" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button>
+                                                        <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn bg-gradient-info btn-sm">Simpan Data</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -319,5 +322,16 @@
     </div>
     <?php echo view('layout/footer'); ?>
 </div>
+ <script>
+        $(document).ready(function() {
 
+            $('#penyuluhkec').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					 'excel'
+				]
+			});
+		});
+</script>
 <?= $this->endSection() ?>
+		

@@ -120,11 +120,11 @@ class Desa extends BaseController
         //return redirect()->to('/daftar_posluhdes?kode_kec=' . $this->request->getPost('kode_kec'));
     }
 
-    public function detailPosluhdes($id)
+    public function detail_posluhdes($idpos)
     {
         $posluhdes_model = new PosluhdesModel;
 
-        $posluh = $posluhdes_model->getPosluhdes($id);
+        $posluh = $posluhdes_model->getPosluhdes($idpos);
         echo json_encode($posluh);
     }
 

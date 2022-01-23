@@ -26,14 +26,14 @@
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                     <a href="<?= base_url('/listpoktan?kode_kec=' . $row['id_daerah']) ?>">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
                     </td></a>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum'] ?></p>
                   
                     
@@ -52,7 +52,7 @@
                     <th class="align-middle text-center text-sm">
                         <p class="text-xs font-weight-bold mb-0">JUMLAH</p>
                     </th>
-                    <th class="align-middle text-center text-sm">
+                    <th class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $jum_poktan ?></p>
                     </th>
                 

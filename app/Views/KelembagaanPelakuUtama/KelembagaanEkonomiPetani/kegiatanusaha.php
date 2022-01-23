@@ -340,7 +340,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" id="btnSaveBun" class="btn bg-gradient-primary">Simpan Data</button>
+                                                <button type="button" id="btnSaveBun" class="btn bg-gradient-info">Simpan Data</button>
                                             </div>
                                         </div>
                                     </form>
@@ -387,7 +387,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" id="btnSaveHor" class="btn bg-gradient-primary">Simpan Data</button>
+                                                <button type="button" id="btnSaveHor" class="btn bg-gradient-info">Simpan Data</button>
                                             </div>
                                         </div>
                                     </form>
@@ -435,7 +435,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" id="btnSaveNak" class="btn bg-gradient-primary">Simpan Data</button>
+                                                <button type="button" id="btnSaveNak" class="btn bg-gradient-info">Simpan Data</button>
                                             </div>
                                         </div>
                                     </form>
@@ -483,7 +483,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="btnSaveOlah" class="btn bg-gradient-primary">Simpan Data</button>
+                                        <button type="button" id="btnSaveOlah" class="btn bg-gradient-info">Simpan Data</button>
                                     </div>
                                 </div>
                             </form>
@@ -530,7 +530,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="btnSaveTp" class="btn bg-gradient-primary">Simpan Data</button>
+                                        <button type="button" id="btnSaveTp" class="btn bg-gradient-info">Simpan Data</button>
                                     </div>
                                 </div>
                             </form>

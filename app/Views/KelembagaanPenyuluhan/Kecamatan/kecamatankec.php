@@ -2,13 +2,21 @@
 
 <?= $this->section('content') ?>
 
+
+
 <center>
-    <h5> Daftar Kelembagaan Penyuluhan Pertanian Tingkat Kecamatan (BP3K) <br>Kecamatan <?= ucwords(strtolower($nama_kec)) ?> </h5>
+    <h3>Daftar Kelembagaan Penyuluhan Pertanian Tingkat Kecamatan (BPP)  <br>Kecamatan <?= ucwords(strtolower($nama_kec)) ?></h3>
+	 <p>Ditemukan <?= $jum_data ?> data </p>
 </center>
-<a href="#"><button type="button" class="btn bg-gradient-primary">+ Tambah Data</button></a>
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+<!-- <a href="#"><button type="button" class="btn bg-gradient-success">+ Tambah Data</button></a> -->
 <div class="card">
     <div class="table-responsive">
-        <table class="table align-items-center mb-0">
+        <table id="tabel" class="table align-items-center mb-0">
             <thead>
                 <tr>
                     <td width="5" class="text-uppercase text-secondary text-xxs font-weight-bolder">No</td>
@@ -106,7 +114,8 @@
                                                 <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button>
+                                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn bg-gradient-info">Simpan Data</button>
                                             </div>
                                         </form>
                                     </div>
@@ -122,5 +131,19 @@
 </table>
 </div>
 </div>
+</div>
+</div>
+</div>
+ <script>
+        $(document).ready(function() {
+
+            $('#tabel').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					 'excel'
+				]
+			});
+		});
+</script>
 
 <?= $this->endSection() ?>
