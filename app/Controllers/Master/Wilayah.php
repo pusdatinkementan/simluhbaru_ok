@@ -44,6 +44,13 @@ class Wilayah extends BaseController
         }
     }
 
+    public function showKecJson($id)
+    {
+        $query = $this->model->getKec($id);
+        $row = json_encode($query);
+        return $row;
+    }
+
     public function showDesa($id)
     {
 
