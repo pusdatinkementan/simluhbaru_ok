@@ -5,7 +5,7 @@ namespace App\Controllers\master;
 use App\Controllers\BaseController;
 use App\Models\WilayahModel;
 
-class Kab extends BaseController
+class Desa extends BaseController
 {
     protected $model;
 
@@ -20,52 +20,54 @@ class Kab extends BaseController
             return redirect()->to('login');
         }
         //$penyuluhModel = new MasterModel();
-        $prov = $this->model->getKabByIdProv($id);
+        $kec = $this->model->getDesaByIdKec($id);
 
-        //dd($jabatan);
+        //  dd($kec);
 
         $data = [
-            'title' => 'Kabupaten',
-            'dtkab' => $prov['kab'],
-            'nmprov' => $prov['nmprov']
+            'title' => 'Desa',
+            'dtdesa' => $kec
         ];
 
         // dd($data);
 
-        return view('master/kab', $data);
+        return view('master/desa', $data);
     }
 
     public function save()
     {
         try {
-            $this->model->saveKab([
+            $data = [
                 'id_prop' => $this->request->getPost('idprov'),
                 'id_dati2' => $this->request->getPost('idkab'),
-                'nama_dati2' => $this->request->getPost('nmkab'),
-            ]);
+                'id_daerah' => $this->request->getPost('idkec'),
+                'id_desa' => $this->request->getPost('iddesa'),
+                'nm_desa' => $this->request->getPost('nmdesa')
+            ];
+
+            $this->model->saveDesa($data);
             return 'success';
         } catch (\Exception $e) {
+            // print_r($e);
             return 'error';
         }
     }
 
     public function edit($id)
     {
-        $res = $this->model->getKab($id);
-        $json = json_encode($res);
-        //dd($json);
-        echo $json;
+        $res = $this->model->getDesaById($id);
+        echo $res;
     }
 
     public function update($id)
     {
         try {
             $data = [
-                'id_dati2' => $this->request->getPost('idkab'),
-                'nama_dati2' => $this->request->getPost('nmkab')
+                'id_desa' => $this->request->getPost('iddesa'),
+                'nm_desa' => $this->request->getPost('nmdesa')
             ];
 
-            $this->model->updateKab($id, $data);
+            $this->model->updateDesa($id, $data);
             return 'success';
         } catch (\Exception $e) {
             return 'error';
@@ -75,7 +77,7 @@ class Kab extends BaseController
     public function delete($id)
     {
         try {
-            $this->model->deleteKab($id);
+            $this->model->deleteDesa($id);
             return 'success';
         } catch (\Exception $e) {
             return 'error';

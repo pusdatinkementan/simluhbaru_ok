@@ -105,6 +105,65 @@ class WilayahModel extends Model
         $builder->insert($data);
     }
 
+    public function getKecById($id)
+    {
+        $query = $this->db->query("SELECT * FROM tbldaerah WHERE id_daerah = '" . $id . "'");
+        $row = $query->getRowArray();
+        return json_encode($row);
+    }
+
+    public function updateKec($id, $data)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbldaerah');
+        $builder->where('id', $id)->update($data);
+    }
+
+    public function deleteKec($id)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbldaerah');
+        $builder->where('id_daerah', $id)->delete();
+    }
+
+    /* Desa */
+
+    public function getDesaByIdKec($id)
+    {
+
+        $query = $this->db->query("SELECT tblpropinsi.nama_prop,tbldati2.nama_dati2,tbldaerah.deskripsi, tbldesa.* FROM `tbldesa` left join tblpropinsi on tbldesa.id_prop = tblpropinsi.id_prop left JOIN tbldaerah on tbldesa.id_daerah = tbldaerah.id_daerah LEFT join tbldati2 on tbldesa.id_dati2 = tbldati2.id_dati2 where tbldesa.id_daerah = '" . $id . "'");
+        $row = $query->getResultArray();
+        // dd($row);
+        return $row;
+    }
+
+    public function saveDesa($data)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbldesa');
+        $builder->insert($data);
+    }
+
+    public function getDesaById($id)
+    {
+        $query = $this->db->query("SELECT * FROM tbldesa WHERE id = '" . $id . "'");
+        $row = $query->getRowArray();
+        return json_encode($row);
+    }
+
+    public function updateDesa($id, $data)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbldesa');
+        $builder->where('id', $id)->update($data);
+    }
+
+    public function deleteDesa($id)
+    {
+        $db = db_connect();
+        $builder = $db->table('tbldesa');
+        $builder->where('id', $id)->delete();
+    }
 
     public function getKab($id)
     {

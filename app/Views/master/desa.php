@@ -11,29 +11,28 @@
 
         <div class="row mt-3">
             <div class="col-lg-2">
-                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalKec">Tambah</button>
+                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalDesa">Tambah</button>
             </div>
-            <table id="tblKec" class="table">
+            <table id="tblDesa" class="table">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Kode</th>
-                        <th scope="col">Nama Kecamatan</th>
+                        <th scope="col">Nama Desa</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 1;
-                    foreach ($dtkec as $row) : ?>
+                    foreach ($dtdesa as $row) : ?>
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
-                            <td><?= $row['id_daerah']; ?></td>
-                            <td><a href="<?= base_url(); ?>/master/desa/index/<?= $row['id_daerah']; ?>"><?= $row['deskripsi']; ?></a></td>
+                            <td><?= $row['id_desa']; ?></td>
+                            <td><?= $row['nm_desa']; ?></td>
                             <td>
-                                <button type="button" id="btnEditKec" data-id="<?= $row['id_daerah'] ?>" class=" btn btn-warning btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm" id="btnHapusKec" data-id="<?= $row['id_daerah'] ?>" type="button">Hapus</button>
-
+                                <button type="button" id="btnEditDesa" data-id="<?= $row['id'] ?>" class=" btn btn-warning btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm" id="btnHapusDesa" data-id="<?= $row['id'] ?>" type="button">Hapus</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -47,26 +46,28 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="modalKec" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
+<div class="modal fade" id="modalDesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Kecamatan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Desa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="<?= base_url('master/kab/save'); ?>">
+                <form method="POST" action="<?= base_url('master/desa/save'); ?>">
                     <div class="form-group">
                         <label for="idprov" class="col-form-label">Kode Provinsi:</label>
-                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtkec[0]['id_prop'] ?>" disabled>
+                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtdesa[0]['id_prop'] ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kabupaten:</label>
-                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtkec[0]['id_dati2'] ?>" disabled>
+                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtdesa[0]['id_dati2'] ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kecamatan:</label>
-                        <input type="text" class="form-control" name="idkec" id="idkec">
-                        <label for="recipient-name" class="col-form-label">Nama Kecamatan:</label>
-                        <input type="text" class="form-control" name="nmkec" id="nmkec">
+                        <input type="text" class="form-control" name="idkec" id="idkec" value="<?= $dtdesa[0]['id_daerah'] ?>" disabled>
+                        <label for="iddesa" class="col-form-label">Kode Desa:</label>
+                        <input type="text" class="form-control" name="iddesa" id="iddesa">
+                        <label for="recipient-name" class="col-form-label">Nama Desa:</label>
+                        <input type="text" class="form-control" name="nmdesa" id="nmdesa">
 
                     </div>
 
@@ -87,23 +88,25 @@
 <script>
     $(document).ready(function() {
 
-        $('#tblKec').DataTable();
-        // $(this).find('modalKec')[0].reset();
+        $('#tblDesa').DataTable();
+        // $(this).find('modalDesa')[0].reset();
         $(document).delegate('#btnSave', 'click', function() {
 
-            var nmkec = $('#nmkec').val();
+            var nmdesa = $('#nmdesa').val();
             var idprov = $('#idprov').val();
             var idkab = $('#idkab').val();
             var idkec = $('#idkec').val();
+            var iddesa = $('#iddesa').val();
             // debugger;
             $.ajax({
-                url: '<?= base_url() ?>/master/kec/saveKecamatan/',
+                url: '<?= base_url() ?>/master/desa/save/',
                 type: 'POST',
                 data: {
-                    'nmkec': nmkec,
+                    'nmdesa': nmdesa,
                     'idprov': idprov,
                     'idkab': idkab,
-                    'idkec': idkec
+                    'idkec': idkec,
+                    'iddesa': iddesa
                 },
                 success: function(result) {
                     if (result == 'success') {
@@ -148,9 +151,9 @@
 
         });
 
-        $(document).delegate('#btnEditKec', 'click', function() {
+        $(document).delegate('#btnEditDesa', 'click', function() {
             $.ajax({
-                url: '<?= base_url() ?>/master/kec/edit/' + $(this).data('id'),
+                url: '<?= base_url() ?>/master/desa/edit/' + $(this).data('id'),
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(result) {
@@ -159,29 +162,32 @@
                     $('#idprov').val(result.id_prop);
                     $('#idkab').val(result.id_dati2);
                     $('#idkec').val(result.id_daerah);
-                    $('#nmkec').val(result.deskripsi);
+                    $('#iddesa').val(result.id_desa);
+                    $('#nmdesa').val(result.nm_desa);
 
-                    $('#modalKec').modal('show');
+                    $('#modalDesa').modal('show');
 
                     $("#btnSave").attr("id", "btnDoEdit");
                     $("#idprov").attr("disabled", "disabled");
-                    $("#exampleModalLabel").text("Edit Kecamatan");
+                    $("#exampleModalLabel").text("Edit Desa");
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
                         var id = result.id;
                         var idprov = $('#idprov').val();
                         var idkab = $('#idkab').val();
                         var idkec = $('#idkec').val();
-                        var nmkec = $('#nmkec').val();
+                        var iddesa = $('#iddesa').val();
+                        var nmdesa = $('#nmdesa').val();
 
                         let formData = new FormData();
                         formData.append('idprov', idprov);
                         formData.append('idkab', idkab);
                         formData.append('idkec', idkec);
-                        formData.append('nmkec', nmkec);
+                        formData.append('iddesa', iddesa);
+                        formData.append('nmdesa', nmdesa);
                         // debugger;
                         $.ajax({
-                            url: '<?= base_url() ?>/master/kec/update/' + id,
+                            url: '<?= base_url() ?>/master/desa/update/' + id,
                             type: "POST",
                             data: formData,
                             cache: false,
@@ -189,7 +195,7 @@
                             contentType: false,
                             success: function(result) {
                                 if (result == 'success') {
-                                    $('#modalKec').modal('hide');
+                                    $('#modalDesa').modal('hide');
                                     Swal.fire({
                                         title: 'Sukses',
                                         text: "Sukses edit data",
@@ -239,7 +245,7 @@
 
         });
 
-        $(document).delegate('#btnHapusKec', 'click', function() {
+        $(document).delegate('#btnHapusDesa', 'click', function() {
 
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -253,7 +259,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '<?= base_url() ?>/master/kec/delete/' + $(this).data('id'),
+                        url: '<?= base_url() ?>/master/desa/delete/' + $(this).data('id'),
                         type: 'GET',
                         success: function(result) {
                             if (result == 'success') {
