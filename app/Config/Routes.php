@@ -36,7 +36,7 @@ $routes->get('/login', 'Auth/Login::index');
 $routes->get('/logout', 'Auth/Login::logout');
 $routes->get('/dashboard', 'Page::dashboard');
 $routes->get('/lembaga', 'Profil/Lembaga::index');
-$routes->get('/index', 'Manage/Rolemenu::index');
+// $routes->get('/index', 'Manage/Rolemenu::index');
 
 $routes->get('/daftarkelembagaan', 'Profil/Guest::daftarkelembagaan');
 $routes->get('/dl_kab', 'Profil/Guest::daftarkelembagaankab');

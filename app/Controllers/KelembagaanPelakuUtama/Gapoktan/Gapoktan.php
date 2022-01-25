@@ -9,7 +9,7 @@ use App\Models\KodeWilayah\KodeWilModel2;
 
 class Gapoktan extends BaseController
 {
-    
+
     protected $model;
     public function __construct()
     {
@@ -32,8 +32,8 @@ class Gapoktan extends BaseController
         $gapoktan_model = new GapoktanModel;
         $gapoktan_data = $gapoktan_model->getGapoktanTotal($this->session->get('kodebapel'));
         $kode_data = $kode_model->getKodeWil2(session()->get('kodebapel'));
-        
-       
+
+
 
         $data = [
 
@@ -43,14 +43,14 @@ class Gapoktan extends BaseController
             'title' => 'Gapoktan',
             'name' => 'Gapoktan',
             'kode_prop' => $kode_data['kode_prop'],
-           
+
         ];
 
         return view('KelembagaanPelakuUtama/Gapoktan/gapoktan', $data);
     }
     public function listgapoktan()
     {
-        
+
         $get_param = $this->request->getGet();
         $kode_kec = $get_param['kode_kec'];
         $listgapoktan_model = new ListGapoktanModel();
@@ -74,7 +74,7 @@ class Gapoktan extends BaseController
             'usahatani' => $usaha_tani,
             'usahaolah' => $usaha_olah
 
-          
+
 
 
         ];
@@ -83,56 +83,57 @@ class Gapoktan extends BaseController
     }
     public function save()
     {
-        try{
+        try {
 
-        $res = $this->model->save([
-            'kode_kec' => $this->request->getPost('kode_kec'),
-            'kode_prop' => $this->request->getPost('kode_prop'),
-            'kode_kab' => $this->request->getPost('kode_kab'),
-            'kode_desa' => $this->request->getPost('kode_desa'),
-            'ketua_gapoktan' => $this->request->getPost('ketua_gapoktan'),
-            'nama_gapoktan' => $this->request->getPost('nama_gapoktan'),
-            'alamat' => $this->request->getPost('alamat'),
-            'simluh_sekretaris' => $this->request->getPost('simluh_sekretaris'),
-            'simluh_bendahara' => $this->request->getPost('simluh_bendahara'),
-            'simluh_tahun_bentuk' => $this->request->getPost('simluh_tahun_bentuk'),
-            'simluh_sk_pengukuhan' => $this->request->getPost('simluh_sk_pengukuhan'), 
-            'simluh_usaha_tani' => $this->request->getPost('simluh_usaha_tani'),
-            'simluh_usaha_olah' => $this->request->getPost('simluh_usaha_olah'),
-            
-            'simluh_usaha_saprodi' => $this->request->getPost('simluh_usaha_saprodi'),
-            'simluh_usaha_pemasaran' => $this->request->getPost('simluh_usaha_pemasaran'),
-            'simluh_usaha_simpan_pinjam' => $this->request->getPost('simluh_usaha_simpan_pinjam'),
-            'simluh_usaha_jasa_lain' => $this->request->getPost('simluh_usaha_jasa_lain'),
-            'simluh_usaha_jasa_lain_desc' => $this->request->getPost('simluh_usaha_jasa_lain_desc'),
+            $res = $this->model->save([
+                'kode_kec' => $this->request->getPost('kode_kec'),
+                'kode_prop' => $this->request->getPost('kode_prop'),
+                'kode_kab' => $this->request->getPost('kode_kab'),
+                'kode_desa' => $this->request->getPost('kode_desa'),
+                'ketua_gapoktan' => $this->request->getPost('ketua_gapoktan'),
+                'nama_gapoktan' => $this->request->getPost('nama_gapoktan'),
+                'alamat' => $this->request->getPost('alamat'),
+                'simluh_sekretaris' => $this->request->getPost('simluh_sekretaris'),
+                'simluh_bendahara' => $this->request->getPost('simluh_bendahara'),
+                'simluh_tahun_bentuk' => $this->request->getPost('simluh_tahun_bentuk'),
+                'simluh_sk_pengukuhan' => $this->request->getPost('simluh_sk_pengukuhan'),
+                'no_sk_pengukuhan' => $this->request->getPost('noskpengukuhan'),
+                'simluh_usaha_tani' => $this->request->getPost('simluh_usaha_tani'),
+                'simluh_usaha_olah' => $this->request->getPost('simluh_usaha_olah'),
 
-            'simluh_alsin_traktor' => $this->request->getPost('simluh_alsin_traktor'),
-            'simluh_alsin_hand_tractor' => $this->request->getPost('simluh_alsin_hand_tractor'),
-            'simluh_alsin_pompa_air' => $this->request->getPost('simluh_alsin_pompa_air'),
-            'simluh_alsin_penggiling_padi' => $this->request->getPost('simluh_alsin_penggiling_padi'),
-            'simluh_alsin_pengering' => $this->request->getPost('simluh_alsin_pengering'),
-            'simluh_alsin_chooper' => $this->request->getPost('simluh_alsin_chooper'),
-            'simluh_alsin_lain_desc' => $this->request->getPost('simluh_alsin_lain_desc'),
-            'simluh_alsin_lain' => $this->request->getPost('simluh_alsin_lain'),
+                'simluh_usaha_saprodi' => $this->request->getPost('simluh_usaha_saprodi'),
+                'simluh_usaha_pemasaran' => $this->request->getPost('simluh_usaha_pemasaran'),
+                'simluh_usaha_simpan_pinjam' => $this->request->getPost('simluh_usaha_simpan_pinjam'),
+                'simluh_usaha_jasa_lain' => $this->request->getPost('simluh_usaha_jasa_lain'),
+                'simluh_usaha_jasa_lain_desc' => $this->request->getPost('simluh_usaha_jasa_lain_desc'),
 
-            
-        ]);
+                'simluh_alsin_traktor' => $this->request->getPost('simluh_alsin_traktor'),
+                'simluh_alsin_hand_tractor' => $this->request->getPost('simluh_alsin_hand_tractor'),
+                'simluh_alsin_pompa_air' => $this->request->getPost('simluh_alsin_pompa_air'),
+                'simluh_alsin_penggiling_padi' => $this->request->getPost('simluh_alsin_penggiling_padi'),
+                'simluh_alsin_pengering' => $this->request->getPost('simluh_alsin_pengering'),
+                'simluh_alsin_chooper' => $this->request->getPost('simluh_alsin_chooper'),
+                'simluh_alsin_lain_desc' => $this->request->getPost('simluh_alsin_lain_desc'),
+                'simluh_alsin_lain' => $this->request->getPost('simluh_alsin_lain'),
 
-        if($res == false){
+
+            ]);
+
+            if ($res == false) {
                 $data = [
                     "value" => false,
                     "message" => 'data tidak lengkap'
                 ];
-            }else{
+            } else {
                 $data = [
                     "value" => true
                 ];
             }
             return json_encode($data);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 "value" => false,
-                "message" => $e->getMessage() 
+                "message" => $e->getMessage()
             ];
             return json_encode($data);
         }
@@ -145,7 +146,7 @@ class Gapoktan extends BaseController
     }
     public function update($id_gap)
     {
-        
+
         $kode_prop = $this->request->getPost('kode_prop');
         $kode_kec = $this->request->getPost('kode_kec');
         $kode_kab = $this->request->getPost('kode_kab');
@@ -156,7 +157,7 @@ class Gapoktan extends BaseController
         $simluh_tahun_bentuk = $this->request->getPost('simluh_tahun_bentuk');
         $simluh_bendahara = $this->request->getPost('simluh_bendahara');
         $simluh_sekretaris = $this->request->getPost('simluh_sekretaris');
-        $simluh_sk_pengukuhan = $this->request->getPost('simluh_sk_pengukuhan');  
+        $simluh_sk_pengukuhan = $this->request->getPost('simluh_sk_pengukuhan');
         $simluh_usaha_tani = $this->request->getPost('simluh_usaha_tani');
         $simluh_usaha_olah = $this->request->getPost('simluh_usaha_olah');
 
@@ -165,7 +166,7 @@ class Gapoktan extends BaseController
         $simluh_usaha_simpan_pinjam = $this->request->getPost('simluh_usaha_simpan_pinjam');
         $simluh_usaha_jasa_lain = $this->request->getPost('simluh_usaha_jasa_lain');
         $simluh_usaha_jasa_lain_desc = $this->request->getPost('simluh_usaha_jasa_lain_desc');
-        
+
         $simluh_alsin_traktor = $this->request->getPost('simluh_alsin_traktor');
         $simluh_alsin_hand_tractor = $this->request->getPost('simluh_alsin_hand_tractor');
         $simluh_alsin_pompa_air = $this->request->getPost('simluh_alsin_pompa_air');
@@ -210,6 +211,6 @@ class Gapoktan extends BaseController
     public function delete($id_gap)
     {
         $this->model->delete($id_gap);
-       // return redirect()->to('/listgapoktan');
+        // return redirect()->to('/listgapoktan');
     }
 }

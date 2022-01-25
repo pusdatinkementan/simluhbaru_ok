@@ -5,7 +5,9 @@
 <?php $sessnama = session()->get('kodebapel'); ?>
 <?php $sessnama = session()->get('kodebpp'); ?>
 
-<center><h2> Daftar Gapoktan di Kab <?= ucwords(strtolower($nama_kabupaten)) ?> </h2></center>
+<center>
+    <h2> Daftar Gapoktan di Kab <?= ucwords(strtolower($nama_kabupaten)) ?> </h2>
+</center>
 <br />
 <div class="card">
     <div class="table-responsive">
@@ -19,27 +21,27 @@
                 </tr>
             </thead>
             <tbody>
-            <?php
-            $i = 1;
-            foreach ($tabel_data as $row) {
-            ?>
-            
-                <tr>
-                    <td class="align-middle rupiah text-sm">
-                        <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
-                    </td>
-                    <td class="align-middle text-sm">
-                    <a href="<?= base_url('/listgapoktan?kode_kec=' . $row['id_daerah']) ?>">
-                        <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
-                    </td></a>
-                    <td class="align-middle rupiah text-sm">
-                        <p class="text-xs font-weight-bold mb-0"><?= $row['jum'] ?></p>
-                  
-                       
-                </tr>
-            <?php
-            }
-            ?>
+                <?php
+                $i = 1;
+                foreach ($tabel_data as $row) {
+                ?>
+
+                    <tr>
+                        <td class="align-middle rupiah text-sm">
+                            <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
+                        </td>
+                        <td class="align-middle text-sm">
+                            <a href="<?= base_url('/listgapoktan?kode_kec=' . $row['id_daerah']) ?>">
+                                <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
+                        </td></a>
+                        <td class="align-middle rupiah text-sm">
+                            <p class="text-xs font-weight-bold mb-0"><?= $row['jum'] ?></p>
+
+
+                    </tr>
+                <?php
+                }
+                ?>
 
             </tbody>
             <tfoot>
@@ -53,12 +55,12 @@
                     <th class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $jum_gapoktan ?></p>
                     </th>
-                
+
 
                 </tr>
             </tfoot>
         </table>
-               
+
     </div>
 </div>
 </tbody>
