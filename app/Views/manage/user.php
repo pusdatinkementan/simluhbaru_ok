@@ -232,6 +232,58 @@
 
         //Update
 
+        function setkodekab(kodekab) {
+
+            var kdkabsub = kodekab.substring(0, 2);
+            $.ajax({
+                url: "<?= base_url() ?>/master/kab/edit/" + kdkabsub + "",
+                type: "GET",
+                dataType: "JSON",
+                success: function(result) {
+                    // console.log(result);
+                    var dbSelect = $('#kab').html();
+                    dbSelect = '';
+                    dbSelect += '<option value=""> Pilih </option>';
+                    for (var x = 0; x < result.length; x++) {
+                        const kdkab = result[x].id_dati2;
+                        //kdes2 = kodeeselon2.substring(0, 4) + '000000';
+                        if (kdkab == kodekab) {
+                            dbSelect += '<option value="' + result[x].id_dati2 + '" selected=selected>' + result[x].nama_dati2 + '</option>';
+                        } else {
+                            dbSelect += '<option value="' + result[x].id_dati2 + '">' + result[x].nama_dati2 + '</option>';
+                        }
+                    }
+                    $("#kab").html(dbSelect);
+                },
+            });
+        }
+
+        function setkodekec(kodekec) {
+
+            var kdkecsub = kodekec.substring(0, 4);
+            $.ajax({
+                url: "<?= base_url() ?>/master/wilayah/showKecJson/" + kdkecsub + "",
+                type: "GET",
+                dataType: "JSON",
+                success: function(result) {
+                    // console.log(result);
+                    var dbSelect = $('#kec').html();
+                    dbSelect = '';
+                    dbSelect += '<option value=""> Pilih </option>';
+                    for (var x = 0; x < result.length; x++) {
+                        const kdkec = result[x].id_daerah;
+                        //kdes2 = kodeeselon2.substring(0, 4) + '000000';
+                        if (kdkec == kodekec) {
+                            dbSelect += '<option value="' + result[x].id_daerah + '" selected=selected>' + result[x].deskripsi + '</option>';
+                        } else {
+                            dbSelect += '<option value="' + result[x].id_daerah + '">' + result[x].deskripsi + '</option>';
+                        }
+                    }
+                    $("#kec").html(dbSelect);
+                },
+            });
+        }
+
         $(document).delegate('#btnEditUser', 'click', function() {
             $.ajax({
                 url: '<?= base_url() ?>/manage/user/edit/' + $(this).data('id'),
@@ -249,13 +301,13 @@
                     $('#phone').val(result.phone);
                     $('#mobile').val(result.mobile);
                     $('#status').val(result.status);
-                    // $('#is_active').val();
                     $('#created_at').val(result.joiningdate);
-
                     $('#newUserModal').modal('show');
-
                     $("#btnSave").attr("id", "btnDoEdit");
                     $("#newSubMenuModalLabel").text("Edit User");
+
+                    setkodekab(result.kodeBapel);
+                    setkodekec(result.kodeBpp);
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
                         var iduser = $('#iduser').val();
