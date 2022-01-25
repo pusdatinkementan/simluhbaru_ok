@@ -36,7 +36,7 @@ $routes->get('/login', 'Auth/Login::index');
 $routes->get('/logout', 'Auth/Login::logout');
 $routes->get('/dashboard', 'Page::dashboard');
 $routes->get('/lembaga', 'Profil/Lembaga::index');
-$routes->get('/index', 'Manage/Rolemenu::index');
+// $routes->get('/index', 'Manage/Rolemenu::index');
 
 $routes->get('/daftarkelembagaan', 'Profil/Guest::daftarkelembagaan');
 $routes->get('/dl_kab', 'Profil/Guest::daftarkelembagaankab');
@@ -69,7 +69,6 @@ $routes->get('/ThlApbnk35', 'Profil/Guest::thlapbnk35');
 $routes->get('/ThlApbd', 'Profil/Guest::thlapbd');
 $routes->get('/Swadaya', 'Profil/Guest::swadaya');
 $routes->get('/dk_kab', 'Profil/Guest::daftarketenagaankec');
-$routes->get('/dk_kec', 'Profil/Guest::daftarpenyuluh');
 $routes->get('/dk_kec', 'Profil/Guest::daftarpenyuluh');
 $routes->get('/rk_umur', 'Profil/Guest::rekaptngumur');
 $routes->get('/rekaptngumur_pst', 'Profil/Guest::rktenagapusat');
@@ -147,6 +146,7 @@ $routes->get('/rekap_jumlahanggotapoktandesalist', 'profil/Guest::rekapjumlahang
 
 
 $routes->get('/penyuluhpns', 'Penyuluh/PenyuluhPns::penyuluhpns');
+$routes->post('/penyuluhpns/showdesaadv', 'Penyuluh/PenyuluhPns::showDesaAdv');
 $routes->get('/penyuluhcpns', 'Penyuluh/PenyuluhCpns::penyuluhcpns');
 $routes->get('/penyuluhthlapbn', 'Penyuluh/PenyuluhTHLAPBN::penyuluhthlAPBN');
 $routes->get('/penyuluhthlapbd', 'Penyuluh/PenyuluhTHLAPBD::penyuluhthlAPBD');

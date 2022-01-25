@@ -2,11 +2,15 @@
 
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
+<center>
+    <h3>Daftar Penyuluh Swasta Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?></h3>
+	 <p>Ditemukan <?= $jml_data ?> data </p>
+</center>
 
-
-<br>
-<b>Daftar Penyuluh Swasta Kec <?= ucwords(strtolower($nama_kecamatan)) ?></b>
-<p>Ditemukan <?= $jml_data ?> data</p>
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
 <div class="card">
     <div class="table-responsive">
         <table id="tblswasta" class="table align-items-center mb-0">
@@ -79,7 +83,7 @@
 
                                             <label>No. KTP</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP">
+                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP" maxlength="16" oninput="NikOnly(this)">
                                             </div>
                                             <label>Nama Penyuluh</label> <span id="error_nama" class="text-danger ms-3"></span>
                                             <div class="input-group mb-3">
@@ -179,7 +183,8 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center>
+                                            <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="btnSave" class="btn bg-gradient-info ajax-save">Simpan Data</button>
                                         </div>
                                     </div>
                                 </form>
@@ -191,6 +196,9 @@
             </div>
         </div>
 
+  </div>
+            </div>
+        </div>
 
 
     </div>
@@ -203,8 +211,12 @@
 <script>
     $(document).ready(function() {
 
-        $('#tblswasta').DataTable();
-
+		$('#tblswasta').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					 'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             tgllahir = $('#tgllahir').val();

@@ -79,6 +79,26 @@ a.nama_perusahaan, a.jabatan_di_perush, a.tgl_update, a.alamat_perush, a.telp_pe
         return $row;
     }
 
+    public function getDetailEditStatus($id)
+    {
+        $query = $this->db->query("select a.id_swa as id, a.noktp, a.nama, a.tgl_update, a.status_kel, a.tgl_status, a.ket_status, c.nama_status
+                              
+                                from tbldasar_swasta a
+                                left join tblsatminkal b on a.satminkal=b.kode
+                                left join tblstatus_penyuluh c on a.status_kel=c.kode
+                               
+        where a.id_swa = '" . $id . "'");
+        $row = $query->getRow();
+        return json_encode($row);
+    }
+
+    public function getStatus()
+    {
+        $query = $this->db->query("select * from tblstatus_penyuluh a where kode ='0' OR kode = '8' OR kode = '2' OR kode = '1'");
+        $row   = $query->getResultArray();
+        return $row;
+    }
+
     public function getDetailEdit($id_swa)
     {
         $query = $this->db->query("select *, a.id_swa, a.jenis_penyuluh, a.noktp, a.nama, a.tgl_lahir, a.bln_lahir, a.thn_lahir, a.tempat_lahir, a.jenis_kelamin,

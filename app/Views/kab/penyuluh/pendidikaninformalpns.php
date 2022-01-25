@@ -51,7 +51,7 @@
                                                 <i class="fas fa-edit"></i> Ubah
                                             </button>
                                         </a>
-                                        <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id="<?= $row['id']; ?>" type="submit" onclick="return confirm('Are you sure ?')">
+                                        <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id="<?= $row['id']; ?>" type="submit" >
                                             <i class="fas fa-trash"></i> Hapus
                                         </button>
                                         </a>
@@ -65,7 +65,7 @@
 
                     <!-- modal -->
                     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
@@ -112,7 +112,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center> -->
                                                     </div>
                                                 </div>
                                             </form>

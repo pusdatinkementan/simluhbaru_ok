@@ -27,13 +27,14 @@ class PenyuluhSwasta extends BaseController
         $swasta_data = $penyuluh_model->getPenyuluhSwastaTotal(session()->get('kodebapel'));
         $namaprop = $penyuluh_model->getPropvinsi();
         $tugas = $penyuluh_model->getTugas(session()->get('kodebapel'));
-
+        $status = $penyuluh_model->getStatus();
         $data = [
             'jml_data' => $swasta_data['jum'],
             'nama_kabupaten' => $swasta_data['nama_kab'],
             'tabel_data' => $swasta_data['table_data'],
             'namaprop' => $namaprop,
             'tugas' => $tugas,
+            'status' => $status,
             'title' => 'Penyuluh Swasta',
             'name' => 'Swasta'
         ];
@@ -101,6 +102,36 @@ class PenyuluhSwasta extends BaseController
     {
         $swasta = $this->model->getDetailEdit($id_swa);
         echo $swasta;
+    }
+
+    public function editstatus($id)
+    {
+        $thl = $this->model->getDetailEditStatus($id);
+        echo $thl;
+    }
+
+    public function updatestatus($id)
+    {
+        //$id = $this->request->getVar('idjab');
+        $nama = $this->request->getPost('nama');
+        //$gelar_blk = $this->request->getPost('gelar_blk');
+        //$gelar_dpn = $this->request->getPost('gelar_dpn');
+        $status = $this->request->getPost('status');
+        $tgl_status = $this->request->getPost('tgl_status');
+        $ket_status = $this->request->getPost('ket_status');
+
+        $this->model->save([
+            'id' => $id,
+            'nama' => $nama,
+            //'gelar_dpn' => $gelar_dpn,
+            //'gelar_blk' => $gelar_blk,
+            'status' => $status,
+            'tgl_status' => $tgl_status,
+            'ket_status' => $ket_status
+        ]);
+
+        //session()->setFlashdata('pesan', 'Data berhasil diubah');
+
     }
 
     public function update($id_swa)

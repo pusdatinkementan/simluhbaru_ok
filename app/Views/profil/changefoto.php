@@ -28,6 +28,8 @@
                     <label class="input-group-text" for="foto">Pilih Foto</label>
                 </div>
 
+                 <label for="infosize" class="col-form-label">Max Size </label>
+
 
         </div>
         <div class="modal-footer">

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\PenyuluhModel;
 
 
-class Master extends BaseController
+class Master2 extends BaseController
 {
     public function jabatan()
     {

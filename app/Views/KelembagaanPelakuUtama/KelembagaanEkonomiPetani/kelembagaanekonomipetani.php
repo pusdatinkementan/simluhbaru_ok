@@ -9,7 +9,7 @@
         <table class="table align-items-center mb-0">
             <thead>
                 <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center; width: 10%">No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Kecamatan</th>
                    
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Jumlah<br>Kelmbagaan Ekonomi<br>Petani</th>
@@ -24,14 +24,14 @@
             ?>
             
                 <tr>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle text-sm">
                     <a href="<?= base_url('/listkep?kode_kec=' . $row['id_daerah']) ?>">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
                     </td>
-                    <td class="align-middle text-center text-sm">
+                    <td class="align-middle rupiah text-sm">
                         <p class="text-xs font-weight-bold mb-0"><?= $row['jum'] ?></p>
                   
                       

@@ -24,6 +24,7 @@ class PenyuluhSwadaya extends BaseController
         $penyuluh_model = new PenyuluhSwadayaModel();
         $swadaya_data = $penyuluh_model->getPenyuluhSwadayaTotal(session()->get('kodebapel'));
         $namaprop = $penyuluh_model->getPropvinsi();
+        $status = $penyuluh_model->getStatus();
         $tugas = $penyuluh_model->getTugas(session()->get('kodebapel'));
         $unitkerja = $penyuluh_model->getUnitKerja(session()->get('kodebapel'));
 
@@ -32,6 +33,7 @@ class PenyuluhSwadaya extends BaseController
             'nama_kabupaten' => $swadaya_data['nama_kab'],
             'tabel_data' => $swadaya_data['table_data'],
             'tugas' => $tugas,
+            'status' => $status,
             'unitkerja' => $unitkerja,
             'namaprop' => $namaprop,
             'title' => 'Penyuluh Swadaya',
@@ -147,6 +149,36 @@ class PenyuluhSwadaya extends BaseController
     {
         $swadaya = $this->model->getDetailEdit($id_swa);
         echo $swadaya;
+    }
+
+    public function editstatus($id)
+    {
+        $thl = $this->model->getDetailEditStatus($id);
+        echo $thl;
+    }
+
+    public function updatestatus($id)
+    {
+        //$id = $this->request->getVar('idjab');
+        $nama = $this->request->getPost('nama');
+        //$gelar_blk = $this->request->getPost('gelar_blk');
+        //$gelar_dpn = $this->request->getPost('gelar_dpn');
+        $status = $this->request->getPost('status');
+        $tgl_status = $this->request->getPost('tgl_status');
+        $ket_status = $this->request->getPost('ket_status');
+
+        $this->model->save([
+            'id' => $id,
+            'nama' => $nama,
+            //'gelar_dpn' => $gelar_dpn,
+            //'gelar_blk' => $gelar_blk,
+            'status' => $status,
+            'tgl_status' => $tgl_status,
+            'ket_status' => $ket_status
+        ]);
+
+        //session()->setFlashdata('pesan', 'Data berhasil diubah');
+
     }
 
     public function update($id_swa)

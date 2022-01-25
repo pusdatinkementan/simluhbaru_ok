@@ -233,7 +233,7 @@ $data = $json[0];
                                                         <td><?= $dt['nama_bpp']; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Klasifikasi BP3K</td>
+                                                        <td>Klasifikasi BPP</td>
                                                         <td>:</td>
                                                         <td><?= $dt['klasifikasi']; ?></td>
                                                     </tr>
@@ -851,7 +851,7 @@ $data = $json[0];
                                 <h4 class="font-weight-bolder text-warning text-gradient">Edit Data</h4>
                             </div>
                             <div class="card-body">
-                                <form role="form text-left" action="<?= base_url('KelembagaanPenyuluhan/Kecamatan/Kecamatan/update/' . $dt['id']) ?>" method="post" enctype="multipart/form-data">
+                                <form id="form_bpp" role="form text-left" action="<?= base_url('KelembagaanPenyuluhan/Kecamatan/Kecamatan/update/' . $dt['id']) ?>" method="post" enctype="multipart/form-data">
                                     <? csrf_field(); ?>
                                     <div class=" row">
                                         <div class="col">
@@ -898,33 +898,35 @@ $data = $json[0];
                                                     <option value="<?= $dt['tgl_berdiri']; ?>"><?= $dt['tgl_berdiri']; ?></option>
                                                 </select>
                                                 <select id="month" name="bln_berdiri" class="form-select bln_berdiri" aria-label="Default select example">
-                                                    <option value="<?= $dt['bln_berdiri']; ?>"><?php
-                                                                                                if ($dt['bln_berdiri'] == "1") {
-                                                                                                    echo "Januari";
-                                                                                                } elseif ($dt['bln_berdiri'] == "2") {
-                                                                                                    echo "Pebruari";
-                                                                                                } elseif ($dt['bln_berdiri'] == "3") {
-                                                                                                    echo "Maret";
-                                                                                                } elseif ($dt['bln_berdiri'] == "4") {
-                                                                                                    echo "April";
-                                                                                                } elseif ($dt['bln_berdiri'] == "5") {
-                                                                                                    echo "Mei";
-                                                                                                } elseif ($dt['bln_berdiri'] == "6") {
-                                                                                                    echo "Juni";
-                                                                                                } elseif ($dt['bln_berdiri'] == "7") {
-                                                                                                    echo "Juli";
-                                                                                                } elseif ($dt['bln_berdiri'] == "8") {
-                                                                                                    echo "Agustus";
-                                                                                                } elseif ($dt['bln_berdiri'] == "9") {
-                                                                                                    echo "September";
-                                                                                                } elseif ($dt['bln_berdiri'] == "10") {
-                                                                                                    echo "Oktober";
-                                                                                                } elseif ($dt['bln_berdiri'] == "11") {
-                                                                                                    echo "Nopember";
-                                                                                                } elseif ($dt['bln_berdiri'] == "12") {
-                                                                                                    echo "Desember";
-                                                                                                }
-                                                                                                ?></option>
+                                                    <option value="<?= $dt['bln_berdiri']; ?>">
+                                                        <?php
+                                                            if ($dt['bln_berdiri'] == "1") {
+                                                                echo "Januari";
+                                                            } elseif ($dt['bln_berdiri'] == "2") {
+                                                                echo "Pebruari";
+                                                            } elseif ($dt['bln_berdiri'] == "3") {
+                                                                echo "Maret";
+                                                            } elseif ($dt['bln_berdiri'] == "4") {
+                                                                echo "April";
+                                                            } elseif ($dt['bln_berdiri'] == "5") {
+                                                                echo "Mei";
+                                                            } elseif ($dt['bln_berdiri'] == "6") {
+                                                                echo "Juni";
+                                                            } elseif ($dt['bln_berdiri'] == "7") {
+                                                                echo "Juli";
+                                                            } elseif ($dt['bln_berdiri'] == "8") {
+                                                                echo "Agustus";
+                                                            } elseif ($dt['bln_berdiri'] == "9") {
+                                                                echo "September";
+                                                            } elseif ($dt['bln_berdiri'] == "10") {
+                                                                echo "Oktober";
+                                                            } elseif ($dt['bln_berdiri'] == "11") {
+                                                                echo "Nopember";
+                                                            } elseif ($dt['bln_berdiri'] == "12") {
+                                                                echo "Desember";
+                                                            }
+                                                        ?>
+                                                    </option>
                                                 </select>
                                                 <select id="year" name="thn_berdiri" class="form-select thn_berdiri" aria-label="Default select example">
                                                     <option value="<?= $dt['thn_berdiri']; ?>"><?= $dt['thn_berdiri']; ?></option>
@@ -938,8 +940,6 @@ $data = $json[0];
                                                     <option value="sewa/pinjam">Sewa/Pinjam</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col">
                                             <label>kondisi Bangunan</label>
                                             <div class="input-group mb-3">
                                                 <select class="form-select" name="kondisi_bangunan" id="kondisi_bangunan" aria-label="Default select example">
@@ -950,7 +950,11 @@ $data = $json[0];
                                             </div>
                                             <label>Koordinat BPP</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="koordinat_lokasi_bpp" id="koordinat_lokasi_bpp" value="<?= $dt['koordinat_lokasi_bpp']; ?>">
+                                                <input type="text" class="form-control" name="koordinat_lokasi_bpp" id="koordinat_lokasi_bpp" value="<?= $dt['koordinat_lokasi_bpp']; ?>" >
+                                                <br>
+                                                <label style="font-weight: normal">Format titik koordinat adalah Decimal Degree, contoh : <b>-6.2924034, 106.820540</b>
+                                                    <br>Tutorial mendapatkan titik koordinat dapat melihat <a href="<?= base_url('assets/Panduan%20Decimal%20Degree%20Google%20Maps.pptx') ?>"><b>panduan berikut</b></a>. 
+                                                </label>
                                             </div>
                                             <label>No.Telepon/Fax</label>
                                             <div class="input-group mb-3">
@@ -1019,73 +1023,73 @@ $data = $json[0];
                                             <label>Kendaraan Roda 4</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbn" id="roda_4_apbn" placeholder="" value="<?= $dt['roda_4_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="roda_4_apbn" id="roda_4_apbn" placeholder="" value="<?= $dt['roda_4_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_4_apbd" id="roda_4_apbd" placeholder="" value="<?= $dt['roda_4_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="roda_4_apbd" id="roda_4_apbd" placeholder="" value="<?= $dt['roda_4_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Kendaraan Roda 2</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbn" id="roda_2_apbn" placeholder="" value="<?= $dt['roda_2_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="roda_2_apbn" id="roda_2_apbn" placeholder="" value="<?= $dt['roda_2_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="roda_2_apbd" id="roda_2_apbd" placeholder="" value="<?= $dt['roda_2_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="roda_2_apbd" id="roda_2_apbd" placeholder="" value="<?= $dt['roda_2_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Alat Pengolah Data (PC)</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbn" id="pc_apbn" placeholder="" value="<?= $dt['pc_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="pc_apbn" id="pc_apbn" placeholder="" value="<?= $dt['pc_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pc_apbd" id="pc_apbd" placeholder="" value="<?= $dt['pc_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="pc_apbd" id="pc_apbd" placeholder="" value="<?= $dt['pc_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Alat Pengolah Data (Laptop)</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbn" id="laptop_apbn" placeholder="" value="<?= $dt['laptop_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="laptop_apbn" id="laptop_apbn" placeholder="" value="<?= $dt['laptop_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="laptop_apbd" id="laptop_apbd" placeholder="" value="<?= $dt['laptop_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="laptop_apbd" id="laptop_apbd" placeholder="" value="<?= $dt['laptop_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Alat Pengolah Data (Printer)</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbn" id="printer_apbn" placeholder="" value="<?= $dt['printer_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="printer_apbn" id="printer_apbn" placeholder="" value="<?= $dt['printer_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="printer_apbd" id="printer_apbd" placeholder="" value="<?= $dt['printer_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="printer_apbd" id="printer_apbd" placeholder="" value="<?= $dt['printer_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Alat Pengolah Data (Modem)</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbn" id="modem_apbn" placeholder="" value="<?= $dt['modem_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="modem_apbn" id="modem_apbn" placeholder="" value="<?= $dt['modem_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="modem_apbd" id="modem_apbd" placeholder="" value="<?= $dt['modem_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="modem_apbd" id="modem_apbd" placeholder="" value="<?= $dt['modem_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>LCD Proyektor</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbn" id="lcd_apbn" placeholder="" value="<?= $dt['lcd_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="lcd_apbn" id="lcd_apbn" placeholder="" value="<?= $dt['lcd_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="lcd_apbd" id="lcd_apbd" placeholder="" value="<?= $dt['lcd_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="lcd_apbd" id="lcd_apbd" placeholder="" value="<?= $dt['lcd_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Soil Tester</label>
                                             <div class="input-group mb-3">
                                                 <label style="margin-top: 10px;">APBN</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbn" id="soil_apbn" placeholder="" value="<?= $dt['soil_apbn']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="soil_apbn" id="soil_apbn" placeholder="" value="<?= $dt['soil_apbn']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                                 <label style="margin-top: 10px;">APBD</label>
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="soil_apbd" id="soil_apbd" placeholder="" value="<?= $dt['soil_apbd']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="soil_apbd" id="soil_apbd" placeholder="" value="<?= $dt['soil_apbd']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                         </div>
@@ -1093,44 +1097,44 @@ $data = $json[0];
                                             <h5>Potensi Ekonomi</h5>
                                             <label>Kios saprotan</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="kios_saprotan" id="kios_saprotan" placeholder="" value="<?= $dt['kios_saprotan']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="kios_saprotan" id="kios_saprotan" placeholder="" value="<?= $dt['kios_saprotan']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Pedagang pengepul</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="pedagang_pengepul" id="pedagang_pengepul" placeholder="" value="<?= $dt['pedagang_pengepul']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="pedagang_pengepul" id="pedagang_pengepul" placeholder="" value="<?= $dt['pedagang_pengepul']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Gudang pangan</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="gudang_pangan" id="gudang_pangan" placeholder="" value="<?= $dt['gudang_pangan']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="gudang_pangan" id="gudang_pangan" placeholder="" value="<?= $dt['gudang_pangan']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Perbankan</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="perbankan" id="perbankan" placeholder="" value="<?= $dt['perbankan']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="perbankan" id="perbankan" placeholder="" value="<?= $dt['perbankan']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Industri Pertanian</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="industri_penyuluhan" id="industri_penyuluhan" placeholder="" value="<?= $dt['industri_penyuluhan']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="industri_penyuluhan" id="industri_penyuluhan" placeholder="" value="<?= $dt['industri_penyuluhan']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Unit</label>&nbsp; &nbsp;
                                             </div>
                                             <h5>Lahan Percontohan</h5>
                                             <label>Di BPP</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_bp3k" id="luas_lahan_bp3k" placeholder="" value="<?= $dt['luas_lahan_bp3k']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="luas_lahan_bp3k" id="luas_lahan_bp3k" placeholder="" value="<?= $dt['luas_lahan_bp3k']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
                                             </div>
                                             <label>Di Petani</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" style="margin-left: 10px;" class="form-control" name="luas_lahan_petani" id="luas_lahan_petani" placeholder="" value="<?= $dt['luas_lahan_petani']; ?>" onkeypress="return Angka(event)">
+                                                <input type="text" style="margin-left: 10px;" class="form-control rupiah" name="luas_lahan_petani" id="luas_lahan_petani" placeholder="" value="<?= $dt['luas_lahan_petani']; ?>" onkeypress="return Angka(event)">
                                                 &nbsp; &nbsp;<label style="margin-top: 10px;">Ha</label>&nbsp; &nbsp;
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" id="btnSave" class="btn bg-gradient-primary">Simpan Data</button>
+                                            <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1167,7 +1171,7 @@ $data = $json[0];
                                             <input type="hidden" name="fotolama5" value="<?= $dt['foto_dalam']; ?>">
                                             <input type="hidden" name="urut" id="urut" value="<?= $dt['urut']; ?>">
                                             <input type="hidden" name="kode_bp3k" id="kode_bp3k" value="<?= $bp; ?>">
-                                            <label>Foto BPP</label>
+                                            <label>Foto BPP (Primary)</label>
                                             <div class="input-group mb-3">
                                                 <div class="col-lg-4">
                                                     <img src="<?= base_url('/assets/img/' . $dt['foto']); ?>" class="img-thumbnail img-preview">
@@ -1215,7 +1219,7 @@ $data = $json[0];
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn bg-gradient-primary">Simpan Data</button>
+                                        <button type="submit" class="btn bg-gradient-info">Simpan Data</button>
                                     </div>
                             </div>
                             </form>
@@ -1263,7 +1267,7 @@ $data = $json[0];
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="btnSaveWilkec" class="btn bg-gradient-primary">Simpan Data</button>
+                                        <button type="button" id="btnSaveWilkec" class="btn bg-gradient-info">Simpan Data</button>
                                     </div>
                                 </div>
                             </form>
@@ -1310,14 +1314,14 @@ $data = $json[0];
                                         </div>
                                         <label for="alamat">Skor</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="skor" placeholder="Skor" name="skor" onkeypress="return Angka(event)">
+                                            <input type="text" class="form-control rupiah" id="skor" placeholder="Skor" name="skor" onkeypress="return Angka(event)">
                                         </div>
 
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="btnSaveKlas" class="btn bg-gradient-primary">Simpan Data</button>
+                                    <button type="button" id="btnSaveKlas" class="btn bg-gradient-info">Simpan Data</button>
                                 </div>
                         </div>
                         </form>
@@ -1377,7 +1381,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveFas" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveFas" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1442,7 +1446,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveAw" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveAw" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1484,7 +1488,7 @@ $data = $json[0];
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveDak" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveDak" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1523,14 +1527,14 @@ $data = $json[0];
                                     </div>
                                     <label for="tahun_beridiri">Luas Lahan (Ha)</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="luas_lhn" placeholder="Luas lahan" name="luas_lhn" onkeypress="return Angka(event)">
+                                        <input type="text" class="form-control rupiah" id="luas_lhn" placeholder="Luas lahan" name="luas_lhn" onkeypress="return Angka(event)">
 
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btnSaveKom" class="btn bg-gradient-primary">Simpan Data</button>
+                                <button type="button" id="btnSaveKom" class="btn bg-gradient-info">Simpan Data</button>
                             </div>
                         </form>
                     </div>
@@ -1669,6 +1673,9 @@ $data = $json[0];
     }
 
     $(document).ready(function() {
+        $('#month').val('<?= $dt["bln_berdiri"]; ?>').change();
+        $('#day').val('<?= $dt["tgl_berdiri"]; ?>').change();
+
         loadNamaKoordinator();
 
         $(document).delegate('#inlineRadio1', 'click', function() {
@@ -1681,6 +1688,48 @@ $data = $json[0];
             loadNamaKoordinator();
         });
     });
+</script>
+
+<!-- ajax crud wilkec -->
+<script>
+    $(document).ready(function() {
+        $(document).delegate('#btnSave', 'click', function() {
+            var valid = true;
+
+            var koordinat_lokasi_bpp = $('#koordinat_lokasi_bpp').val();
+            if (koordinat_lokasi_bpp.length == 0) {
+                Swal.fire({
+                    title: 'Error',
+                    text: "Titik Koordinat Lahan Harus Diisi",
+                    type: 'error',
+                }).then((result) => {
+                    if (result.value) {
+                        return false;
+                    }
+                });
+                valid = false;
+            }else {
+                var koord_array = koordinat_lokasi_bpp.split(",");
+                if(koord_array.length!=2 || !(validateLatLng(koord_array[0].trim(), koord_array[1].trim()))){
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Titik Koordinat Lahan harus format Decimal Degree, contoh : -6.2924034, 106.820540",
+                        type: 'error',
+                    }).then((result) => {
+                        if (result.value) {
+                            return false;
+                        }
+                    });
+                    valid = false;
+                }
+            }
+
+            if(valid){
+                $("#form_bpp").submit();
+            }
+        });
+    });
+
 </script>
 
 <!-- ajax crud wilkec -->

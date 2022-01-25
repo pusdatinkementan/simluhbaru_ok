@@ -2,14 +2,56 @@
 
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
-
+<center>
+    <h3> Data Penyuluh PNS Kabupaten <?= ucwords(strtolower($nama_kabupaten)) ?> </h3>
+	<p>Ditemukan <?= $jml_data ?> data</p>
+</center>
 <div class="container-fluid py-4">
-    <div class="row">
+    <div class="row"> 
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button><br>
-            <b>Daftar Penyuluh PNS Kab <?= ucwords(strtolower($nama_kabupaten)) ?></b>
-            <p>Ditemukan <?= $jml_data ?> data</p>
+        <form method="POST" action="<?= base_url('Penyuluh/PenyuluhPns/viewfilter'); ?>">    
+            <div class="col-md-12">
+            <label>Provinsi</label>
+            
+               <div class="input-group mb-3">
+                    <select name="filter_prov" id="filter_prov" class="form-control">
+                        <?php if(count($list_prov) > 1) {?>
+                            <option value="">Pilih Provinsi</option>
+                        <?php } ?>
+                        <?php foreach($list_prov as $row){
+                            echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
+                        } ?>
+                    </select>
+               </div>
+              <label>Kabupaten</label>
+                <div class="input-group mb-3">
+                    <select name="filter_kab" id="filter_kab" class="form-control">
+                        <?php if(count($list_kab) > 1) {?>
+                            <option value="">Pilih Kabupaten</option>
+                        <?php } ?>
+                        <?php foreach($list_kab as $row){
+                            echo '<option value="' . $row["id_dati2"] . '">' . $row["nama_dati2"] . '</option>';
+                        } ?>
+                    </select>
+               </div>
+              <label>Kecamatan</label>
+                <div class="input-group mb-3">
+                    <select name="filter_kec" id="filter_kec" class="form-control">
+                        <?php if(count($list_kec) > 1) {?>
+                            <option value="">Pilih Kecamatan</option>
+                        <?php } ?>
+                        <?php foreach($list_kec as $row){
+                            echo '<option value="' . $row["id_daerah"] . '">' . $row["deskripsi"] . '</option>';
+                        } ?>
+                    </select>
+               </div>
+                </div>   
+               <button type="submit" name="filter_submit" class="btn bg-gradient-warning">Filter</button>
+               </form>      
+            </div>    
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button><br>
+            
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblpns" class="table align-items-center mb-0">
@@ -33,29 +75,29 @@
                             foreach ($tabel_data as $row) {
                             ?>
                                 <tr>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle rupiah text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $row['nip']) ?>"><?= $row['noktp'] ?></a></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['nip'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['gelar_dpn'] ?> <?= $row['nama'] ?> <?= $row['gelar_blk'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nama_bpp'] ?><?= $row['nama_bapel'] ?></p>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nama_bpp'] ?><?= $row['nama_bapel2'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0">Kec.<?= ucwords(strtolower($row['kecamatan_tugas'])) ?></p>
                                     </td>
 
                                     <td class="align-middle text-center text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['status_kel'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['namajab'] ?> / <?= $row['gol_ruang'] ?></p>
                                         </p>
                                         </p>
@@ -75,7 +117,7 @@
                                         </button>
                                         </a>
                                         <a href="#">
-                                            <button type="button" id="btnEditStatus" data-id="<?= $row['id']; ?>" class="btn bg-gradient-warning btn-sm">
+                                            <button type="button" id="btnEditStatus" data-id="<?= $row['id']; ?>" class="btn bg-gradient-info btn-sm">
                                                 <i class="fas fa-edit"></i> Manajemen Status
                                             </button>
                                         </a>
@@ -126,11 +168,11 @@
                                                         ?>
                                                         <label>NIP (18 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" id="nip" name="nip" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)">
+                                                            <input type="text" id="nip" name="nip" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)" maxlength="18" oninput="NipOnly(this)">
                                                         </div>
                                                         <label>NIK (16 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" id="noktp" name="noktp" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" aria-label="Password" aria-describedby="password-addon">
+                                                            <input type="text" id="noktp" name="noktp" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" maxlength="16" oninput="NikOnly(this)" aria-label="Password" aria-describedby="password-addon">
                                                         </div>
                                                         <label>Nama Penyuluh</label>
                                                         <div class="input-group mb-3">
@@ -146,8 +188,7 @@
                                                         <label>Tempat, Tanggal Lahir</label>
                                                         <div class="input-group mb-1">
                                                             <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control tempat_lahir" placeholder="Tempat Lahir">
-                                                        </div>
-                                                        <div class="input-group mb-3">
+                                                        
                                                             <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control" placeholder="Tanggal Lahir">
                                                         </div>
                                                         <label>Jenis Kelamin</label>
@@ -210,6 +251,49 @@
                                                             <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Nama Sekolah/Universitas" aria-label="Password" aria-describedby="password-addon">
                                                         </div>
                                                     </div>
+													<div class="col">
+                                                        <label>Tgl SK CPNS</label>
+                                                        <div class="input-group mb-3 select-date2">
+                                                            <input type="text" id="tgl_skcpns" name="tgl_skcpns" class="form-control" placeholder="Tgl SK Pns">
+                                                        </div>
+                                                        <label>Tgl SK Penyuluh</label>
+                                                        <div class="input-group mb-3 select-date3">
+                                                            <input type="text" id="tglsk" name="tglsk" class="form-control" placeholder="Tgl SPMT">
+                                                        </div>
+                                                        <input type="hidden" name="tgl_sk_luh" class="form-control" placeholder="Tgl SPMT">
+                                                        <input type="hidden" name="bln_sk_luh" class="form-control" placeholder="Tgl SPMT">
+                                                        <input type="hidden" name="thn_sk_luh" class="form-control" placeholder="Tgl SPMT">
+                                                        <label>Alamat Rumah</label>
+                                                        <div class="input-group mb-3">
+                                                            <textarea class="form-control" name="alamat" id="alamat" placeholder="Alamat Rumah"></textarea>
+                                                        </div>
+                                                        <label>Kabupaten</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="dati2" id="dati2" class="form-control" placeholder="Kabupaten" aria-label="Password" aria-describedby="password-addon">
+
+                                                            <input type="text" name="kodepos" id="kodepos" class="form-control" placeholder="| Kode Pos" oninput="AngkaOnly(this)" aria-label="Password" aria-describedby="password-addon">
+                                                        </div>
+                                                        <label>Provinsi</label>
+                                                        <div class="input-group mb-3">
+                                                            <select name="kode_prop" id="kode_prop" class="form-control input-lg kode_prop">
+                                                                <option value="">Pilih Provinsi</option>
+                                                                <?php
+                                                                foreach ($namaprop as $row) {
+                                                                    echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                        <label>No.Telepon rumah</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="number" name="telp" id="telp" class="form-control" placeholder="No.Telepon rumah" aria-label="Password" aria-describedby="password-addon">
+                                                            <input type="number" name="hp" id="hp" class="form-control" placeholder="| HP" aria-label="Password" aria-describedby="password-addon">
+                                                        </div>
+                                                        <label>Alamat Email</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="Password" aria-describedby="password-addon">
+                                                        </div>
+                                                    </div>
                                                     <div class="col">
                                                         <label>Lokasi Kerja</label>
                                                         <div class="input-group mb-3">
@@ -222,7 +306,9 @@
                                                                 <label class="form-check-label" for="inlineRadio2">Kecamatan</label>
                                                             </div>
                                                         </div>
-                                                        <div id="form22">
+                                                        
+                                                    
+														<div id="form22">
                                                             <label>Kecamatan 1</label>
                                                             <div class="input-group mb-3">
                                                                 <select name="kecamatan_tugas1" id="kecamatan_tugas1" class="form-control input-lg kecamatan_tugas1">
@@ -352,8 +438,6 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col">
                                                         <div id="form2">
                                                             <label>Kecamatan</label>
                                                             <div class="input-group mb-3">
@@ -383,7 +467,7 @@
                                                         <div id="form3">
                                                             <label>Wilayah Kerja 1</label>
                                                             <div class="input-group mb-3">
-                                                                <select id="wil_kerja" name="wil_kerja" class="form-select" aria-label="Default select example">
+                                                                <select id="wil_kerja" name="wil_kerja" class="form-select" next-id="2" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -391,7 +475,7 @@
                                                         <div id="form4">
                                                             <label>Wilayah Kerja 2</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja2" name="wil_kerja2" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja2" name="wil_kerja2" next-id="3" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -399,7 +483,7 @@
                                                         <div id="form5">
                                                             <label>Wilayah Kerja 3</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja3" name="wil_kerja3" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja3" name="wil_kerja3" next-id="4" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -407,7 +491,7 @@
                                                         <div id="form6">
                                                             <label>Wilayah Kerja 4</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja4" name="wil_kerja4" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja4" name="wil_kerja4" next-id="5" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -415,7 +499,7 @@
                                                         <div id="form7">
                                                             <label>Wilayah Kerja 5</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja5" name="wil_kerja5" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja5" name="wil_kerja5" next-id="6" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -423,18 +507,15 @@
                                                         <div id="form8">
                                                             <label>Wilayah Kerja 6</label>
                                                             <div class="input-group mb-3">
-                                                                <select id="wil_kerja6" name="wil_kerja6" class="form-select" aria-label="Default select example">
+                                                                <select id="wil_kerja6" name="wil_kerja6" class="form-select" next-id="7" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <div id="form9">
+														<div id="form9">
                                                             <label>Wilayah Kerja 7</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja7" name="wil_kerja7" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja7" name="wil_kerja7" next-id="8" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -442,7 +523,7 @@
                                                         <div id="form10">
                                                             <label>Wilayah Kerja 8</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja8" name="wil_kerja8" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja8" name="wil_kerja8" next-id="9" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -450,7 +531,7 @@
                                                         <div id="form11">
                                                             <label>Wilayah Kerja 9</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="wil_kerja9" name="wil_kerja9" aria-label="Default select example">
+                                                                <select class="form-select" id="wil_kerja9" name="wil_kerja9" next-id="10" aria-label="Default select example">
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
@@ -462,53 +543,14 @@
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
-                                                        </div>
+                                                        </div>	
                                                     </div>
-                                                    <div class="col">
-                                                        <label>Tgl SK CPNS</label>
-                                                        <div class="input-group mb-3 select-date2">
-                                                            <input type="text" id="tgl_skcpns" name="tgl_skcpns" class="form-control" placeholder="Tgl SK Pns">
-                                                        </div>
-                                                        <label>Tgl SK Penyuluh</label>
-                                                        <div class="input-group mb-3 select-date3">
-                                                            <input type="text" id="tglsk" name="tglsk" class="form-control" placeholder="Tgl SPMT">
-                                                        </div>
-                                                        <input type="hidden" name="tgl_sk_luh" class="form-control" placeholder="Tgl SPMT">
-                                                        <input type="hidden" name="bln_sk_luh" class="form-control" placeholder="Tgl SPMT">
-                                                        <input type="hidden" name="thn_sk_luh" class="form-control" placeholder="Tgl SPMT">
-                                                        <label>Alamat Rumah</label>
-                                                        <div class="input-group mb-3">
-                                                            <textarea class="form-control" name="alamat" id="alamat" placeholder="Alamat Rumah"></textarea>
-                                                        </div>
-                                                        <label>Kabupaten</label>
-                                                        <div class="input-group mb-3">
-                                                            <input type="text" name="dati2" id="dati2" class="form-control" placeholder="Kabupaten" aria-label="Password" aria-describedby="password-addon">
-
-                                                            <input type="text" name="kodepos" id="kodepos" class="form-control" placeholder="| Kode Pos" aria-label="Password" aria-describedby="password-addon">
-                                                        </div>
-                                                        <label>Provinsi</label>
-                                                        <div class="input-group mb-3">
-                                                            <select name="kode_prop" id="kode_prop" class="form-control input-lg kode_prop">
-                                                                <option value="">Pilih Provinsi</option>
-                                                                <?php
-                                                                foreach ($namaprop as $row) {
-                                                                    echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
-                                                        <label>No.Telepon rumah</label>
-                                                        <div class="input-group mb-3">
-                                                            <input type="number" name="telp" id="telp" class="form-control" placeholder="No.Telepon rumah" aria-label="Password" aria-describedby="password-addon">
-                                                            <input type="number" name="hp" id="hp" class="form-control" placeholder="| HP" aria-label="Password" aria-describedby="password-addon">
-                                                        </div>
-                                                        <label>Alamat Email</label>
-                                                        <div class="input-group mb-3">
-                                                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="Password" aria-describedby="password-addon">
-                                                        </div>
-                                                    </div>
+                                                    
+                                                    
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center> -->
                                                     </div>
                                                 </div>
                                             </form>
@@ -521,7 +563,7 @@
                     </div>
 
                     <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
@@ -568,7 +610,9 @@
                                                         <textarea class="form-control ket_status" name="ket_status" id="ket_status" placeholder="Keterangan"></textarea>
                                                     </div>
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSaveStatus" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSaveStatus" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSaveStatus" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center> -->
                                                     </div>
                                                 </div>
                                             </form>
@@ -587,10 +631,85 @@
 
     <?= $this->endSection() ?>
     <?= $this->section('script') ?>
+	
+	
+	
+
+
+
+
     <script>
         $(document).ready(function() {
 
-            $('#tblpns').DataTable();
+            $('#tblpns').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					 'excel'
+				]
+			});
+            
+            $('#filter_prov').change(function() { // Jika Select Box id provinsi dipilih
+			var provinsi = $(this).val(); // Ciptakan variabel provinsi
+			$.ajax({
+                async: false,
+				type: 'POST', // Metode pengiriman data menggunakan POST
+				url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkab/' + provinsi, // File yang akan memproses data
+				//data: 'provinsi=' + provinsi, // Data yang akan dikirim ke file pemroses
+				success: function(response) { // Jika berhasil
+                    response = JSON.parse(response)
+                    var html = '<option value="">-- SEMUA --</option>';
+                    for(var i=0;i<response.length;i++){
+                        html = html + '<option value="'+response[i].id_kab+'">'+response[i].nama_kab+'</option>'
+                    }
+					$('#filter_kab').html(html); // Berikan hasil ke id kota
+					
+				    }
+                });
+            });
+
+            <?php if ($getPostProv != ''){ ?>
+                $('#filter_prov').val('<?php echo $getPostProv; ?>').change();
+            <?php } ?>
+
+            // if ($("#filter_prov").val() != '') {
+            //     $("#filter_prov option:selected").html();
+            // }
+
+            $('#filter_kab').change(function() { // Jika Select Box id provinsi dipilih
+                    var kabupaten = $(this).val(); // Ciptakan variabel provinsi
+                    $.ajax({
+                        async: false,
+                        type: 'POST', // Metode pengiriman data menggunakan POST
+                        url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkec/' + kabupaten, // File yang akan memproses data
+                        //data: 'kabupaten=' + kabupaten, // Data yang akan dikirim ke file pemroses
+                        success: function(response) { // Jika berhasil
+                            response = JSON.parse(response)
+                            var html = '<option value="">-- SEMUA --</option>';
+                            for(var i=0;i<response.length;i++){
+                                html = html + '<option value="'+response[i].id_kec+'">'+response[i].nama_kec+'</option>'
+                            }
+                            $('#filter_kec').html(html); // Berikan hasil ke id kota
+                            
+                        }
+                    });
+                });
+
+                
+            //if ($("#filter_kab").val() != '') {
+            <?php if ($getPostKab != ''){ ?>
+                $('#filter_kab').val('<?php echo $getPostKab; ?>').change();
+            <?php } ?>
+                //}
+
+                
+                //if ($("#filter_kec").val() != '') {
+                    $('#filter_kec').val('<?php echo $getPostKec; ?>');
+                // //}   
+                
+              
+
+
+                
 
             $(document).delegate('#btnSave', 'click', function() {
 
@@ -1310,7 +1429,7 @@ if (tempat_lahir.length == 0) {
                         var htmla = '<option value="">Pilih Desa</option>';
                         if (response == '') {
                             $("select#wil_kerja").html('<option value="">--Pilih Desa--</option>');
-                            $("select#wil_kerja2").html('<option value="">--Pilih Desa--</option>');
+                            /*$("select#wil_kerja2").html('<option value="">--Pilih Desa--</option>');
                             $("select#wil_kerja3").html('<option value="">--Pilih Desa--</option>');
                             $("select#wil_kerja4").html('<option value="">--Pilih Desa--</option>');
                             $("select#wil_kerja5").html('<option value="">--Pilih Desa--</option>');
@@ -1318,10 +1437,10 @@ if (tempat_lahir.length == 0) {
                             $("select#wil_kerja7").html('<option value="">--Pilih Desa--</option>');
                             $("select#wil_kerja8").html('<option value="">--Pilih Desa--</option>');
                             $("select#wil_kerja9").html('<option value="">--Pilih Desa--</option>');
-                            $("select#wil_kerja10").html('<option value="">--Pilih Desa--</option>');
+                            $("select#wil_kerja10").html('<option value="">--Pilih Desa--</option>');*/
                         } else {
                             $("select#wil_kerja").html(htmla += response);
-                            $("select#wil_kerja2").html(htmla += response);
+                           /*$("select#wil_kerja2").html(htmla += response);
                             $("select#wil_kerja3").html(htmla += response);
                             $("select#wil_kerja4").html(htmla += response);
                             $("select#wil_kerja5").html(htmla += response);
@@ -1329,7 +1448,7 @@ if (tempat_lahir.length == 0) {
                             $("select#wil_kerja7").html(htmla += response);
                             $("select#wil_kerja8").html(htmla += response);
                             $("select#wil_kerja9").html(htmla += response);
-                            $("select#wil_kerja10").html(htmla += response);
+                            $("select#wil_kerja10").html(htmla += response);*/
 
                             $('#wil_kerja').val(wil_kerjaa);
                             $('#wil_kerja2').val(wil_kerjaa2);
@@ -1347,6 +1466,65 @@ if (tempat_lahir.length == 0) {
                 });
                 return false;
             });
+            
+            const awal = $('#wil_kerja').val();
+            var wil_kerja_awal = [];
+                wil_kerja_awal[0] = awal;
+            
+            var jum_wil = 1;
+
+            var wil_kerja_notin = ""; 
+
+            for(let i = 1; i < 10; i++){
+                var wilkerid = (i == 1 ? 'wil_kerja' : 'wil_kerja'+i.toString());
+                var wilkeridb = 'wil_kerja'+(i+1).toString();
+                $('#'+wilkerid).on('change', function(e) {
+
+                    const next_id = this.getAttribute("next-id");
+                    
+                    //wil_kerja_notin = awal;
+
+                    wil_kerja_awal[i-1] = this.value;
+
+                    jum_wil = i;
+
+                    //wil_kerja_notin = id;
+
+                    for(let idx = 0; idx < i; idx++){
+                        if(idx == 0) {
+                            wil_kerja_notin = wil_kerja_awal[idx];
+                        } else {
+                            wil_kerja_notin += ','+wil_kerja_awal[idx];
+                        }
+                    }
+                    for(let idx = i+1; idx < 11; idx++){
+                        $('#wil_kerja'+idx).html('<option value="">--Pilih--</option>');
+                        $('#wil_kerja'+idx).val();
+                    }
+
+                    //wil_kerja_notin = wil_kerja_awal[i];
+
+                    $.ajax({
+                        //url: "<? //= base_url() ?>/Penyuluh/PenyuluhPns/showDesaAdv/",
+                        url: "<?= base_url() ?>/penyuluhpns/showdesaadv",
+                        type: 'POST',
+                        data: {
+                                'wil_kerja_notin': wil_kerja_notin,
+                                'jum_wil': jum_wil
+                            },
+                        success: function(response) {
+                            var htmla = '<option value="">Pilih Desa</option>';
+                            if (response == '') {
+                                $("select#wil_kerja"+next_id).html('<option value="">--Pilih Desa--</option>');
+                            } else {
+                                $("select#wil_kerja"+next_id).html(htmla += response); 
+                            }
+                        },
+                        dataType: "html"
+                    });
+                    return false;
+                });
+            }
         });
     </script>
 

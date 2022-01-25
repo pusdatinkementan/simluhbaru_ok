@@ -45,7 +45,7 @@ class Kecamatan extends BaseController
         $no_urut = $kec_model->getNoUrut(session()->get('kodebapel'));
 
         $data = [
-            //'jumpns' => $kec_data['jumpns'],
+            'jumpns' => count($kec_data['table_data']),
             'nama_kabupaten' => $kec_data['nama_kab'],
             'tabel_data' => $kec_data['table_data'],
             'penyuluhPNS' => $penyuluhPNS,
@@ -155,7 +155,7 @@ class Kecamatan extends BaseController
             'nama_koord_penyuluh' => $this->request->getVar('nama_koord_penyuluh'),
             'nama_koord_penyuluh_thl' => $this->request->getVar('nama_koord_penyuluh_thl'),
             'koord_lainya_nip' => $this->request->getVar('koord_lainya_nip'),
-'koord_lainya_nama' => $this->request->getVar('koord_lainya_nama'),
+            'koord_lainya_nama' => $this->request->getVar('koord_lainya_nama'),
             'roda_4_apbn' => $this->request->getVar('roda_4_apbn'),
             'roda_4_apbd' => $this->request->getVar('roda_4_apbd'),
             'roda_2_apbn' => $this->request->getVar('roda_2_apbn'),
@@ -213,7 +213,7 @@ class Kecamatan extends BaseController
             'nama_koord_penyuluh' => $this->request->getVar('nama_koord_penyuluh'),
             'nama_koord_penyuluh_thl' => $this->request->getVar('nama_koord_penyuluh_thl'),
             'koord_lainya_nip' => $this->request->getVar('koord_lainya_nip'),
-'koord_lainya_nama' => $this->request->getVar('koord_lainya_nama'),
+            'koord_lainya_nama' => $this->request->getVar('koord_lainya_nama'),
             'roda_4_apbn' => $this->request->getVar('roda_4_apbn'),
             'roda_4_apbd' => $this->request->getVar('roda_4_apbd'),
             'roda_2_apbn' => $this->request->getVar('roda_2_apbn'),
@@ -242,7 +242,9 @@ class Kecamatan extends BaseController
 
         //session()->setFlashdata('pesan', 'Edit data berhasil.');
 
-        return redirect()->to('/detail_kecamatan?kode_kec=' . $this->request->getVar('kecamatan'));
+        return redirect()->to('/detail_kecamatan?kode_kec=' . $this->request->getVar('kecamatan') 
+                                . '&kode_bp3k=' . $this->request->getVar('kode_bp3k')
+                                . '&kodebpp=' . $id);
         // dd($this->request->getVar());
     }
 
@@ -327,7 +329,7 @@ class Kecamatan extends BaseController
 
         //session()->setFlashdata('pesan', 'Edit data berhasil.');
 
-        return redirect()->to('/detail_kecamatan?kode_kec=' . $this->request->getVar('kecamatan') . '&kodebpp=' . $id);
+        return redirect()->to('/detail_kecamatan?kode_kec=' . $this->request->getVar('kecamatan') . '&kodebpp=' . $id . '&kode_bp3k=' . $this->request->getVar('kode_bp3k'));
         // dd($this->request->getVar());
     }
 

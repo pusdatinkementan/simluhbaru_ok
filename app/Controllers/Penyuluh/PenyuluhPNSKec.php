@@ -17,7 +17,7 @@ class PenyuluhPNSKec extends BaseController
         // $kode_kab = $get_param['kode_kab'];
         $penyuluh_model = new PenyuluhPNSKecModel();
         $pnskec_data = $penyuluh_model->getPenyuluhPNSKecTotal(session()->get('kodebpp'));
-
+		//print_r($pnskec_data);
         $data = [
             'jml_data' => $pnskec_data['jum'],
             // 'nama_kabupaten' => $pnskec_data['nama_kab'],

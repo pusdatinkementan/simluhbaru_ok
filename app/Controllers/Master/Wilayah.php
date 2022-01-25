@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\master;
+namespace App\Controllers\Master;
 
 use App\Controllers\BaseController;
 use App\Models\WilayahModel;

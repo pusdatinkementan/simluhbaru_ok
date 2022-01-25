@@ -63,22 +63,22 @@ $data = $json[0];
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['ketua'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= number_format($data['jumpenyuluhpns']); ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['jumthl'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= number_format($data['jumpenyuluhswadaya']); ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= number_format($data['jumpoktan']); ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= number_format($data['jumgapoktan']); ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
+                        <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['jumkep'] ?></p>
                         </td>
                         <td class="align-middle text-center text-sm">
@@ -120,7 +120,8 @@ $data = $json[0];
                                                 <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button>
+                                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Simpan Data</button>
                                             </div>
                                         </form>
                                     </div>

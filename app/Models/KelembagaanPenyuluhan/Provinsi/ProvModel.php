@@ -16,7 +16,7 @@ class ProvModel extends Model
 
     protected $allowedFields = [
         'id_bakor', 'nama_bapel', 'dasar_hukum', 'no_peraturan', 'tgl_berdiri', 'bln_berdiri', 'thn_berdiri', 'telp_kantor', 'alamat',  'email', 'website', 'ketua', 'telp_hp',
-        'nama_bidang_luh', 'nama_kabid', 'hp_kabid', 'seksi_luh', 'nama_kasie', 'hp_kasie', 'eselon3_luh', 'nama_koord_penyuluh', 'deskripsi_lembaga_lain', 'koordinat'
+        'nama_bidang_luh', 'nama_kabid', 'hp_kabid', 'seksi_luh', 'nama_kasie', 'hp_kasie', 'eselon3_luh', 'nama_koord_penyuluh', 'deskripsi_lembaga_lain', 'koordinat', 'instagram', 'twitter', 'facebook'
     ];
 
     // protected $useTimestamps = false;
@@ -69,7 +69,7 @@ class ProvModel extends Model
         $query = $db->query("select count(id) as jum_pns from tbldasar where satminkal like '$kode_prop' 
                             and kode_kab='2' and status !='1' and status !='2' and status !='3'");
         $row   = $query->getRow();
-        $query2  = $db->query("select id,nama,nip from tbldasar where satminkal='$kode_prop' and kode_kab='2' 
+        $query2  = $db->query("select id,nama,nip, gelar_dpn, gelar_blk from tbldasar where satminkal='$kode_prop' and kode_kab='2' 
                     and status !='1' and status !='2' and status !='3' order by nama");
         $results = $query2->getResultArray();
 
@@ -80,11 +80,29 @@ class ProvModel extends Model
 
         return $data;
     }
+	
+	 public function getTotalp3k($kode_prop)
+    {
+        $db = Database::connect();
+        $query = $db->query("select count(id) as jum_p3k from tbldasar_p3k where satminkal like '$kode_prop' 
+                            and kode_kab='2' and status !='1' and status !='2' and status !='3'");
+        $row   = $query->getRow();
+        $query2  = $db->query("select id,nama,nip, gelar_dpn, gelar_blk from tbldasar_p3k where satminkal='$kode_prop' and kode_kab='2' 
+                    and status !='1' and status !='2' and status !='3' order by nama");
+        $results = $query2->getResultArray();
+
+        $data =  [
+            'jum_p3k' => $row->jum_p3k,
+            'datap3k' => $results,
+        ];
+
+        return $data;
+    }
 
     public function getPenyuluhPNS($kode_prop)
     {
 
-        $query = $this->db->query("select * from tbldasar where satminkal ='$kode_prop' and kode_kab='2' 
+        $query = $this->db->query("select * from tbldasar where satminkal ='$kode_prop' and kode_kab='2' and status IN ('0','6','7')
                                     and nip !='nama_koord_penyuluh'");
         $row   = $query->getResultArray();
         return $row;

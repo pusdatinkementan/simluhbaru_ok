@@ -26,6 +26,7 @@ class PenyuluhTHLAPBD extends BaseController
         $thlapbd_data = $penyuluh_model->getPenyuluhTHLAPBDTotal(session()->get('kodebapel'));
         $namaprop = $penyuluh_model->getPropvinsi();
         $tingkatpen = $penyuluh_model->getTingkat();
+        $status = $penyuluh_model->getStatus();
         $tugas = $penyuluh_model->getTugas(session()->get('kodebapel'));
         $bpp = $penyuluh_model->getBpp(session()->get('kodebapel'));
         $unitkerja = $penyuluh_model->getUnitKerja(session()->get('kodebapel'));
@@ -39,6 +40,7 @@ class PenyuluhTHLAPBD extends BaseController
             'namaprop' => $namaprop,
             'tingkatpen' => $tingkatpen,
             'bpp' => $bpp,
+            'status' => $status,
             'title' => 'Penyuluh THL APBD',
             'name' => 'THL APBD'
         ];
@@ -66,6 +68,36 @@ class PenyuluhTHLAPBD extends BaseController
     //     ];
     //     return json_encode($data);
     // }
+
+    public function editstatus($id)
+    {
+        $thl = $this->model->getDetailEditStatus($id);
+        echo $thl;
+    }
+
+    public function updatestatus($id)
+    {
+        //$id = $this->request->getVar('idjab');
+        $nama = $this->request->getPost('nama');
+        $gelar_blk = $this->request->getPost('gelar_blk');
+        $gelar_dpn = $this->request->getPost('gelar_dpn');
+        $status = $this->request->getPost('status');
+        $tgl_status = $this->request->getPost('tgl_status');
+        $ket_status = $this->request->getPost('ket_status');
+
+        $this->model->save([
+            'id' => $id,
+            'nama' => $nama,
+            'gelar_dpn' => $gelar_dpn,
+            'gelar_blk' => $gelar_blk,
+            'status' => $status,
+            'tgl_status' => $tgl_status,
+            'ket_status' => $ket_status
+        ]);
+
+        //session()->setFlashdata('pesan', 'Data berhasil diubah');
+
+    }
 
     public function save()
     {

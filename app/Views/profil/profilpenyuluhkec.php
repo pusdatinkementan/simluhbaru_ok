@@ -4,7 +4,7 @@
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Page Heading -->
-        <div class="page-header min-height-150 border-radius-xl mt-4" style="background-image: url('<?= base_url(/assets/img/curved-images/curved0.jpg'); ?>); background-position-y: 50%;">
+        <div class="page-header min-height-150 border-radius-xl mt-4" style="background-image: url('<?= base_url('/assets/img/curved-images/curved0.jpg'); ?>'); background-position-y: 50%;">
             <span class="mask bg-gradient-primary opacity-6"></span>
             <!-- <div class="card mb-3 col-lg-8 opacity-8">
                 <div class="row no-gutters">

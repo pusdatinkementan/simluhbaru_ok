@@ -56,7 +56,7 @@ class KelembagaanEkonomiPetani extends BaseController
         $kode_data = $kodewil_model->getKodeWil($kode_kec);
 
         $data = [
-
+			 'jum' => count($listkep_data['table_data']),
             'nama_kecamatan' => $listkep_data['nama_kec'],
             'tabel_data' => $listkep_data['table_data'],
             'title' => 'List Kelembagaan Ekonomi Petani',

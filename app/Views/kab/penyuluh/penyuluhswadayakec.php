@@ -3,12 +3,18 @@
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebpp'); ?>
 
-<br>
-<b>Kecamatan <?= $nama_kecamatan ?></b>
-<p>Ditemukan <?= $jml_data ?> data</p>
+<center>
+    <h3>Daftar Penyuluh Swadaya Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?></h3>
+	 <p>Ditemukan <?= $jml_data ?> data </p>
+</center>
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Map -->
+        <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
 <div class="card">
     <div class="table-responsive">
-        <table class="table align-items-center mb-0">
+        <table id="penyuluhkec" class="table align-items-center mb-0">
             <thead>
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
@@ -43,11 +49,14 @@
                             <p class="text-xs font-weight-bold mb-0"><?= $row['deskripsi'] ?></p>
                         </td>
                         <td class="align-middle text-sm">
-                            <p class="text-xs font-weight-bold mb-0">1. <?= $row['wil_ker'] ?><br>
-                                2. <?= $row['wil_ker2'] ?><br>
-                                3. <?= $row['wil_ker3'] ?><br>
-                                4. <?= $row['wil_ker4'] ?><br>
-                                5. <?= $row['wil_ker5'] ?></p>
+                            <p class="text-xs font-weight-bold mb-0">
+								<?php
+									for ($y=1;$y<=5;$y++){
+										$field = ($y=='1') ? 'wil_ker' : 'wil_ker'.$y;
+										echo ($row[$field] == '') ? '' : $y.'. '.$row[$field].'<br />';
+									}
+								?>
+							</p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['tgl_update'] ?></p>
@@ -92,7 +101,7 @@
                                             </div>
                                             <label>No. KTP</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP">
+                                                <input type="text" name="noktp" id="noktp" class="form-control noktp" placeholder="No. KTP" maxlength="16" oninput="NikOnly(this)">
                                             </div>
                                             <label>Nama</label>
                                             <div class="input-group mb-3">
@@ -346,7 +355,8 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="btnSave" class="btn bg-gradient-warning">Simpan Data</button>
                                         </div>
                                     </div>
                                 </form>
@@ -359,6 +369,9 @@
         </div>
 
     </div>
+</div> </div>
+
+    </div>
 </div>
 <?= $this->endSection() ?>
 
@@ -366,7 +379,12 @@
 
 <script>
     $(document).ready(function() {
-
+		$('#penyuluhkec').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					 'excel'
+				]
+			});
         $(document).delegate('#btnSave', 'click', function() {
 
             tgllahir = $('#tgllahir').val();

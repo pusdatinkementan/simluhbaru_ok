@@ -106,7 +106,8 @@
             </div>
         </div>
         <div class="text-center">
-            <center><button type="button" class="btn btn-round bg-gradient-warning btn-lg">Simpan Data</button></center>
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn bg-gradient-info">Simpan Data</button>
         </div>
     </div>
 </form>

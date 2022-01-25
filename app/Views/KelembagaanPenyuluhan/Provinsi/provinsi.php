@@ -118,7 +118,8 @@ $data = $json[0];
                                                 <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                                             </div>
                                             <div class="text-center">
-                                                <button type="button" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button>
+                                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn bg-gradient-info">Simpan Data</button>
                                             </div>
                                         </form>
                                     </div>

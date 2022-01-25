@@ -2,14 +2,17 @@
 
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
-
+	<center>
+    <h3> Daftar CPNS Calon Penyuluh Kab <?= ucwords(strtolower($nama_kabupaten)) ?> </h3>
+	 <p> Ditemukan <?= ucwords(strtolower($jml_data)) ?> Data </p>
+</center>
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-primary btn-sm">+ Tambah Data</button><br>
-            <b>Daftar Penyuluh CPNS Kab <?= ucwords(strtolower($nama_kabupaten)) ?></b>
-            <p>Ditemukan <?= $jml_data ?> data</p>
+	
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button><br>
+           
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblcpns" class="table align-items-center mb-0">
@@ -33,29 +36,29 @@
                             foreach ($tabel_data as $row) {
                             ?>
                                 <tr>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle rupiah text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $row['nip']) ?>"><?= $row['noktp'] ?></a></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['nip'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['gelar_dpn'] ?> <?= $row['nama'] ?> <?= $row['gelar_blk'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_bpp'] ?><?= $row['nama_bapel'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0">Kec.<?= ucwords(strtolower($row['kecamatan_tugas'])) ?></p>
                                     </td>
 
                                     <td class="align-middle text-center text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['status_kel'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['namajab'] ?> / <?= $row['gol_ruang'] ?></p>
                                         </p>
                                         </p>
@@ -75,7 +78,7 @@
                                         </button>
                                         </a>
                                         <a href="#">
-                                            <button type="button" id="btnEditStatus" data-id="<?= $row['id']; ?>" class="btn bg-gradient-warning btn-sm">
+                                            <button type="button" id="btnEditStatus" data-id="<?= $row['id']; ?>" class="btn bg-gradient-info btn-sm">
                                                 <i class="fas fa-edit"></i> Manajemen Status
                                             </button>
                                         </a>
@@ -126,11 +129,11 @@
                                                         ?>
                                                         <label>NIP (18 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" id="nip" name="nip" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)">
+                                                            <input type="number" id="nip" name="nip" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)" maxlength="18" oninput="NipOnly(this)">
                                                         </div>
                                                         <label>NIK (16 Digit)</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="number" id="noktp" name="noktp" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" aria-label="Password" aria-describedby="password-addon">
+                                                            <input type="number" id="noktp" name="noktp" class="form-control" placeholder="Penulisan NIK disambung (tanpa tanda pemisah)" maxlength="16" oninput="NikOnly(this)" aria-label="Password" aria-describedby="password-addon">
                                                         </div>
                                                         <label>Nama Penyuluh</label>
                                                         <div class="input-group mb-3">
@@ -352,8 +355,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col">
+                                                        
                                                         <div id="form2">
                                                             <label>Kecamatan</label>
                                                             <div class="input-group mb-3">
@@ -428,9 +430,6 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="col">
                                                         <div id="form9">
                                                             <label>Wilayah Kerja 7</label>
                                                             <div class="input-group mb-3">
@@ -508,7 +507,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSave" class="btn btn-round bg-gradient-warning btn-lg w-100 mt-4 mb-0">Simpan Data</button></center> -->
                                                     </div>
                                                 </div>
                                             </form>
@@ -521,7 +522,7 @@
                     </div>
 
                     <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
@@ -568,7 +569,9 @@
                                                         <textarea class="form-control ket_status" name="ket_status" id="ket_status" placeholder="Keterangan"></textarea>
                                                     </div>
                                                     <div class="text-center">
-                                                        <center><button type="button" id="btnSaveStatus" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center>
+                                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" id="btnSaveStatus" class="btn bg-gradient-info">Simpan Data</button>
+                                                        <!-- <center><button type="button" id="btnSaveStatus" class="btn btn-round bg-gradient-warning btn-lg ajax-save">Simpan Data</button></center> -->
                                                     </div>
                                                 </div>
                                             </form>
@@ -590,7 +593,12 @@
     <script>
         $(document).ready(function() {
 
-            $('#tblcpns').DataTable();
+			 $('#tblcpns').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					'excel'
+				]
+			});
 
             $(document).delegate('#btnSave', 'click', function() {
 

@@ -12,10 +12,18 @@ class Login extends BaseController
         $this->session = service('session');
         $this->config = config('Auth');
         $this->auth = service('authentication');
+		 $this->session->start();       
+		session();
+
+        
     }
+
 
     public function index()
     {
+		if (session()->get('username') <> "") {
+            return redirect()->to('/lembaga');
+        }
         $data = [
             'title' => 'Login',
             'config' => $this->config
