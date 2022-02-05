@@ -130,6 +130,31 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="resetPassword" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleresetPassword">Reset Password</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newpass">New Password</label>
+                    <input type="text" class="form-control" id="newPass" name="newPass" placeholder="New Password">
+                </div>
+                <input type="hidden" class="form-control" id="updated_at" name="updated_at" value="<?php echo date('Y-m-d H:i:s'); ?>">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="btnSavePass" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php echo view('layout/footer'); ?>
 
 </div>
@@ -166,6 +191,70 @@
             }, ],
         });
 
+        $(document).delegate('#btnResetUser', 'click', function() {
+            // alert('reset');
+            // alert($(this).data('id'));
+            $('#resetPassword').modal('show');
+            $.ajax({
+                url: '<?= base_url() ?>/manage/user/edit/' + $(this).data('id'),
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(result) {
+                    // console.log(result);                        
+                    // $('#newPass').val(result.password);
+                    $("#btnSavePass").attr("id", "btnDoEditPass");
+                    $("#titleresetPassword").text("Reset Password");
+
+                    $(document).delegate('#btnDoEditPass', 'click', function() {
+                        var iduser = result.id;
+                        var newpass = $('#newPass').val();
+                        var updatedat = $('#updated_at').val();
+
+                        let formData = new FormData();
+                        formData.append('newpass', newpass);
+                        formData.append('updatedat', updatedat);
+
+                        debugger;
+                        $.ajax({
+                            url: '<?= base_url() ?>/manage/user/updatepass/' + iduser,
+                            type: "POST",
+                            data: formData,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                Swal.fire({
+                                    title: 'Sukses',
+                                    text: "Sukses edit data",
+                                    type: 'success',
+                                }).then((result) => {
+
+                                    if (result.value) {
+                                        location.reload();
+                                    }
+                                });
+
+                            },
+                            error: function(jqxhr, status, exception) {
+
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Gagal edit data",
+                                    type: 'Error',
+                                }).then((result) => {
+
+                                    if (result.value) {
+                                        location.reload();
+                                    }
+                                });
+
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
         //save
 
         $(document).delegate('#btnSave', 'click', function() {
@@ -183,7 +272,6 @@
             var is_active = $('#is_active').val();
             var joindate = $('#created_at').val();
 
-            debugger;
             $.ajax({
                 url: '<?= base_url() ?>/manage/user/saveUser/',
                 type: 'POST',

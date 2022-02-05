@@ -29,15 +29,15 @@ class PenyuluhPns extends BaseController
         $list_kec = [];
         $level = "";
 
-        if ($keca!="") {
+        if ($keca != "") {
             $kode = $keca;
             $level = "3";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
-        } elseif ($kabu!="") {
+        } elseif ($kabu != "") {
             $kode = $kabu;
             $level = "2";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
-        } elseif ($prov!="") {
+        } elseif ($prov != "") {
             $kode = $prov;
             $level = "1";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
@@ -68,7 +68,7 @@ class PenyuluhPns extends BaseController
 
         //  d($kode);
 
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode, $level);
         $status = $penyuluh_model->getStatus();
 
         if (session()->get('username') == "") {
@@ -81,7 +81,7 @@ class PenyuluhPns extends BaseController
         // }
 
         $penyuluh_model = new PenyuluhPNSModel();
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode, $level);
         $status = $penyuluh_model->getStatus();
         $namaprop = $penyuluh_model->getPropvinsi();
         $tingkatpen = $penyuluh_model->getTingkat();
@@ -131,15 +131,15 @@ class PenyuluhPns extends BaseController
         $list_kec = [];
         $level = "";
 
-        if ($keca!="") {
+        if ($keca != "") {
             $kode = $keca;
             $level = "3";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
-        } elseif ($kabu!="") {
+        } elseif ($kabu != "") {
             $kode = $kabu;
             $level = "2";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
-        } elseif ($prov!="") {
+        } elseif ($prov != "") {
             $kode = $prov;
             $level = "1";
             $list_prov = $penyuluh_model->getProv_Filter($kode);
@@ -170,7 +170,7 @@ class PenyuluhPns extends BaseController
 
         //  d($kode);
 
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode, $level);
         $status = $penyuluh_model->getStatus();
 
         if (session()->get('username') == "") {
@@ -183,7 +183,7 @@ class PenyuluhPns extends BaseController
         // }
 
         $penyuluh_model = new PenyuluhPNSModel();
-        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode,$level);
+        $pns_data = $penyuluh_model->getPenyuluhPNSTotal($kode, $level);
         $status = $penyuluh_model->getStatus();
         $namaprop = $penyuluh_model->getPropvinsi();
         $tingkatpen = $penyuluh_model->getTingkat();
@@ -231,7 +231,7 @@ class PenyuluhPns extends BaseController
     {
         $kab = $this->model->getKab_Filter($provinsi);
         $data = [];
-        foreach($kab as $item){
+        foreach ($kab as $item) {
             array_push($data, [
                 'id_kab' => $item['id_dati2'],
                 'nama_kab' => $item['nama_dati2']
@@ -244,7 +244,7 @@ class PenyuluhPns extends BaseController
     {
         $kec = $this->model->getKec_Filter($kabupaten);
         $data = [];
-        foreach($kec as $item){
+        foreach ($kec as $item) {
             array_push($data, [
                 'id_kec' => $item['id_daerah'],
                 'nama_kec' => $item['deskripsi']
@@ -293,7 +293,7 @@ class PenyuluhPns extends BaseController
     }
 
     public function showDesaAdv()
-        
+
     {
 
         ini_set("memory_limit", "912M");
@@ -304,16 +304,12 @@ class PenyuluhPns extends BaseController
 
         $id_wil = $id_wil_arr;
 
-        $data['q'] = $this->model->getDesaAdv($id_wil,$jum_wil);
+        $data['q'] = $this->model->getDesaAdv($id_wil, $jum_wil);
 
         foreach ($data['q'] as $dtDesa) {
 
             echo '<option value="' . $dtDesa['id_desa'] . '">' . $dtDesa['nm_desa'] . '</option>';
-
         }
-
-
-        
     }
 
     // public function getWilKer($tempat_tugas = null)
@@ -326,7 +322,7 @@ class PenyuluhPns extends BaseController
     //     return json_encode($data);
     // }
 
-    
+
 
     public function save()
     {
@@ -690,5 +686,10 @@ class PenyuluhPns extends BaseController
 
         //session()->setFlashdata('pesan', 'Data berhasil diubah');
 
+    }
+
+    function nonAktif()
+    {
+        echo "test";
     }
 }

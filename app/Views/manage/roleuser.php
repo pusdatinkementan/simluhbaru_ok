@@ -11,7 +11,7 @@
 
         <div class="row mt-3">
             <div class="col-lg-2">
-                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalJab">Tambah</button>
+                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalRole">Tambah</button>
             </div>
             <table id="tblAksesMenu" class="table">
                 <thead>
@@ -31,7 +31,7 @@
                             <td><?= $row['role']; ?></td>
                             <td><?= $row['menu']; ?></td>
                             <td>
-                                <button type="button" id="btnEditJab" data-id="<?= $row['aksesid'] ?>" class=" btn btn-warning btn-sm">Edit</button>
+                                <button type="button" id="btnEditRole" data-id="<?= $row['aksesid'] ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusAkses" data-id="<?= $row['aksesid'] ?>" type="button">Hapus</button>
 
                             </td>
@@ -47,7 +47,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="modalJab" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
+<div class="modal fade" id="modalRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -142,41 +142,40 @@
 
         });
 
-        $(document).delegate('#btnEditJab', 'click', function() {
+        $(document).delegate('#btnEditRole', 'click', function() {
+            // debugger;
             $.ajax({
-                url: '<?= base_url() ?>/master/jabatan/edit/' + $(this).data('id'),
+                url: '<?= base_url() ?>/manage/rolemenu/edit/' + $(this).data('id'),
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(result) {
                     // console.log(result);
+                    $('#role_id').val(result.role_id);
+                    $('#menu_id').val(result.menu_id);
 
-                    $('#idjab').val(result.id_jab);
-                    $('#jabatan').val(result.nama_jab);
-
-                    $('#modalJab').modal('show');
+                    $('#modalRole').modal('show');
 
                     $("#btnSave").attr("id", "btnDoEdit");
                     $("#exampleModalLabel").text("Edit Jabatan");
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
-                        console.log('ok');
-
-                        var idjab = $('#idjab').val();
-                        var jab = $('#jabatan').val();
+                        // console.log('ok');
+                        var role_id = $('#role_id').val();
+                        var menu_id = $('#menu_id').val();
 
                         let formData = new FormData();
-                        formData.append('idjab', idjab);
-                        formData.append('jab', jab);
-
+                        formData.append('role_id', role_id);
+                        formData.append('menu_id', menu_id);
+                        // debugger;
                         $.ajax({
-                            url: '<?= base_url() ?>/master/jabatan/update/' + idjab,
+                            url: '<?= base_url() ?>/manage/rolemenu/updateRoleAccess/' + result.id,
                             type: "POST",
                             data: formData,
                             cache: false,
                             processData: false,
                             contentType: false,
                             success: function(result) {
-                                $('#modalJab').modal('hide');
+                                $('#modalRole').modal('hide');
                                 Swal.fire({
                                     title: 'Sukses',
                                     text: "Sukses edit data",

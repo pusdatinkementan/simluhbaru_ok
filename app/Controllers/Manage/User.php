@@ -51,7 +51,8 @@ class User extends BaseController
                 $row[] = $list->nama_bpp;
                 $row[] = $list->satminkal;
                 $row[] = '<button type="button" id="btnHapusUser" data-id=' . $list->id . ' class="btn btn-danger btn-xs">Hapus</button>
-                      <button type="button" id="btnEditUser" data-id=' . $list->id . ' class="btn btn-primary btn-xs">Edit</button>';
+                      <button type="button" id="btnEditUser" data-id=' . $list->id . ' class="btn btn-primary btn-xs">Edit</button>
+                      <button type="button" id="btnResetUser" data-id=' . $list->id . ' class="btn btn-warning btn-xs">Reset</button>';
                 $data[] = $row;
             }
 
@@ -114,6 +115,21 @@ class User extends BaseController
             'kodebapel' => $this->request->getPost('kab'),
             'kodebpp' => $this->request->getPost('kec'),
             'p_oke' => $this->request->getPost('password')
+        ];
+
+        $this->model1->updateUser($id, $data);
+    }
+
+    public function updatepass($id)
+    {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+
+        $data = [
+            'password' => md5($this->request->getPost('newpass')),
+            'p_oke' => $this->request->getPost('newpass'),
+            'updated_at' => $this->request->getPost('updatedat')
         ];
 
         $this->model1->updateUser($id, $data);

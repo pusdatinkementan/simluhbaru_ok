@@ -37,6 +37,13 @@ class RolemenuModel extends Model
         return $row;
     }
 
+    public function getRoleById($id)
+    {
+        $query = $this->db->query("SELECT * FROM user_access_menu WHERE id = '" . $id . "'");
+        $row = $query->getResultArray();
+        return json_encode($row);
+    }
+
     public function getSubMenuAll()
     {
         $query = $this->db->query("SELECT `user_sub_menu`.*, `user_menu`.`menu`
@@ -59,6 +66,13 @@ class RolemenuModel extends Model
     {
         $db = db_connect();
         $builder = $db->table('user_sub_menu');
+        $builder->where('id', $id)->update($data);
+    }
+
+    public function updateRoleAccess($id, $data)
+    {
+        $db = db_connect();
+        $builder = $db->table('user_access_menu');
         $builder->where('id', $id)->update($data);
     }
 

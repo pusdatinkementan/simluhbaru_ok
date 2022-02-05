@@ -2,17 +2,17 @@
 
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
-	<center>
+<center>
     <h3> Daftar CPNS Calon Penyuluh Kab <?= ucwords(strtolower($nama_kabupaten)) ?> </h3>
-	 <p> Ditemukan <?= ucwords(strtolower($jml_data)) ?> Data </p>
+    <p> Ditemukan <?= ucwords(strtolower($jml_data)) ?> Data </p>
 </center>
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-	
+
             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button><br>
-           
+
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblcpns" class="table align-items-center mb-0">
@@ -40,7 +40,19 @@
                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                     </td>
                                     <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $row['nip']) ?>"><?= $row['noktp'] ?></a></p>
+                                        <!-- <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $row['nip']) ?>"><?= $row['noktp'] ?></a></p> -->
+
+                                        <div class="dropdown">
+
+                                            <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <?= $row['noktp'] ?>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="javascript:;">Profil</a></li>
+                                                <li><a class="dropdown-item" href="javascript:;">Edit</a></li>
+                                                <li><a class="dropdown-item" href="javascript:;">Manajemen Status</a></li>
+                                            </ul>
+                                        </div>
                                     </td>
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['nip'] ?></p>
@@ -355,7 +367,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div id="form2">
                                                             <label>Kecamatan</label>
                                                             <div class="input-group mb-3">
@@ -593,12 +605,12 @@
     <script>
         $(document).ready(function() {
 
-			 $('#tblcpns').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'excel'
-				]
-			});
+            $('#tblcpns').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel'
+                ]
+            });
 
             $(document).delegate('#btnSave', 'click', function() {
 
@@ -733,7 +745,7 @@
                     });
                     return false;
                 }
-		if (tempat_lahir.length == 0) {
+                if (tempat_lahir.length == 0) {
                     Swal.fire({
                         title: 'Error',
                         text: "Tempat Lahir tidak boleh kosong",
@@ -1086,115 +1098,115 @@
                             var nama_sekolah = $('#nama_sekolah').val();
                             var noktp = $('#noktp').val();
 
-if (nip.length == 0 || noktp.length == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "NIP/NIK tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if (nip.length < 18 || nip.length > 18) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "NIP harus 18 digit",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if (noktp.length < 16 || noktp.length > 16) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "NIK harus 16 digit",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if (nama.length == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Nama tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if (agama == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Agama tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-if (tempat_lahir.length == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Tempat Lahir tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
+                            if (nip.length == 0 || noktp.length == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "NIP/NIK tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if (nip.length < 18 || nip.length > 18) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "NIP harus 18 digit",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if (noktp.length < 16 || noktp.length > 16) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "NIK harus 16 digit",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if (nama.length == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Nama tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if (agama == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Agama tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if (tempat_lahir.length == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Tempat Lahir tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
 
-                if (tgl_lahir == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Tanggal Lahir tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if ($('input[name=jenis_kelamin]:checked').length <= 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Jenis Kelamin tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
-                if ($('input[name=kode_kab]:checked').length <= 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Lokasi Kerja tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
+                            if (tgl_lahir == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Tanggal Lahir tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if ($('input[name=jenis_kelamin]:checked').length <= 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Jenis Kelamin tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                            if ($('input[name=kode_kab]:checked').length <= 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Lokasi Kerja tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
 
                             let formData = new FormData();
                             formData.append('id', id);

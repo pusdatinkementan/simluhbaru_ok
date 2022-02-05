@@ -17,8 +17,7 @@ class KabupatenModel extends Model
     protected $allowedFields = [
         'kode_prop', 'kabupaten', 'roda_4_apbn', 'roda_4_apbd', 'roda_2_apbn' . 'roda_2_apbd', 'pc_apbn', 'pc_apbd', 'laptop_apbn', 'laptop_apbd', 'printer_apbn', 'printer_apbd', 'lcd_apbn', 'lcd_apbd', 'soil_apbn', 'soil_apbd', 'modem_apbn', 'modem_apbd',
         'perda', 'pergub', 'id_gapoktan', 'nama_bapel', 'dasar_hukum', 'deskripsi_lembaga_lain', 'no_peraturan', 'tgl_berdiri', 'bln_berdiri', 'thn_berdiri', 'telp_kantor', 'alamat',  'email', 'website', 'ketua', 'telp_hp', 'telp_hp_koord', 'email_koord', 'jenis_pertanian', 'koord',
-        'jenis_tp', 'jenis_hor', 'jenis_bun', 'jenis_nak', 'jenis_pkh', 'jenis_ketahanan_pangan', 'jenis_pangan', 'bidang_luh', 'nama_kabid', 'hp_kabid', 'seksi_luh', 'nama_kasie', 'hp_kasie', 'uptd_luh', 'nama_kauptd', 'hp_kauptd', 'nama_koord_penyuluh', 'nama_koord_penyuluh_thl', 'koord_lainya_nip', 'koord_lainya_nama', 'kode_koord_penyuluh'
-		,'instagram','twitter','facebook'
+        'jenis_tp', 'jenis_hor', 'jenis_bun', 'jenis_nak', 'jenis_pkh', 'jenis_ketahanan_pangan', 'jenis_pangan', 'bidang_luh', 'nama_kabid', 'hp_kabid', 'seksi_luh', 'nama_kasie', 'hp_kasie', 'uptd_luh', 'nama_kauptd', 'hp_kauptd', 'nama_koord_penyuluh', 'nama_koord_penyuluh_thl', 'koord_lainya_nip', 'koord_lainya_nama', 'kode_koord_penyuluh', 'instagram', 'twitter', 'facebook'
     ];
 
 
@@ -128,10 +127,14 @@ class KabupatenModel extends Model
 
     public function getPenyuluhPNS($kode_kab)
     {
+        if (session()->get('status_user') == '303') {
+            $query = $this->db->query("select * from tbldasar where status='0' ORDER BY nama ASC ");
+        }
 
         $query = $this->db->query("select * from tbldasar where satminkal LIKE '" . $kode_kab . "' and kode_kab='4' and status='0' or 
                                     satminkal LIKE '" . $kode_kab . "' and kode_kab='3' and status='0'
                                     ORDER BY nama ASC ");
+
         $row   = $query->getResultArray();
         return $row;
     }
@@ -231,8 +234,8 @@ class KabupatenModel extends Model
 
         return $data;
     }
-	
-	 public function getTotalp3k($kode_prop)
+
+    public function getTotalp3k($kode_prop)
     {
         $db = Database::connect();
         $query = $db->query("select count(id) as jum_p3k from tbldasar_p3k where satminkal like '$kode_prop' 

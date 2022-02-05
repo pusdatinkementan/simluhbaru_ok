@@ -6,6 +6,11 @@ use App\Controllers\BaseController;
 use App\Models\KelembagaanPelakuUtama\KelompokTani\KelompokTaniModel;
 use App\Models\KelembagaanPelakuUtama\KelompokTani\ListPoktanModel;
 use App\Models\KodeWilayah\KodeWilModel2;
+use App\Models\KelembagaanPelakuUtama\KelompokTani\KomoditasBunModel;
+use App\Models\KelembagaanPelakuUtama\KelompokTani\KomoditasHorModel;
+use App\Models\KelembagaanPelakuUtama\KelompokTani\KomoditasNakModel;
+use App\Models\KelembagaanPelakuUtama\KelompokTani\KomoditasOlahModel;
+use App\Models\KelembagaanPelakuUtama\KelompokTani\KomoditasTpModel;
 
 class KelompokTani extends BaseController
 {
@@ -51,7 +56,14 @@ class KelompokTani extends BaseController
         $desa = $listpoktan_model->getDesa($kode_kec);
         $listpoktan_data = $listpoktan_model->getKelompokTaniTotal($kode_kec);
         $kode_data = $kodewil_model->getKodeWil($kode_kec);
-        
+        /*
+        Tanggal : 31 Januari 2022
+        Desc: menambahkan list model komoditas
+        Edited By: Bambang, Wahyu, Asyhadi
+        */
+        $getmodelbun = new KomoditasBunModel();
+        $getmodeltp = new KomoditasTpModel();
+        $getmodelnak = new KomoditasNakModel();
 
         $data = [
 
@@ -62,13 +74,16 @@ class KelompokTani extends BaseController
             'name' => 'List Kelompok Tani',
             'desa' => $desa,
             'kode_kec' => $kode_kec,
-            'kode_prop' => $kode_data['kode_prop']
+            'kode_prop' => $kode_data['kode_prop'],
+            'databun' => $getmodelbun->getBun(),
+            'datatp' => $getmodeltp->getTp()
         ];
+
 
         return view('KelembagaanPelakuUtama/KelompokTani/listpoktan', $data);
     }
     public function save()
-    { 
+    {
         $listpoktan_model = new ListPoktanModel();
         try {
             $res = $listpoktan_model->save([
@@ -84,7 +99,7 @@ class KelompokTani extends BaseController
                 'status' => $this->request->getPost('status'),
                 'simluh_tahun_tap_kelas' => $this->request->getPost('simluh_tahun_tap_kelas'),
                 'simluh_kelas_kemampuan' => $this->request->getPost('simluh_kelas_kemampuan'),
-                
+
                 'simluh_jenis_kelompok_perempuan' => $this->request->getPost('simluh_jenis_kelompok_perempuan'),
                 'simluh_jenis_kelompok_domisili' => $this->request->getPost('simluh_jenis_kelompok_domisili'),
                 'simluh_jenis_kelompok_upja' => $this->request->getPost('simluh_jenis_kelompok_upja'),
@@ -94,35 +109,37 @@ class KelompokTani extends BaseController
                 'simluh_jenis_kelompok_kmp' => $this->request->getPost('simluh_jenis_kelompok_kmp'),
                 'simluh_jenis_kelompok_umkm' => $this->request->getPost('simluh_jenis_kelompok_umkm'),
 
-                
+
                 'simluh_jenis_kelompok_tp' => $this->request->getPost('simluh_jenis_kelompok_tp'),
                 'simluh_jenis_kelompok_bun' => $this->request->getPost('simluh_jenis_kelompok_bun'),
                 'simluh_jenis_kelompok_hor' => $this->request->getPost('simluh_jenis_kelompok_hor'),
                 'simluh_jenis_kelompok_nak' => $this->request->getPost('simluh_jenis_kelompok_nak'),
                 'simluh_jenis_kelompok_olah' => $this->request->getPost('simluh_jenis_kelompok_olah'),
 
-                
+
                 'simluh_komo_lain_tp' => $this->request->getPost('simluh_komo_lain_tp'),
                 'simluh_komo_lain_bun' => $this->request->getPost('simluh_komo_lain_bun'),
                 'simluh_komo_lain_hor' => $this->request->getPost('simluh_komo_lain_hor'),
                 'simluh_komo_lain_nak' => $this->request->getPost('simluh_komo_lain_nak'),
                 'simluh_komo_lain_olah' => $this->request->getPost('simluh_komo_lain_olah'),
+
+                'simluh_komo_lain_olah' => $this->request->getPost('komTp')
             ]);
-            if($res == false){
+            if ($res == false) {
                 $data = [
                     "value" => false,
                     "message" => 'data tidak lengkap'
                 ];
-            }else{
+            } else {
                 $data = [
                     "value" => true
                 ];
             }
             return json_encode($data);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 "value" => false,
-                "message" => $e->getMessage() 
+                "message" => $e->getMessage()
             ];
             return json_encode($data);
         }
@@ -130,14 +147,14 @@ class KelompokTani extends BaseController
     }
     public function edit($id_poktan)
     {
-        
+
         $poktan = $this->model->getDataById($id_poktan);
         echo $poktan;
     }
 
     public function update($id_poktan)
     {
-        
+
         $listpoktan_model = new ListPoktanModel();
         $kode_kec = $this->request->getPost('kode_kec');
         $kode_kab = $this->request->getPost('kode_kab');
@@ -151,7 +168,7 @@ class KelompokTani extends BaseController
         $status = $this->request->getPost('status');
         $simluh_kelas_kemampuan = $this->request->getPost('simluh_kelas_kemampuan');
         $simluh_tahun_tap_kelas = $this->request->getPost('simluh_tahun_tap_kelas');
-      
+
         $simluh_jenis_kelompok_perempuan = $this->request->getPost('simluh_jenis_kelompok_perempuan');
         $simluh_jenis_kelompok_domisili = $this->request->getPost('simluh_jenis_kelompok_domisili');
         $simluh_jenis_kelompok_upja = $this->request->getPost('simluh_jenis_kelompok_upja');
@@ -172,7 +189,7 @@ class KelompokTani extends BaseController
         $simluh_komo_lain_hor = $this->request->getPost('simluh_komo_lain_hor');
         $simluh_komo_lain_nak = $this->request->getPost('simluh_komo_lain_nak');
         $simluh_komo_lain_olah = $this->request->getPost('simluh_komo_lain_olah');
-        
+
         $listpoktan_model->save([
             'id_poktan' => $id_poktan,
             'kode_kec' => $kode_kec,
@@ -187,7 +204,7 @@ class KelompokTani extends BaseController
             'status' => $status,
             'simluh_tahun_tap_kelas' => $simluh_tahun_tap_kelas,
             'simluh_kelas_kemampuan' => $simluh_kelas_kemampuan,
-            
+
             'simluh_jenis_kelompok_perempuan' => $simluh_jenis_kelompok_perempuan,
             'simluh_jenis_kelompok_domisili' => $simluh_jenis_kelompok_domisili,
             'simluh_jenis_kelompok_upja' => $simluh_jenis_kelompok_upja,
@@ -209,8 +226,6 @@ class KelompokTani extends BaseController
             'simluh_komo_lain_nak' => $simluh_komo_lain_nak,
             'simluh_komo_lain_olah' => $simluh_komo_lain_olah,
         ]);
-
-
     }
     public function delete($id_poktan)
     {

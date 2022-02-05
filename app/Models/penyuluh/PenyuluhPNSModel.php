@@ -101,29 +101,29 @@ class PenyuluhPNSModel extends Model
     }
 
 
-    public function getPenyuluhPNSTotal($kode_kab,$level_filter)
+    public function getPenyuluhPNSTotal($kode_kab, $level_filter)
     {
         //d($kode_kab);
         $db = Database::connect();
 
-        if($level_filter == 2){
+        if ($level_filter == 2) {
             $query = $db->query("select count(a.id) as jum, nama_dati2 as nama_kab from tbldasar a left join tbldati2 b on b.id_dati2=a.satminkal where satminkal='$kode_kab' and status not IN('1','2','7')");
             $row   = $query->getRow();
-        } else if($level_filter == 3) {
+        } else if ($level_filter == 3) {
             $query = $db->query("select count(a.id) as jum, nama_dati2 as nama_kab, deskripsi as nama_kec from tbldasar a 
             left join tbldati2 b on b.id_dati2=a.satminkal
             left join tbldaerah c on c.id_daerah=a.tempat_tugas
             where a.tempat_tugas='" . $kode_kab . "' and status not IN('1','2','7')");
             $row   = $query->getRow();
-        } else if($level_filter == 1) {
+        } else if ($level_filter == 1) {
             $query = $db->query("select count(a.id) as jum, nama_dati2 as nama_kab from tbldasar a left join tbldati2 b on b.id_dati2=a.satminkal where satminkal LIKE '(SUBSTR('" . $kode_kab . "',1,2))%' and status not IN('1','2','7')");
             $row   = $query->getRow();
         } else {
             $query = $db->query("select count(a.id) as jum, nama_dati2 as nama_kab from tbldasar a left join tbldati2 b on b.id_dati2=a.satminkal where satminkal='$kode_kab' and status not IN('1','2','7')");
             $row   = $query->getRow();
         }
-        
-        if($level_filter == 2){
+
+        if ($level_filter == 2) {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
         status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
         a.alamat, a.dati2, a.kodepos, a.kode_prop, a.telp, a.hp, a.email, a.status, a.gol, a.jabatan, a.tgltmtgol, a.batas_pensiun,
@@ -195,8 +195,7 @@ class PenyuluhPNSModel extends Model
                                 left join tblpak zo on a.id=zo.id
                                 left join tblpp z on zo.gol=z.kode
                                 where a.satminkal='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
-        }
-        elseif($level_filter == 3){
+        } elseif ($level_filter == 3) {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
             status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
             a.alamat, a.dati2, a.kodepos, a.kode_prop, a.telp, a.hp, a.email, a.status, a.gol, a.jabatan, a.tgltmtgol, a.batas_pensiun,
@@ -268,8 +267,7 @@ class PenyuluhPNSModel extends Model
                                     left join tblpak zo on a.id=zo.id
                                     left join tblpp z on zo.gol=z.kode
                                     where a.tempat_tugas='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
-           
-        }elseif($level_filter==1){
+        } elseif ($level_filter == 1) {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
         status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
         a.alamat, a.dati2, a.kodepos, a.kode_prop, a.telp, a.hp, a.email, a.status, a.gol, a.jabatan, a.tgltmtgol, a.batas_pensiun,
@@ -341,7 +339,6 @@ class PenyuluhPNSModel extends Model
                                 left join tblpak zo on a.id=zo.id
                                 left join tblpp z on zo.gol=z.kode
                                 where a.satminkal LIKE '(SUBSTR('" . $kode_kab . "',1,2))%' and status not IN('1','2','7') order by nama");
-        
         } else {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
         status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
@@ -415,7 +412,7 @@ class PenyuluhPNSModel extends Model
                                 left join tblpp z on zo.gol=z.kode
                                 where a.satminkal='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
         }
-        
+
         $results = $query->getResultArray();
 
         $data =  [
@@ -493,7 +490,7 @@ class PenyuluhPNSModel extends Model
         $row = $query->getRow();
         return json_encode($row);
     }
- 
+
     public function getProv_Filter($kode_kab)
     {
         $query = $this->db->query("select * from tblpropinsi WHERE id_prop LIKE CONCAT(SUBSTR('" . $kode_kab . "',1,2),'00') ORDER BY nama_prop ASC");
@@ -503,28 +500,28 @@ class PenyuluhPNSModel extends Model
 
     public function getKab_Def($kode_kab)
     {
-        $query = $this->db->query("select * from tbldati2 WHERE id_dati2 = '".$kode_kab."' ORDER BY id_dati2 ASC");
+        $query = $this->db->query("select * from tbldati2 WHERE id_dati2 = '" . $kode_kab . "' ORDER BY id_dati2 ASC");
         $row   = $query->getResultArray();
         return $row;
     }
 
     public function getKec_Def($kode_kec)
     {
-        $query = $this->db->query("select * from tbldaerah WHERE id_daerah = '".$kode_kec."' ORDER BY id_daerah ASC");
+        $query = $this->db->query("select * from tbldaerah WHERE id_daerah = '" . $kode_kec . "' ORDER BY id_daerah ASC");
         $row   = $query->getResultArray();
         return $row;
     }
 
     public function getKab_Filter($provinsi)
     {
-        $query = $this->db->query("select * from tbldati2 WHERE id_prop = '".$provinsi."' ORDER BY id_dati2 ASC");
+        $query = $this->db->query("select * from tbldati2 WHERE id_prop = '" . $provinsi . "' ORDER BY id_dati2 ASC");
         $row   = $query->getResultArray();
         return $row;
     }
 
     public function getKec_Filter($kabupaten)
     {
-        $query = $this->db->query("select * from tbldaerah WHERE id_dati2 = '".$kabupaten."' ORDER BY id_daerah ASC");
+        $query = $this->db->query("select * from tbldaerah WHERE id_dati2 = '" . $kabupaten . "' ORDER BY id_daerah ASC");
         $row   = $query->getResultArray();
         return $row;
     }
@@ -568,21 +565,20 @@ class PenyuluhPNSModel extends Model
         return $row;
     }
 
-    public function getDesaAdv($id_wil,$jum_wil)
+    public function getDesaAdv($id_wil, $jum_wil)
     {
-        if($jum_wil > 1) {
-            $arr_id_satu = explode(",",$id_wil);
-            $id_satu = substr($arr_id_satu[0],0,6);
-        }
-        else {
+        if ($jum_wil > 1) {
+            $arr_id_satu = explode(",", $id_wil);
+            $id_satu = substr($arr_id_satu[0], 0, 6);
+        } else {
             $arr_id_satu = $id_wil;
-            $id_satu = substr($arr_id_satu,0,6);
+            $id_satu = substr($arr_id_satu, 0, 6);
         }
 
-        
-        
+
+
         //$id_wil =    
-        $query = $this->db->query("SELECT * FROM tbldesa WHERE id_desa LIKE '" . $id_satu . "%' AND id_desa NOT IN (".$id_wil.") ORDER BY id_desa");
+        $query = $this->db->query("SELECT * FROM tbldesa WHERE id_desa LIKE '" . $id_satu . "%' AND id_desa NOT IN (" . $id_wil . ") ORDER BY id_desa");
         $row = $query->getResultArray();
         return $row;
     }
