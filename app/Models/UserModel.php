@@ -63,7 +63,6 @@ class UserModel extends Model
     {
 
         $query = $this->db->query("SELECT * FROM tblstatus");
-
         $row   = $query->getResultArray();
         return $row;
     }

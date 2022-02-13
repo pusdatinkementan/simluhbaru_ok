@@ -167,6 +167,7 @@ class WilayahModel extends Model
 
     public function getKab($id)
     {
+
         $query = $this->db->query("SELECT * FROM tbldati2 WHERE id_dati2 LIKE '" . $id . "%' ORDER BY id_dati2");
         $row = $query->getResultArray();
 

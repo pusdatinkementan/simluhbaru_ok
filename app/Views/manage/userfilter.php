@@ -32,6 +32,7 @@
                 <label>Kabupaten</label>
                 <div class="input-group mb-3">
                     <select name="filter_kab" id="filter_kab" class="form-control">
+                        <option value="">-- SEMUA --</option>
 
                     </select>
                 </div>
@@ -40,11 +41,13 @@
                 <label>Kecamatan</label>
                 <div class="input-group mb-3">
                     <select name="filter_kec" id="filter_kec" class="form-control">
+                        <option value="">-- SEMUA --</option>
+
                     </select>
                 </div>
             </div>
             <div class="col-md-4">
-                <button type="button" name="filter_submit" id="filter_submit" class="btn bg-gradient-warning btn-sm">Filter</button>
+                <button type="submit" name="filter_submit" class="btn bg-gradient-warning btn-sm">Filter</button>
             </div>
             </form>
         </div>
@@ -53,28 +56,41 @@
             <div class="col-lg-2">
                 <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#newUserModal">Tambah</button>
             </div>
-            <div id="tblawal">
-                <table id="tblUser" class="table">
-                    <thead>
+            <table id="tblUser" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Nama User</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">BPP</th>
+                        <th scope="col">Satker</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    foreach ($dtsearch as $row) {
+                    ?>
                         <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Password</th>
-                            <th scope="col">Nama User</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">BPP</th>
-                            <th scope="col">Satker</th>
-                            <th scope="col">Aksi</th>
+                            <td><?= $no++; ?></td>
+                            <td><?= $row['username']; ?></td>
+                            <td><?= $row['p_oke']; ?></td>
+                            <td><?= $row['name']; ?></td>
+                            <td><?= $row['namastatus']; ?></td>
+                            <td><?= $row['nama_bpp']; ?></td>
+                            <td><?= $row['satminkal']; ?></td>
+                            <td><button type="button" id="btnHapusUser" data-id="<?= $row['id']; ?>" class="btn btn-danger btn-xs">Hapus</button>
+                                <button type="button" id="btnEditUser" data-id="<?= $row['id']; ?>" class="btn btn-primary btn-xs">Edit</button>
+                                <button type="button" id="btnResetUser" data-id="<?= $row['id']; ?>" class="btn btn-warning btn-xs">Reset</button>
+                            </td>
                         </tr>
-                    </thead>
+                    <?php } ?>
+                </tbody>
 
-                    <tbody></tbody>
-
-                </table>
-            </div>
-
-            <div id="resultFilter">
-            </div>
+            </table>
 
         </div>
 
@@ -216,15 +232,15 @@
         //datatables
         var table = $('#tblUser').DataTable({
             "processing": true, //Feature control the processing indicator.
-            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            // "serverSide": true, //Feature control DataTables' server-side processing mode.
             "ordering": true, // Set true agar bisa di sorting
-            "order": [], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+            // "order": [], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
             // Load data for the table's content from an Ajax source
-            "ajax": {
-                "url": "<?php echo site_url('manage/user/ajax_user_list') ?>",
-                //"url": "ajax_user_list",
-                "type": "POST"
-            },
+            // "ajax": {
+            //     "url": "<?php echo site_url('manage/user/ajax_user_list') ?>",
+            //     //"url": "ajax_user_list",
+            //     "type": "POST"
+            // },`
             "aLengthMenu": [
                 [5, 10, 50],
                 [5, 10, 50]
@@ -664,115 +680,6 @@
             dataType: "html"
         });
         return false;
-    });
-
-    $('#filter_submit').on('click', function() {
-
-        var kdprov = $('#filter_prov').val();
-        var kdkab = $('#filter_kab').val();
-        var kdkec = $('#filter_kec').val();
-
-        if (kdprov == '') {
-            // alert('test');
-            location.reload();
-        }
-
-        if (kdprov != '' && kdkab == '') {
-            // debugger;
-            $.ajax({
-                url: "<?= base_url() ?>/manage/filter/filter_prov/" + kdprov,
-                type: 'POST',
-                data: {
-                    'kdprov': kdprov
-                },
-                dataType: 'html',
-                success: function(response) {
-                    $("#tblawal").hide();
-                    $("#resultFilter").html(response);
-                    $("#tblresFilteruser").DataTable({
-                        "processing": true, //Feature control the processing indicator.
-                        "ordering": true, // Set true agar bisa di sorting
-                        "order": [], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
-                        "aLengthMenu": [
-                            [5, 10, 50],
-                            [5, 10, 50]
-                        ], // Combobox Limit
-                        //Set column definition initialisation properties.
-                        "columnDefs": [{
-                            "targets": [0], //first column / numbering column
-                            "orderable": true, //set not orderable
-                        }, ],
-                    });
-                }
-            });
-
-        }
-
-        if (kdprov != '' && kdkab != '' && kdkec == '') {
-            // alert(kdkab);
-            $.ajax({
-                url: "<?= base_url() ?>/manage/filter/filter_kab/" + kdkab,
-                type: 'POST',
-                data: {
-                    'kdkab': kdkab
-                },
-                dataType: 'html',
-                success: function(response) {
-                    $("#tblawal").hide();
-
-                    $("#resultFilter").html(response);
-                    $("#tblresFilteruser").DataTable({
-                        "processing": true, //Feature control the processing indicator.
-                        "ordering": true, // Set true agar bisa di sorting
-                        "order": [], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
-                        "aLengthMenu": [
-                            [5, 10, 50],
-                            [5, 10, 50]
-                        ], // Combobox Limit
-                        //Set column definition initialisation properties.
-                        "columnDefs": [{
-                            "targets": [0], //first column / numbering column
-                            "orderable": true, //set not orderable
-                        }, ],
-                    });
-                }
-            });
-
-
-        }
-
-        if (kdprov != '' && kdkab != '' && kdkec != '') {
-            // alert(kdkec);
-            $.ajax({
-                url: "<?= base_url() ?>/manage/filter/filter_kec/" + kdkec,
-                type: 'POST',
-                data: {
-                    'kdkec': kdkec
-                },
-                dataType: 'html',
-                success: function(response) {
-                    $("#tblawal").hide();
-
-                    $("#resultFilter").html(response);
-                    $("#tblresFilteruser").DataTable({
-                        "processing": true, //Feature control the processing indicator.
-                        "ordering": true, // Set true agar bisa di sorting
-                        "order": [], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
-                        "aLengthMenu": [
-                            [5, 10, 50],
-                            [5, 10, 50]
-                        ], // Combobox Limit
-                        //Set column definition initialisation properties.
-                        "columnDefs": [{
-                            "targets": [0], //first column / numbering column
-                            "orderable": true, //set not orderable
-                        }, ],
-                    });
-                }
-            });
-        }
-
-
     });
 </script>
 

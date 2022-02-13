@@ -26,7 +26,7 @@ class Wilayah extends BaseController
     {
 
         $data['q'] = $this->model->getKab($id);
-
+        echo  '<option value="">Pilih</option>';
         foreach ($data['q'] as $dtKab) {
 
             echo '<option value="' . $dtKab['id_dati2'] . '">' . $dtKab['nama_dati2'] . '</option>';
@@ -37,7 +37,7 @@ class Wilayah extends BaseController
     {
 
         $data['q'] = $this->model->getKec($id);
-
+        echo  '<option value="">Pilih</option>';
         foreach ($data['q'] as $dtKec) {
 
             echo '<option value="' . $dtKec['id_daerah'] . '">' . $dtKec['deskripsi'] . '</option>';
