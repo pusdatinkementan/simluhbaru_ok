@@ -87,6 +87,9 @@ $routes->get('/data_layanan_kab', 'Profil/Guest::datadukungkab');
 $routes->get('/data_layanan_kec', 'Profil/Guest::datadukungkec');
 $routes->get('/powil_luaslahan', 'Profil/Guest::rekappowil');
 
+$routes->get('/penyuluhbbpptp', 'Penyuluh/PenyuluhPns::getPenyuluhBbpptp');
+$routes->get('/penyuluhbptp', 'Penyuluh/PenyuluhPns::getPenyuluhBptp');
+
 //KelembagaanPelakuUtama
 $routes->get('/daftarkelpenerimabantuan', 'profil/Guest::rekapkelpenbanprov');
 $routes->get('/daftarkelpenerimabantuankab', 'profil/Guest::rekapkelpenbankab');
@@ -186,6 +189,7 @@ $routes->get('/kelompoktanikec', 'KelembagaanPelakuUtama/KelompokTani/KelompokTa
 $routes->get('/listpoktan', 'KelembagaanPelakuUtama/KelompokTani/KelompokTani::listpoktan');
 $routes->get('/listpoktananggota', 'KelembagaanPelakuUtama/KelompokTani/ListPoktanAnggota::listpoktananggota');
 $routes->get('/listbantu', 'KelembagaanPelakuUtama/KelompokTani/ListBantu::listbantu');
+$routes->get('/listprogram', 'KelembagaanPelakuUtama/KelompokTani/ListProgram::index');
 $routes->post('/listpoktan/save', 'KelembagaanPelakuUtama/Gapoktan/ListGapoktan::save');
 $routes->get('/komoditasbun', 'KelembagaanPelakuUtama/KelompokTani/JenisKomoditasDiusahakan::komoditasbun');
 

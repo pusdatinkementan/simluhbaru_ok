@@ -25,6 +25,19 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         <table id="tblposluhdes" class="table align-items-center mb-0">
             <thead>
                 <tr>
+                    <th class="text-uppercase text-secondary text-xxs"></th>
+                    <th class="text-uppercase text-secondary text-xxs">Desa</th>
+                    <th class="text-uppercase text-secondary text-xxs">NamaPosluhdes</th>
+                    <th class="text-uppercase text-secondary text-xxs">Alamat</th>
+                    <th class="text-uppercase text-secondary text-xxs">Ketua</th>
+                    <th class="text-uppercase text-secondary text-xxs">Sekretaris</th>
+                    <th class="text-uppercase text-secondary text-xxs">Bendahara</th>
+                    <th class="text-uppercase text-secondary text-xxs">TahunBerdiri</th>
+                    <th class="text-uppercase text-secondary text-xxs">JumlahAnggota</th>
+                    <th class="text-uppercase text-secondary text-xxs">PenyuluhSwadaya</th>
+
+                </tr>
+                <tr>
                     <td width="5" class="text-uppercase text-secondary text-xxs font-weight-bolder">No</td>
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder">Desa</td>
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder">Nama<br>Posluhdes</td>
@@ -35,7 +48,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     <td width="10" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Tahun<br>Berdiri</td>
                     <td width="10" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Jumlah<br>Anggota</td>
                     <td width="100" class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Penyuluh<br>Swadaya</td>
-                    <td width="100" class="text-secondary opacity-7"></td>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +60,18 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                             <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                         </td>
                         <td width="50">
-                            <p class="text-xs font-weight-bold mb-0"><?= $item['nm_desa'] ?></p>
+                            <p class="text-xs font-weight-bold mb-0"></p>
+                            <div class="dropdown show">
+                                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <?= $item['nm_desa'] ?>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" data-idpos="<?= $item['idpos'] ?>" id="btn-edit" href="#"> <i class="fas fa-edit"></i> Ubah</a>
+                                    <a class="dropdown-item" id="btn-hapus" data-idpos="<?= $item['idpos'] ?>" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                </div>
+                            </div>
+
                         </td>
                         <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p>
@@ -74,16 +97,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         <td class="align-middle rupiah text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $item['penyuluh_swadaya'] ?></p>
                         </td>
-                        <td class="align-middle text-center text-sm">
-                            <a href="#">
-                                <button type="button" id="btn-edit" class="btn bg-gradient-warning btn-sm" data-idpos="<?= $item['idpos'] ?>">
-                                    <i class="fas fa-edit"></i> Ubah
-                                </button>
-                            </a>
-                            <button type="button" id="btn-hapus" data-idpos="<?= $item['idpos'] ?>" class="btn bg-gradient-danger btn-sm">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                        </td>
+
                     </tr>
                 <?php
                 }
@@ -161,7 +175,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                     <option value="">Penyuluh Swadaya</option>
                                                     <?php
                                                     foreach ($pen_swa as $row3) {
-                                                        echo '<option value="' . $row3["id_swa"] . '">' . $row3["nama"] . '</option>';
+                                                        echo '<option value="' . $row3["id_swa"] . '">' . $row3["nama"] . ' - ' . $row3["nm_desa"] . '</option>';
                                                     }
                                                     ?>
                                                 </select>
@@ -203,12 +217,36 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         return true;
     }
     $(document).ready(function() {
-		 $('#tblposluhdes').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'excel'
-				]
-			});
+
+        var input_id = 0;
+        $('#tblposluhdes thead th').each(function() {
+            var title = $(this).text();
+            if (title != '') {
+                $(this).html('<input id="input_search_' + input_id + '" type="text" style="width: 100%" placeholder="Search ' + title + '" />');
+            }
+            input_id++;
+        });
+
+        $('#tblposluhdes').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel'
+            ],
+            initComplete: function() {
+                // Apply the search
+                this.api().columns().every(function() {
+                    var that = this;
+
+                    $('#input_search_' + this.index()).on('keyup change clear', function() {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
         $(document).delegate('#btnSave', 'click', function() {
 
             var kode_desa = $('#kode_desa').val();

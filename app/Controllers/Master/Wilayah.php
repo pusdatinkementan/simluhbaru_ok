@@ -55,7 +55,7 @@ class Wilayah extends BaseController
     {
 
         $data['q'] = $this->model->getDesa($id);
-
+        echo  '<option value="">Pilih</option>';
         foreach ($data['q'] as $dtDesa) {
 
             echo '<option value="' . $dtDesa['id_desa'] . '">' . $dtDesa['nm_desa'] . '</option>';

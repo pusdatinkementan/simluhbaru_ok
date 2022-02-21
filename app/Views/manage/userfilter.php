@@ -65,6 +65,7 @@
                         <th scope="col">Nama User</th>
                         <th scope="col">Status</th>
                         <th scope="col">BPP</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Satker</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -81,6 +82,7 @@
                             <td><?= $row['name']; ?></td>
                             <td><?= $row['namastatus']; ?></td>
                             <td><?= $row['nama_bpp']; ?></td>
+                            <td><?= $row['email']; ?></td>
                             <td><?= $row['satminkal']; ?></td>
                             <td><button type="button" id="btnHapusUser" data-id="<?= $row['id']; ?>" class="btn btn-danger btn-xs">Hapus</button>
                                 <button type="button" id="btnEditUser" data-id="<?= $row['id']; ?>" class="btn btn-primary btn-xs">Edit</button>

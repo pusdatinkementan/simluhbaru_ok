@@ -205,7 +205,7 @@ $data = $json[0];
                                         <?= number_format($data['jumpenyuluhp3k']); ?>
                                     </h5>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                     <i class="fas fa-user"></i>
@@ -227,7 +227,7 @@ $data = $json[0];
                                         <?= number_format($data['jumkep']); ?>
                                     </h5>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                     <i class="fas fa-user"></i>
@@ -238,7 +238,7 @@ $data = $json[0];
                 </div>
             </div>
 
-             <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
@@ -249,7 +249,7 @@ $data = $json[0];
                                         <?= number_format($data['jumgapoktanbersama']); ?>
                                     </h5>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                     <i class="fas fa-user"></i>
@@ -260,7 +260,7 @@ $data = $json[0];
                 </div>
             </div>
 
-             <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
@@ -271,7 +271,7 @@ $data = $json[0];
                                         <?= number_format($data['jumpenyuluhswasta']); ?>
                                     </h5>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                     <i class="fas fa-user"></i>
@@ -282,7 +282,7 @@ $data = $json[0];
                 </div>
             </div>
 
-             <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
@@ -293,7 +293,7 @@ $data = $json[0];
                                         <?= number_format($data['jumpoktanp2l']); ?>
                                     </h5>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                     <i class="fas fa-user"></i>
@@ -331,19 +331,19 @@ $data = $json[0];
 
 
                                         <h1 class="h3 mb-4 text-gray-800">
-											<?= $title; ?>
-											<div style="float:right">
-												<a data-bs-toggle="modal" data-bs-target="#modal-form" id="btn-edit" data-id_gapoktan="<?= $dt['id_gapoktan']; ?>"><i class="fas fa-edit"></i></a>&nbsp; &nbsp;
-												<a href="<?php echo site_url('/profil/cetaklembaga'); ?>" target="_blank" id="btn-edit"><i class="fas fa-file-pdf"></i></a>
-											</div>
-											
-										</h1>
-																			
-																			
+                                            <?= $title; ?>
+                                            <div style="float:right">
+                                                <a data-bs-toggle="modal" data-bs-target="#modal-form" id="btn-edit" data-id_gapoktan="<?= $dt['id_gapoktan']; ?>"><i class="fas fa-edit"></i></a>&nbsp; &nbsp;
+                                                <a href="<?php echo site_url('/profil/cetaklembaga'); ?>" target="_blank" id="btn-edit"><i class="fas fa-file-pdf"></i></a>
+                                            </div>
+
+                                        </h1>
+
+
 
                                         <div class="col-lg-12">
                                             <?php if (session()->get('status_user') == '1') { ?>
-											<!--
+                                                <!--
                                                 <table class="table">
 
                                                     <tbody>
@@ -355,7 +355,7 @@ $data = $json[0];
                                                          <tr>
                                                             <td>Tanggal Pembentukan</td>
                                                             <td>:</td>
-                                                            <td><?= format_date($dt['thn_berdiri'] . '-' . $dt['bln_berdiri'] . '-' . $dt['tgl_berdiri'], 2).' ('.$dt['dasar_hukum'].' '.(($dt['no_peraturan'] <> '') ? ' No. '.$dt['no_peraturan']: '').')'; ?> </td>
+                                                            <td><?= format_date($dt['thn_berdiri'] . '-' . $dt['bln_berdiri'] . '-' . $dt['tgl_berdiri'], 2) . ' (' . $dt['dasar_hukum'] . ' ' . (($dt['no_peraturan'] <> '') ? ' No. ' . $dt['no_peraturan'] : '') . ')'; ?> </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Alamat</td>
@@ -385,17 +385,17 @@ $data = $json[0];
 														<tr>
                                                             <td>Akun Instagram Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['instagram'] <> '') ? '<a href="http://instagram.com/'.$dt['instagram'].'" target="_blank"><i class="fab fa-instagram"></i> '.$dt['instagram'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['instagram'] <> '') ? '<a href="http://instagram.com/' . $dt['instagram'] . '" target="_blank"><i class="fab fa-instagram"></i> ' . $dt['instagram'] . '</a>' : ''; ?></td>
                                                         </tr>
 														<tr>
                                                             <td>Akun Facebook Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['facebook'] <> '') ? '<a href="http://facebook.com/'.$dt['facebook'].'" target="_blank"><i class="fab fa-facebook"></i> '.$dt['facebook'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['facebook'] <> '') ? '<a href="http://facebook.com/' . $dt['facebook'] . '" target="_blank"><i class="fab fa-facebook"></i> ' . $dt['facebook'] . '</a>' : ''; ?></td>
                                                         </tr>
 														<tr>
                                                             <td>Akun Twitter Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['twitter'] <> '') ? '<a href="http://twitter.com/'.$dt['twitter'].'" target="_blank"><i class="fab fa-twitter"></i> '.$dt['twitter'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['twitter'] <> '') ? '<a href="http://twitter.com/' . $dt['twitter'] . '" target="_blank"><i class="fab fa-twitter"></i> ' . $dt['twitter'] . '</a>' : ''; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Nama Pimpinan</td>
@@ -423,27 +423,27 @@ $data = $json[0];
                                                     </tbody>
                                                 </table>
 												-->
-                                            <?php } elseif (session()->get('status_user') == '200') { 
-														$bidang = array();
-														if ($dt['jenis_pertanian'] == '1')
-															$bidang[] = "Pertanian";
-														if ($dt['jenis_tp'] == '2')
-															$bidang[] = "Tanaman Pangan";
-														if ($dt['jenis_hor'] == '3')
-															$bidang[] = "Hortikultura";
-														if ($dt['jenis_bun'] == '4')
-															$bidang[] = "Perkebunan";
-														if ($dt['jenis_nak'] == '5')
-															$bidang[] = "Peternakan";
-														if ($dt['jenis_pkh'] == '6')
-															$bidang[] = "Kesehatan Hewan";
-														if ($dt['jenis_ketahanan_pangan'] == '7')
-															$bidang[] = "Ketahanan Pangan";
-														if ($dt['jenis_pangan'] == '8')
-															$bidang[] = "Pangan";
-														$dtbidang = (count($bidang) > 0) ? implode(", ",$bidang) : "";
-												
-											?>
+                                            <?php } elseif (session()->get('status_user') == '200') {
+                                                $bidang = array();
+                                                if ($dt['jenis_pertanian'] == '1')
+                                                    $bidang[] = "Pertanian";
+                                                if ($dt['jenis_tp'] == '2')
+                                                    $bidang[] = "Tanaman Pangan";
+                                                if ($dt['jenis_hor'] == '3')
+                                                    $bidang[] = "Hortikultura";
+                                                if ($dt['jenis_bun'] == '4')
+                                                    $bidang[] = "Perkebunan";
+                                                if ($dt['jenis_nak'] == '5')
+                                                    $bidang[] = "Peternakan";
+                                                if ($dt['jenis_pkh'] == '6')
+                                                    $bidang[] = "Kesehatan Hewan";
+                                                if ($dt['jenis_ketahanan_pangan'] == '7')
+                                                    $bidang[] = "Ketahanan Pangan";
+                                                if ($dt['jenis_pangan'] == '8')
+                                                    $bidang[] = "Pangan";
+                                                $dtbidang = (count($bidang) > 0) ? implode(", ", $bidang) : "";
+
+                                            ?>
                                                 <table class="table">
 
                                                     <tbody>
@@ -452,7 +452,7 @@ $data = $json[0];
                                                             <td>:</td>
                                                             <td><?= $dt['deskripsi_lembaga_lain']; ?> <?= $sessnama; ?></td>
                                                         </tr>
-														 <tr>
+                                                        <tr>
                                                             <td>Bidang Kelembagaan (Sesuai Nomenklatur)</td>
                                                             <td>:</td>
                                                             <td><?= $dtbidang; ?></td>
@@ -460,7 +460,7 @@ $data = $json[0];
                                                         <tr>
                                                             <td>Tanggal Pembentukan</td>
                                                             <td>:</td>
-                                                            <td><?= format_date($dt['thn_berdiri'] . '-' . $dt['bln_berdiri'] . '-' . $dt['tgl_berdiri'], 2).' ('.$dt['dasar_hukum'].' '.(($dt['no_peraturan'] <> '') ? ' No. '.$dt['no_peraturan']: '').')'; ?> </td>
+                                                            <td><?= format_date($dt['thn_berdiri'] . '-' . $dt['bln_berdiri'] . '-' . $dt['tgl_berdiri'], 2) . ' (' . $dt['dasar_hukum'] . ' ' . (($dt['no_peraturan'] <> '') ? ' No. ' . $dt['no_peraturan'] : '') . ')'; ?> </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Alamat</td>
@@ -476,8 +476,8 @@ $data = $json[0];
                                                             <td>Titik Koordinat Lembaga</td>
                                                             <td>:</td>
                                                             <td>
-															<?php echo ($dt['koord'] <> '') ? '<a href="https://www.google.com/maps/?q='.$dt['koord'].'" target="_blank"><i class="fas fa-map-marker-alt"></i> '.$dt['koord'].'</a>' : '' ; ?>
-															</td>
+                                                                <?php echo ($dt['koord'] <> '') ? '<a href="https://www.google.com/maps/?q=' . $dt['koord'] . '" target="_blank"><i class="fas fa-map-marker-alt"></i> ' . $dt['koord'] . '</a>' : ''; ?>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Nama Pimpinan</td>
@@ -489,29 +489,29 @@ $data = $json[0];
                                                             <td>:</td>
                                                             <td><?= $dt['telp_hp']; ?></td>
                                                         </tr>
-														
-														<tr>
+
+                                                        <tr>
                                                             <td>Nama Kepala Bidang yang Menangani Penyuluhan</td>
                                                             <td>:</td>
-                                                            <td><?= $dt['nama_kabid'].(($dt['bidang_luh'] <> '') ? ' (Kepala '.$dt['bidang_luh'].')' : ''); ?></td>
+                                                            <td><?= $dt['nama_kabid'] . (($dt['bidang_luh'] <> '') ? ' (Kepala ' . $dt['bidang_luh'] . ')' : ''); ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>No HP Kepala Bidang </td>
                                                             <td>:</td>
                                                             <td><?= $dt['hp_kabid']; ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>Nama Kepala Seksi yang Menangani Penyuluhan</td>
                                                             <td>:</td>
-                                                            <td><?= $dt['nama_kasie'].(($dt['seksi_luh'] <> '') ? ' (Kepala '.$dt['seksi_luh'].')' : ''); ?></td>
+                                                            <td><?= $dt['nama_kasie'] . (($dt['seksi_luh'] <> '') ? ' (Kepala ' . $dt['seksi_luh'] . ')' : ''); ?></td>
                                                         </tr>
-														
-														<tr>
+
+                                                        <tr>
                                                             <td>No HP Kepala Seksi </td>
                                                             <td>:</td>
                                                             <td><?= $dt['hp_kasie']; ?></td>
                                                         </tr>
-														
+
                                                         <tr>
                                                             <td>Nama Koordinator PP</td>
                                                             <td>:</td>
@@ -523,7 +523,7 @@ $data = $json[0];
                                                                     echo $dt['koord_lainya_nama'];
                                                                 } ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>No Telepon</td>
                                                             <td>:</td>
                                                             <td><?= $dt['telp_kantor']; ?></td>
@@ -536,27 +536,27 @@ $data = $json[0];
                                                         <tr>
                                                             <td>Alamat Website</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['website'] <> '') ? '<a href="'.$dt['website'].'" target="_blank"><i class="fas fa-globe"></i> '.$dt['website'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['website'] <> '') ? '<a href="' . $dt['website'] . '" target="_blank"><i class="fas fa-globe"></i> ' . $dt['website'] . '</a>' : ''; ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>Akun Instagram Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['instagram'] <> '') ? '<a href="http://instagram.com/'.$dt['instagram'].'" target="_blank"><i class="fab fa-instagram"></i> '.$dt['instagram'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['instagram'] <> '') ? '<a href="http://instagram.com/' . $dt['instagram'] . '" target="_blank"><i class="fab fa-instagram"></i> ' . $dt['instagram'] . '</a>' : ''; ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>Akun Facebook Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['facebook'] <> '') ? '<a href="http://facebook.com/'.$dt['facebook'].'" target="_blank"><i class="fab fa-facebook"></i> '.$dt['facebook'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['facebook'] <> '') ? '<a href="http://facebook.com/' . $dt['facebook'] . '" target="_blank"><i class="fab fa-facebook"></i> ' . $dt['facebook'] . '</a>' : ''; ?></td>
                                                         </tr>
-														<tr>
+                                                        <tr>
                                                             <td>Akun Twitter Lembaga</td>
                                                             <td>:</td>
-                                                            <td><?php echo ($dt['twitter'] <> '') ? '<a href="http://twitter.com/'.$dt['twitter'].'" target="_blank"><i class="fab fa-twitter"></i> '.$dt['twitter'].'</a>' : '' ; ?></td>
+                                                            <td><?php echo ($dt['twitter'] <> '') ? '<a href="http://twitter.com/' . $dt['twitter'] . '" target="_blank"><i class="fab fa-twitter"></i> ' . $dt['twitter'] . '</a>' : ''; ?></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             <?php } elseif (session()->get('status_user') == '300') { ?>
-<!--
+                                                <!--
                                                 <table class="table">
 
                                                     <tbody>
@@ -661,7 +661,7 @@ $data = $json[0];
                                                                     <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                                                 </td>
                                                                 <td class="align-middle text-sm">
-                                                                    <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $pns['nip']) ?>" style="color: blue;"><?= $pns['nip'].' - '.$pns['nama'] ?></p>
+                                                                    <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $pns['nip']) ?>" style="color: blue;"><?= $pns['nip'] . ' - ' . $pns['nama'] ?></p>
                                                                 </td>
                                                             </tr>
                                                         <?php
@@ -673,7 +673,7 @@ $data = $json[0];
                                         </div>
                                         <br>
                                         <br>
-										<br>
+                                        <br>
                                         <br>
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -735,7 +735,7 @@ $data = $json[0];
                                                 </div>
                                             </div>
                                         </div>
-										<div class="row">
+                                        <div class="row">
                                             <div class="col-sm-4">
                                                 <h5><span>Penyuluh PPPK</span></h5>
                                             </div>
@@ -882,55 +882,55 @@ $data = $json[0];
                                                 </div>
                                                 <div class="input-group mb-3">
                                                     <label style="margin-top: 10px;">Nomenklatur </label>
-													<div class="input-group mb-3">
+                                                    <div class="input-group mb-3">
                                                         <input type="text" class="form-control  input-lg" id="deskripsi_lembaga_lain" placeholder="" name="deskripsi_lembaga_lain">
-													</div>
-													<label>Pilih Sesuai nomenklatur :</label><br />
-													<div style="clear:both"></div>
-													<div class="form-check">
-														<input class="form-check-input jenis_pertanian" type="checkbox" id="jenis_pertanian" name="jenis_pertanian" value="1">
-														<label class="form-check-label" for="flexCheckDefault">
-															Pertanian
-														</label>
-														<br />
-														<input class="form-check-input jenis_tp" type="checkbox" id="jenis_tp" name="jenis_tp" value="2" required>
-														<label class="form-check-label" for="flexCheckDefault">
-															Tanaman Pangan
-														</label>
-														<br />
-														<input class="form-check-input jenis_hor" type="checkbox" id="jenis_hor" name="jenis_hor" value="3">
-														<label class="form-check-label" for="flexCheckDefault">
-															Hortikultura
-														</label>
-														<br />
-														<input class="form-check-input jenis_bun" type="checkbox" id="jenis_bun" name="jenis_bun" value="4">
-														<label class="form-check-label" for="flexCheckDefault">
-															Perkebunan
-														</label>
-														<br />
-														<input class="form-check-input jenis_nak" type="checkbox" id="jenis_nak" name="jenis_nak" value="5">
-														<label class="form-check-label" for="flexCheckDefault">
-															Peternakan
-														</label>
-														<br />
-														<input class="form-check-input jenis_ketahanan_pangan" type="checkbox" id="jenis_ketahanan_pangan" name="jenis_ketahanan_pangan" value="6">
-														<label class="form-check-label" for="flexCheckDefault">
-															Ketahanan Pangan
-														</label>
-														<br />
-														<input class="form-check-input jenis_pkh" type="checkbox" id="jenis_pkh" name="jenis_pkh" value="7">
-														<label class="form-check-label" for="flexCheckDefault">
-															Kesehatan Hewan
-														</label>
-														<br />
-														<input class="form-check-input jenis_pangan" type="checkbox" id="jenis_pangan" name="jenis_pangan" value="8">
-														<label class="form-check-label" for="flexCheckDefault">
-															Pangan
-														</label>
-													</div>
-													
-													
-                                                    
+                                                    </div>
+                                                    <label>Pilih Sesuai nomenklatur :</label><br />
+                                                    <div style="clear:both"></div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input jenis_pertanian" type="checkbox" id="jenis_pertanian" name="jenis_pertanian" value="1">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Pertanian
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_tp" type="checkbox" id="jenis_tp" name="jenis_tp" value="2" required>
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Tanaman Pangan
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_hor" type="checkbox" id="jenis_hor" name="jenis_hor" value="3">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Hortikultura
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_bun" type="checkbox" id="jenis_bun" name="jenis_bun" value="4">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Perkebunan
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_nak" type="checkbox" id="jenis_nak" name="jenis_nak" value="5">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Peternakan
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_ketahanan_pangan" type="checkbox" id="jenis_ketahanan_pangan" name="jenis_ketahanan_pangan" value="6">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Ketahanan Pangan
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_pkh" type="checkbox" id="jenis_pkh" name="jenis_pkh" value="7">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Kesehatan Hewan
+                                                        </label>
+                                                        <br />
+                                                        <input class="form-check-input jenis_pangan" type="checkbox" id="jenis_pangan" name="jenis_pangan" value="8">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Pangan
+                                                        </label>
+                                                    </div>
+
+
+
                                                 </div>
                                                 <label for="alamat">Dasar Hukum Pembentukan</label>
                                                 <select name="dasar_hukum" id="dasar_hukum" class="form-control input-lg" required>
@@ -1061,15 +1061,15 @@ $data = $json[0];
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="website" placeholder="Alamat website" name="website">
                                                 </div>
-												<label for="ketua">Akun Instagram Lembaga</label>
+                                                <label for="ketua">Akun Instagram Lembaga</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="instagram" placeholder="Akun Instagram" name="instagram">
                                                 </div>
-												<label for="ketua">Akun Facebook Lembaga</label>
+                                                <label for="ketua">Akun Facebook Lembaga</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="facebook" placeholder="Akun Facebook" name="facebook">
                                                 </div>
-												<label for="ketua">Akun Twitter Lembaga</label>
+                                                <label for="ketua">Akun Twitter Lembaga</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="twitter" placeholder="Akun Twitter" name="twitter">
                                                 </div>
@@ -1178,7 +1178,7 @@ $data = $json[0];
                                 <label class="input-group-text" for="foto">Pilih Foto</label>
 
                                 <br>
-                                <label for="infosize" class="input-group-text"  style="text-align: right;  font-size: 8pt; font-style: italic;">Max Size 2 Mb </label>
+                                <label for="infosize" class="input-group-text" style="text-align: right;  font-size: 8pt; font-style: italic;">Max Size 2 Mb </label>
                             </div>
 
                     </div>
@@ -1298,9 +1298,9 @@ $data = $json[0];
                     $('#telp_kantor').val(res[0].telp_kantor);
                     $('#email').val(res[0].email);
                     $('#website').val(res[0].website);
-					$('#instagram').val(res[0].instagram);
-					$('#twitter').val(res[0].twitter);
-					$('#facebook').val(res[0].facebook);
+                    $('#instagram').val(res[0].instagram);
+                    $('#twitter').val(res[0].twitter);
+                    $('#facebook').val(res[0].facebook);
                     $('#ketua').val(res[0].ketua);
                     $('#koord').val(res[0].koord);
                     $('#telp_hp').val(res[0].telp_hp);
@@ -1383,9 +1383,9 @@ $data = $json[0];
                         var telp_kantor = $('#telp_kantor').val();
                         var email = $('#email').val();
                         var website = $('#website').val();
-						var instagram = $('#instagram').val();
-						var facebook = $('#facebook').val();
-						var twitter = $('#twitter').val();
+                        var instagram = $('#instagram').val();
+                        var facebook = $('#facebook').val();
+                        var twitter = $('#twitter').val();
                         var ketua = $('#ketua').val();
                         var telp_hp = $('#telp_hp').val();
                         var koord = $('#koord').val();
@@ -1415,7 +1415,7 @@ $data = $json[0];
                         var koord_lainya_nama = $('#koord_lainya_nama').val();
                         var kode_koord_penyuluh = $('.pen:checked').val();
 
-  
+
                         if (nama_bapel == 0) {
                             Swal.fire({
                                 title: 'Error',
@@ -1727,9 +1727,9 @@ $data = $json[0];
                                 }
                             });
                             return false;
-                        }else {
+                        } else {
                             var koord_array = koord.split(",");
-                            if(koord_array.length!=2 || !(validateLatLng(koord_array[0].trim(), koord_array[1].trim()))){
+                            if (koord_array.length != 2 || !(validateLatLng(koord_array[0].trim(), koord_array[1].trim()))) {
                                 Swal.fire({
                                     title: 'Error',
                                     text: "Titik Koordinat Harus format Decimal Degree, contoh : -6.2924034, 106.820540",
@@ -1782,9 +1782,9 @@ $data = $json[0];
                         formData.append('telp_kantor', telp_kantor);
                         formData.append('email', email);
                         formData.append('website', website);
-						formData.append('twitter', twitter);
-						formData.append('facebook', facebook);
-						formData.append('instagram', instagram);
+                        formData.append('twitter', twitter);
+                        formData.append('facebook', facebook);
+                        formData.append('instagram', instagram);
                         formData.append('ketua', ketua);
                         formData.append('koord', koord);
                         formData.append('telp_hp', telp_hp);

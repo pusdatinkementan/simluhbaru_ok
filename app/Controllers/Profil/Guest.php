@@ -1059,18 +1059,18 @@ class Guest extends BaseController
         ];
         return view('guest/rekap_datadukung_kec', $data);
     }
- // REKAP KELEMBAGAAN PELAKU UTAMA
+    // REKAP KELEMBAGAAN PELAKU UTAMA
 
     public function rekapkelpenbanprov()
     {
 
         $gmodel = new GuestModel();
         $rkpbprov = $gmodel->getKelPenerimaBantuanProv();
-       
+
         $data = [
             'title' => 'Rekap Kelompok Penerima Bantuan Provinsi',
             'rkpbprov' => $rkpbprov['rkpbprov'],
-          
+
         ];
         // dd($data);
 
@@ -1088,11 +1088,11 @@ class Guest extends BaseController
             'title' => 'Rekap Kelompok Penerima Bantuan Kapubaten di Provinsi Aceh',
             'rkpbkab' => $rkpbkab['rkpbkab'],
             'nama_provinsi' => $rkpbkab['nama_prop'],
-          
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankab', $data);
-    } 
+    }
     public function rekapkelpenbankec()
     {
         $gmodel = new GuestModel();
@@ -1103,8 +1103,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Rekap Kelompok Penerima Bantuan di Kecamatan ',
             'rkpbkec' => $rkpbkec['rkpbkec'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankec', $data);
@@ -1115,11 +1115,11 @@ class Guest extends BaseController
 
         $gmodel = new GuestModel();
         $rkpbkprov = $gmodel->getKelPenerimaBantuanKegiatanProv();
-       
+
         $data = [
             'title' => 'Rekap Kelompok Penerima Bantuan Kegiatan Provinsi',
             'rkpbkprov' => $rkpbkprov['rkpbkprov'],
-          
+
         ];
         // dd($data);
 
@@ -1149,8 +1149,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk11' => $rkpbk11['rkpbk11'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan11', $data);
@@ -1165,8 +1165,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk12' => $rkpbk12['rkpbk12'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan12', $data);
@@ -1181,8 +1181,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk13' => $rkpbk13['rkpbk13'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan13', $data);
@@ -1197,8 +1197,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk14' => $rkpbk14['rkpbk14'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan14', $data);
@@ -1213,8 +1213,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk15' => $rkpbk15['rkpbk15'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan15', $data);
@@ -1229,8 +1229,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk16' => $rkpbk16['rkpbk16'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan16', $data);
@@ -1245,8 +1245,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk17' => $rkpbk17['rkpbk17'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan17', $data);
@@ -1261,8 +1261,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk18' => $rkpbk18['rkpbk18'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan18', $data);
@@ -1277,8 +1277,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk21' => $rkpbk21['rkpbk21'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan21', $data);
@@ -1293,8 +1293,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk22' => $rkpbk22['rkpbk22'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan22', $data);
@@ -1309,8 +1309,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk23' => $rkpbk23['rkpbk23'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan23', $data);
@@ -1325,8 +1325,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk31' => $rkpbk31['rkpbk31'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan31', $data);
@@ -1341,8 +1341,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk32' => $rkpbk32['rkpbk32'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan32', $data);
@@ -1357,8 +1357,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk33' => $rkpbk33['rkpbk33'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan33', $data);
@@ -1373,8 +1373,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk34' => $rkpbk34['rkpbk34'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan34', $data);
@@ -1389,8 +1389,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk35' => $rkpbk35['rkpbk35'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan35', $data);
@@ -1405,8 +1405,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk36' => $rkpbk36['rkpbk36'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan36', $data);
@@ -1421,8 +1421,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk37' => $rkpbk37['rkpbk37'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan37', $data);
@@ -1437,8 +1437,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk61' => $rkpbk61['rkpbk61'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan61', $data);
@@ -1453,8 +1453,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk71' => $rkpbk71['rkpbk71'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan71', $data);
@@ -1469,8 +1469,8 @@ class Guest extends BaseController
         $data = [
             'title' => 'Daftar Kelompok Petani Penerima Bantuan  ',
             'rkpbk72' => $rkpbk72['rkpbk72'],
-          
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarkelpenerimabantuankegiatan72', $data);
@@ -1480,11 +1480,11 @@ class Guest extends BaseController
     {
         $gmodel = new GuestModel();
         $rkpuprov = $gmodel->getRekKelembagaanPelakuUtamaProv();
-       
+
         $data = [
             'title' => 'Rekap Kelembagaan Pelaku Utama Provinsi',
             'rkpuprov' => $rkpuprov['rkpuprov']
-          
+
         ];
         // dd($data);
 
@@ -1503,7 +1503,7 @@ class Guest extends BaseController
         ];
         // dd($data);
         return view('guest/daftarrekapkelembagaanpelakuutamakab', $data);
-    } 
+    }
     public function rekapkelembagaanpelakuutamaKec()
     {
         $gmodel = new GuestModel();
@@ -1517,22 +1517,22 @@ class Guest extends BaseController
             'nomap' => $rkpukec['nomap'],
             'nomap_gap' => $rkpukec['nomap_gap'],
             'nomap_kep' => $rkpukec['nomap_kep'],
-           
-          
+
+
         ];
         // dd($data);
         return view('guest/daftarrekapkelembagaanpelakuutamakec', $data);
     }
 
-public function rekapkelembagaanekonomipetaniProv()
+    public function rekapkelembagaanekonomipetaniProv()
     {
         $gmodel = new GuestModel();
         $rkepprov = $gmodel->getRekKelembagaanEkonomiPetaniProv();
-       
+
         $data = [
             'title' => 'Rekap Kelembagaan Ekonomi Petani Provinsi',
             'rkepprov' => $rkepprov['rkepprov']
-          
+
         ];
         // dd($data);
 
@@ -1595,7 +1595,7 @@ public function rekapkelembagaanekonomipetaniProv()
     }
 
 
-public function rekappoktangenluh()
+    public function rekappoktangenluh()
     {
 
         $gmodel = new GuestModel();

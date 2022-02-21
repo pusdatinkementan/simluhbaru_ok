@@ -2,19 +2,19 @@
 
 <?= $this->section('content') ?>
 
-
 <center>
     <h4>Data Dasar Penyuluh Pertanian PNS Status Aktif<br>
         Balai Besar Pengkajian dan Pengembangan Teknologi Pertanian (BBP2TP)</h4>
-</center>
-
-
-<div class="card">
     <?php
     $tanggal_today = date('d');
     $bulan_today = date('m');
     $tahun_today = date('Y'); ?>
     <p class="text-xs font-weight-bold mb-0">Per : <?= $tanggal_today . '-' . $bulan_today . '-' . $tahun_today; ?></p>
+</center>
+
+
+<div class="card">
+
 
     <div class="table-responsive">
         <table class="table align-items-center mb-0" id="tblPenyuluhBp2tp">

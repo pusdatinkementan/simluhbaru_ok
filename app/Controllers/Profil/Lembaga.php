@@ -139,7 +139,6 @@ class Lembaga extends BaseController
             $data = [
                 'title' => 'Profil Lembaga',
                 'dt' => $dtlembaga,
-
                 'penyuluhPNS' => $penyuluhPNS,
                 'penyuluhTHL' => $penyuluhTHL,
                 'namaprov' => $namawil['namaprov'],
@@ -160,6 +159,8 @@ class Lembaga extends BaseController
                 'validation' => \Config\Services::validation()
 
             ];
+
+            // dd($data);
 
             return view('profil/profillembaga', $data);
         } elseif (session()->get('status_user') == '300') {

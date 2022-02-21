@@ -3,11 +3,14 @@
 namespace App\Controllers\Penyuluh;
 
 use App\Controllers\BaseController;
+use App\Controllers\profil\Guest;
 use App\Models\penyuluh\PenyuluhPNSModel;
+use App\Models\Guest\GuestModel;
 
 ini_set("memory_limit", "912M");
 class PenyuluhPns extends BaseController
 {
+    protected $guestmodel;
 
     public function __construct()
     {
@@ -16,6 +19,7 @@ class PenyuluhPns extends BaseController
         $this->auth = service('authentication');
 
         $this->model = new PenyuluhPNSModel();
+        $this->guestmodel = new GuestModel();
     }
 
     public function penyuluhpns()
@@ -226,6 +230,31 @@ class PenyuluhPns extends BaseController
         $pns = $this->model->getDetailEditStatus($id);
         echo $pns;
     }
+
+    public function getPenyuluhBbpptp()
+    {
+        // $getdatabbpptp = $this->bbpptp->getBP2TP();
+        $data = [
+            'title' => 'Data BBP2TP Aktif',
+            'bp2tp' => $this->guestmodel->getBP2TP()
+        ];
+
+        // dd($data);
+        return view('pusat/bbpptp', $data);
+    }
+
+    public function getPenyuluhBptp()
+    {
+
+        $data = [
+            'title' => 'Data BPTP Aktif',
+            'bptp' => $this->guestmodel->getBPTP(session()->get('idprop'))
+        ];
+
+        // dd($data);
+        return view('pusat/bptp', $data);
+    }
+
 
     public function getlistkab($provinsi)
     {

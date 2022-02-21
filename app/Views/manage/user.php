@@ -63,6 +63,7 @@
                             <th scope="col">Nama User</th>
                             <th scope="col">Status</th>
                             <th scope="col">BPP</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Satker</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -142,6 +143,11 @@
                     <div class="form-group">
                         <label for="mobile">HP</label>
                         <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Hp">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                     </div>
 
                     <div class="form-group">
@@ -314,6 +320,7 @@
             var password = $('#password').val();
             var phone = $('#phone').val();
             var mobile = $('#mobile').val();
+            var email = $('#email').val();
             var status = $('#status').val();
             var is_active = $('#is_active').val();
             var joindate = $('#created_at').val();
@@ -329,6 +336,7 @@
                     'status': status,
                     'phone': phone,
                     'mobile': mobile,
+                    'email': email,
                     'idprop': prov,
                     'kodebakor': prov,
                     'kodebapel': kab,
@@ -368,57 +376,77 @@
 
         function setkodekab(kodekab) {
 
-            var kdkabsub = kodekab.substring(0, 2);
-            $.ajax({
-                url: "<?= base_url() ?>/master/kab/edit/" + kdkabsub + "",
-                type: "GET",
-                dataType: "JSON",
-                success: function(result) {
-                    // console.log(result);
-                    var dbSelect = $('#kab').html();
-                    dbSelect = '';
-                    dbSelect += '<option value=""> Pilih </option>';
-                    for (var x = 0; x < result.length; x++) {
-                        const kdkab = result[x].id_dati2;
-                        //kdes2 = kodeeselon2.substring(0, 4) + '000000';
-                        if (kdkab == kodekab) {
-                            dbSelect += '<option value="' + result[x].id_dati2 + '" selected=selected>' + result[x].nama_dati2 + '</option>';
-                        } else {
-                            dbSelect += '<option value="' + result[x].id_dati2 + '">' + result[x].nama_dati2 + '</option>';
+            if (kodekab == null || kodekab == '') {
+                var dbSelect = $('#kab').html();
+                dbSelect = '';
+                dbSelect += '<option value=""> Pilih </option>';
+                $("#kab").html(dbSelect);
+            } else {
+
+                var kdkabsub = kodekab.substring(0, 2);
+
+                $.ajax({
+                    url: "<?= base_url() ?>/master/kab/edit/" + kdkabsub + "",
+                    type: "GET",
+                    dataType: "JSON",
+                    async: false,
+                    success: function(result) {
+                        // console.log(result);
+                        var dbSelect = $('#kab').html();
+                        dbSelect = '';
+                        dbSelect += '<option value=""> Pilih </option>';
+                        for (var x = 0; x < result.length; x++) {
+                            const kdkab = result[x].id_dati2;
+                            //kdes2 = kodeeselon2.substring(0, 4) + '000000';
+                            if (kdkab == kodekab) {
+                                dbSelect += '<option value="' + result[x].id_dati2 + '" selected=selected>' + result[x].nama_dati2 + '</option>';
+                            } else {
+                                dbSelect += '<option value="' + result[x].id_dati2 + '">' + result[x].nama_dati2 + '</option>';
+                            }
                         }
-                    }
-                    $("#kab").html(dbSelect);
-                },
-            });
+                        $("#kab").html(dbSelect);
+                    },
+                });
+            }
         }
 
         function setkodekec(kodekec) {
 
-            var kdkecsub = kodekec.substring(0, 4);
-            $.ajax({
-                url: "<?= base_url() ?>/master/wilayah/showKecJson/" + kdkecsub + "",
-                type: "GET",
-                dataType: "JSON",
-                success: function(result) {
-                    // console.log(result);
-                    var dbSelect = $('#kec').html();
-                    dbSelect = '';
-                    dbSelect += '<option value=""> Pilih </option>';
-                    for (var x = 0; x < result.length; x++) {
-                        const kdkec = result[x].id_daerah;
-                        //kdes2 = kodeeselon2.substring(0, 4) + '000000';
-                        if (kdkec == kodekec) {
-                            dbSelect += '<option value="' + result[x].id_daerah + '" selected=selected>' + result[x].deskripsi + '</option>';
-                        } else {
-                            dbSelect += '<option value="' + result[x].id_daerah + '">' + result[x].deskripsi + '</option>';
+            if (kodekec == null || kodekec == '') {
+                var dbSelect = $('#kec').html();
+                dbSelect = '';
+                dbSelect += '<option value=""> Pilih </option>';
+                $("#kec").html(dbSelect);
+            } else {
+
+                var kdkecsub = kodekec.substring(0, 4);
+                $.ajax({
+                    url: "<?= base_url() ?>/master/wilayah/showKecJson/" + kdkecsub + "",
+                    type: "GET",
+                    dataType: "JSON",
+                    async: false,
+                    success: function(result) {
+                        // console.log(result);
+                        var dbSelect = $('#kec').html();
+                        dbSelect = '';
+                        dbSelect += '<option value=""> Pilih </option>';
+                        for (var x = 0; x < result.length; x++) {
+                            const kdkec = result[x].id_daerah;
+                            //kdes2 = kodeeselon2.substring(0, 4) + '000000';
+                            if (kdkec == kodekec) {
+                                dbSelect += '<option value="' + result[x].id_daerah + '" selected=selected>' + result[x].deskripsi + '</option>';
+                            } else {
+                                dbSelect += '<option value="' + result[x].id_daerah + '">' + result[x].deskripsi + '</option>';
+                            }
                         }
-                    }
-                    $("#kec").html(dbSelect);
-                },
-            });
+                        $("#kec").html(dbSelect);
+                    },
+                });
+            }
         }
 
         $(document).delegate('#btnEditUser', 'click', function() {
+            // debugger;
             $.ajax({
                 url: '<?= base_url() ?>/manage/user/edit/' + $(this).data('id'),
                 type: 'GET',
@@ -427,21 +455,22 @@
                     // console.log(result);
                     $('#iduser').val(result.id);
                     $('#namauser').val(result.name);
-                    $('#prov').val(result.idProp);
-                    $('#kab').val(result.kodeBapel);
-                    $('#kec').val(result.kodeBpp);
+                    $('#prov').val(result.idProp).trigger('change');
+                    // setkodekab(result.kodeBapel);
+                    $('#kab').val(result.kodeBapel).trigger('change');
+                    // setkodekec(result.kodeBpp);
+                    $('#kec').val(result.kodeBpp).trigger('change');;
                     $('#username').val(result.username);
                     $('#password').val(result.p_oke);
                     $('#phone').val(result.phone);
                     $('#mobile').val(result.mobile);
+                    $('#email').val(result.email);
                     $('#status').val(result.status);
                     $('#created_at').val(result.joiningdate);
                     $('#newUserModal').modal('show');
                     $("#btnSave").attr("id", "btnDoEdit");
                     $("#newSubMenuModalLabel").text("Edit User");
 
-                    setkodekab(result.kodeBapel);
-                    setkodekec(result.kodeBpp);
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
                         var iduser = $('#iduser').val();
@@ -454,6 +483,7 @@
                         var password = $('#password').val();
                         var phone = $('#phone').val();
                         var mobile = $('#mobile').val();
+                        var email = $('#email').val();
                         var status = $('#status').val();
                         var is_active = $('#is_active').val();
                         var joindate = $('#created_at').val();
@@ -468,6 +498,7 @@
                         formData.append('password', password);
                         formData.append('phone', phone);
                         formData.append('mobile', mobile);
+                        formData.append('email', email);
                         formData.append('status', status);
 
                         debugger;
@@ -520,7 +551,6 @@
         });
 
         $(document).delegate('#btnHapusUser', 'click', function() {
-
             Swal.fire({
                 title: 'Apakah anda yakin',
                 text: "Data akan dihapus ?",
@@ -532,7 +562,7 @@
                 confirmButtonText: 'Hapus Data!'
             }).then((result) => {
                 if (result.value) {
-                    debugger;
+                    // debugger;
                     $.ajax({
                         url: '<?= base_url() ?>/manage/user/delete/' + $(this).data('id'),
                         type: 'GET',
@@ -589,10 +619,11 @@
             $.ajax({
                 url: "<?= base_url() ?>/master/wilayah/showKab/" + kdprov + "",
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     $("#kab").html(response);
                 },
-                dataType: "html"
+                dataType: "html",
+                async: false
             });
             return false;
         });
@@ -601,17 +632,20 @@
         $('#kab').on('change', function() {
             $('#desa').html('');
             const id = $('#kab').val();
-            var kdkab = id.substring(0, 4);
-
-            $.ajax({
-                url: "<?= base_url() ?>/master/wilayah/showKec/" + kdkab + "",
-                success: function(response) {
-                    console.log(response);
-                    $("#kec").html(response);
-                },
-                dataType: "html"
-            });
-            return false;
+            if (id == null || id == '') {
+                $("#kec").html('<option value=""> Pilih </option>');
+            } else {
+                $.ajax({
+                    url: "<?= base_url() ?>/master/wilayah/showKec/" + id + "",
+                    success: function(response) {
+                        // console.log(response);
+                        $("#kec").html(response);
+                    },
+                    dataType: "html",
+                    async: false
+                });
+                return false;
+            }
         });
 
         $('#kec').on('change', function() {
@@ -624,7 +658,8 @@
                 success: function(response) {
                     $("#desa").html(response);
                 },
-                dataType: "html"
+                dataType: "html",
+                async: false
             });
             return false;
         });

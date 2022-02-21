@@ -29,13 +29,11 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Desa</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">ID Poktan</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Poktan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">ID Poktan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Desa</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Ketua</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Alamat Sekretariat</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Aksi</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -48,45 +46,40 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                     <td class="align-middle rupiah text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
                                     </td>
-
                                     <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nm_desa'] ?></p>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <?= $row['nama_poktan'] ?>
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="<?= base_url('/listpoktananggota?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Tambah Anggota</a>
+                                                <a class="dropdown-item" href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Tambah Bantuan</a>
+                                                <a class="dropdown-item" href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Komoditas yang diusahakan</a>
+                                                <a class="dropdown-item" href="<?= base_url('/kelaskelompok?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Kelas Kelompok</a>
+                                                <a class="dropdown-item" data-id_poktan="<?= $row['id_poktan'] ?>" id="btnEditPok" href="#"> <i class="fas fa-edit"></i> Ubah</a>
+                                                <a class="dropdown-item" id="btnHapus" data-id_poktan="<?= $row['id_poktan'] ?>" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                            </div>
+                                        </div>
+
                                     </td>
+
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['id_poktan'] ?></p>
                                     </td>
+
                                     <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nama_poktan'] ?></p>
+
+                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nm_desa'] ?></p>
                                     </td>
+
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['ketua_poktan'] ?></p>
                                     </td>
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['alamat'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
 
-                                        <button type="button" data-id_poktan="<?= $row['id_poktan'] ?>" id="btnEditPok" class="btn bg-gradient-warning btn-sm">
-                                            <i class="fas fa-edit"></i> Ubah
-                                        </button>
-
-
-                                        <button class="btn btn-danger btn-sm" id="btnHapus" data-id_poktan="<?= $row['id_poktan'] ?>" type="button">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-
-                                        <a class="btn bg-gradient-success btn-sm" href="<?= base_url('/listpoktananggota?ip=' . $row['id_poktan']) ?>">
-                                            +Tambah Anggota
-                                        </a>
-                                        <a class="btn bg-gradient-primary btn-sm" href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>">
-                                            +Tambah Bantuan
-                                        </a>
-
-                                        <a class="btn bg-gradient-info btn-sm" href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>">
-                                            +Tambah Komoditas
-                                        </a>
-
-                                    </td>
                                 </tr>
                             <?php
                             }
@@ -167,6 +160,11 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                             </select>
                                                         </div>
 
+                                                        <label>Penilaian Kelas Kemampuan</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" class="form-control" id="nilai_kelas" name="nilai_kelas" placeholder="Nilai Kelas" required>
+                                                        </div>
+
                                                         <label>Status Pengukuhan Kelompok</label>
                                                         <div class="input-group mb-3">
                                                             <select class="form-select" id="simluh_pengukuhan_kelompok" name="simluh_kelas_kemampuan" aria-label="Default select example">
@@ -236,6 +234,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                                 UMKM Model Pengembangan Pangan Pokok Lokal (MP3L)
                                                             </label>
                                                         </div>
+
                                                         <Label> Komoditas Diusahakan</label>
                                                         <div class="form-check">
                                                             <input class="form-check-input simluh_jenis_kelompok_tp" type="checkbox" value="tp" name="simluh_jenis_kelompok_tp" id="simluh_jenis_kelompok_tp">
@@ -333,6 +332,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                     </div>
 
 
+
                                                     <input type="hidden" name="kode_kab" id="kode_kab" value="<?= $kode; ?>">
                                                     <input type="hidden" name="kode_prop" id="kode_prop" value="<?= $kode_prop; ?>">
                                                     <input type="hidden" name="kode_kec" id="kode_kec" value="<?= $kode_kec; ?>">
@@ -394,6 +394,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             var status = $('#status').val();
             var simluh_tahun_tap_kelas = $('#year2').val();
             var simluh_kelas_kemampuan = $('#simluh_kelas_kemampuan').val();
+            var nilai_kelas = $('#nilai_kelas').val();
 
             var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
             var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
@@ -488,7 +489,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 return false;
             }
 
-
+            debugger;
             $.ajax({
                 url: '<?= base_url('/KelembagaanPelakuUtama/KelompokTani/KelompokTani/save/') ?>',
                 type: 'POST',
@@ -505,6 +506,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     'status': status,
                     'simluh_tahun_tap_kelas': simluh_tahun_tap_kelas,
                     'simluh_kelas_kemampuan': simluh_kelas_kemampuan,
+                    'nilai_kelas': nilai_kelas,
                     'simluh_jenis_kelompok_perempuan': simluh_jenis_kelompok_perempuan,
                     'simluh_jenis_kelompok_domisili': simluh_jenis_kelompok_domisili,
                     'simluh_jenis_kelompok_upja': simluh_jenis_kelompok_upja,
@@ -629,6 +631,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     $('#status').val(result.status);
                     $('#year2').val(result.simluh_tahun_tap_kelas);
                     $('#simluh_kelas_kemampuan').val(result.simluh_kelas_kemampuan);
+                    $('#nilai_kelas').val(result.nilai_kelas);
 
                     if (result.simluh_jenis_kelompok_perempuan == "perempuan") {
                         $("#simluh_jenis_kelompok_perempuan").prop("checked", true);
@@ -706,11 +709,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     $("#btnSave").attr("id", "btnDoEdit");
 
 
-
-
-
                     $(document).delegate('#btnDoEdit', 'click', function() {
-
 
                         var id_poktan = $('#id_poktan').val();
                         var kode_kec = $('#kode_kec').val();
@@ -725,6 +724,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         var status = $('#status').val();
                         var simluh_tahun_tap_kelas = $('#year2').val();
                         var simluh_kelas_kemampuan = $('#simluh_kelas_kemampuan').val();
+                        var nilai_kelas = $('#nilai_kelas').val();
 
                         var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
                         var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
@@ -761,6 +761,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         formData.append('status', status);
                         formData.append('simluh_tahun_tap_kelas', simluh_tahun_tap_kelas);
                         formData.append('simluh_kelas_kemampuan', simluh_kelas_kemampuan);
+                        formData.append('nilai_kelas', nilai_kelas);
                         formData.append('simluh_jenis_kelompok_perempuan', simluh_jenis_kelompok_perempuan);
                         formData.append('simluh_jenis_kelompok_domisili', simluh_jenis_kelompok_domisili);
                         formData.append('simluh_jenis_kelompok_upja', simluh_jenis_kelompok_upja);

@@ -10,8 +10,8 @@ class UserModel extends Model
     // protected $table      = 'penyuluh';
     protected $table = 'useradmin';
     protected $primaryKey = 'id';
-    protected $column_order = ['id', 'username', 'password', 'name', 'namastatus', 'nama_bpp', 'satminkal', 'idProp', 'kodeBakor', 'kodeBapel', 'kodeBpp'];
-    protected $column_search = ['name', 'username'];
+    protected $column_order = ['id', 'username', 'password', 'name', 'namastatus', 'nama_bpp', 'email', 'satminkal', 'idProp', 'kodeBakor', 'kodeBapel', 'kodeBpp'];
+    protected $column_search = ['name', 'username', 'namastatus', 'email'];
     protected $order = ['id' => 'ASC'];
     protected $request;
     protected $db;

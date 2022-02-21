@@ -62,9 +62,8 @@ class Desa extends BaseController
             'name' => 'Posluhdes'
         ];
 
-        //$output = view('KelembagaanPenyuluhan/Desa/source-pos', $data);
-        //echo json_encode($datas);
-        //$data = json_encode($data);
+        // dd($data);
+
         return view('KelembagaanPenyuluhan/Desa/daftar_posluhdes', $data);
     }
 

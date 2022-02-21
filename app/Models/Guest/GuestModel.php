@@ -363,7 +363,7 @@ class GuestModel extends Model
         from tbldasar a
         left join (select nip,gol,tgl_spk,kredit_utama,min(gol),max(kredit_utama) from tblpak group by nip) b on a.nip=b.nip
         left join tblpp c on b.gol = c.kode
-        where a.status='0' and a.satminkal='$kode_prop' order by a.nama asc");
+        where a.status='0' and a.satminkal='" . $kode_prop . "' order by a.nama asc");
         $results   = $query->getResultArray();
 
         $data =  [
@@ -1852,7 +1852,7 @@ class GuestModel extends Model
 
         return $results;
     }
-  // REKAP KELEMBAGAAN PELAKU UTAMA
+    // REKAP KELEMBAGAAN PELAKU UTAMA
 
     public function getKelPenerimaBantuanProv()
     {
@@ -1861,10 +1861,10 @@ class GuestModel extends Model
         $results = $query->getResultArray();
         $data =  [
             'rkpbprov' => $results,
-           
+
         ];
 
-        return $data; 
+        return $data;
     }
     public function getKelPenerimaBantuanKab($kode_prop)
     {
@@ -1878,8 +1878,7 @@ class GuestModel extends Model
             'rkpbkab' => $results,
             'nama_prop' => $row->nama_prop
         ];
-        return $data; 
-
+        return $data;
     }
     public function getKelPenerimaBantuanKec($kode_kab)
     {
@@ -1894,9 +1893,9 @@ class GuestModel extends Model
         $results = $query->getResultArray();
         $data =  [
             'rkpbkec' => $results,
-          
+
         ];
-        return $data; 
+        return $data;
     }
     public function getKelPenerimaBantuanKegiatanProv()
     {
@@ -1935,15 +1934,15 @@ class GuestModel extends Model
         $results  = $query->getResultArray();
         $data =  [
             'rkpbkprov' => $results,
-          
+
         ];
-        return $data; 
+        return $data;
     }
 
-public function getKelPenerimaBantuanKegiatanKab($kode_prop)
-{
-    $db = Database::connect();
-    $query = $db->query("SELECT *,
+    public function getKelPenerimaBantuanKegiatanKab($kode_prop)
+    {
+        $db = Database::connect();
+        $query = $db->query("SELECT *,
     SUM(CASE WHEN kegiatan =11 THEN poke1 ELSE 0 END) AS   rjit,
     SUM(CASE WHEN kegiatan =12 THEN poke1 ELSE 0 END) AS rjitapbn,
     SUM(CASE WHEN kegiatan =13 THEN poke1 ELSE 0 END) AS jitut,
@@ -1974,389 +1973,388 @@ public function getKelPenerimaBantuanKegiatanKab($kode_prop)
         INNER JOIN `tbldati2` 
             ON (`tbldati2`.`id_dati2` = `tb_poktan`.`kode_kab`)WHERE kegiatan>0 and kode_prop = $kode_prop GROUP BY kegiatan,kode_kab
             ) t GROUP BY t.kode_kab;");
-    $results  = $query->getResultArray();
-    $data =  [
-        'rkpbkkab' => $results,
-      
-    ];
-    return $data; 
+        $results  = $query->getResultArray();
+        $data =  [
+            'rkpbkkab' => $results,
 
-}
-public function getKelPenerimaBantuanKegiatan11($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan11($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='11' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk11' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan12($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk11' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan12($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='12' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk12' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan13($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk12' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan13($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='13' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk13' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan14($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk13' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan14($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='14' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk14' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan15($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk14' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan15($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='15' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk15' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan16($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk15' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan16($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='16' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk16' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan17($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk16' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan17($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='17' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk17' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan18($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk17' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan18($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='18' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk18' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan21($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk18' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan21($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='21' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk21' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan22($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk21' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan22($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='22' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk22' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan23($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk22' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan23($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='23' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk23' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan31($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk23' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan31($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='31' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk31' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan32($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk31' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan32($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='32' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk32' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan33($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk32' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan33($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='33' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk33' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan34($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk33' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan34($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='34' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk34' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan35($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk34' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan35($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='35' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk35' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan36($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk35' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan36($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='36' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk36' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan37($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk36' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan37($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='37' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk37' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan61($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk37' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan61($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='61' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk61' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan71($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk61' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan71($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='71' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk71' => $results,
-      
-    ];
-    return $data; 
-}
-public function getKelPenerimaBantuanKegiatan72($kode_kab)
-{
-    $db = Database::connect();
-    $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk71' => $results,
+
+        ];
+        return $data;
+    }
+    public function getKelPenerimaBantuanKegiatan72($kode_kab)
+    {
+        $db = Database::connect();
+        $query  = $db->query("select e.deskripsi, d.nm_desa, b.volume, b.id_poktan, b.kegiatan,b.tahun, c.desckeg, c.subitem, a.kode_kab, a.kode_kec, a.kode_desa, a.nama_poktan, a.ketua_poktan, a.alamat, a.kode_bp3k
     from tb_poktan a
     left join tb_bantuan b on a.id_poktan=b.id_poktan
     left join mast_kegiatan c on b.kegiatan=c.kegiatan
     left join tbldesa d on a.kode_desa=d.id_desa
     left join tbldaerah e on a.kode_kec=e.id_daerah
     where a.kode_kab LIKE '$kode_kab' and b.kegiatan ='72' group by b.id_poktan");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpbk72' => $results,
-      
-    ];
-    return $data; 
-}
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpbk72' => $results,
 
-public function getRekKelembagaanPelakuUtamaProv()
-{
-    $db = Database::connect();
-    $query  = $db->query("select a.id_prop, a.nama_prop as nama_prop , b.kode_prop, b.pns, c.pnsTB, d.thl_apbn 
+        ];
+        return $data;
+    }
+
+    public function getRekKelembagaanPelakuUtamaProv()
+    {
+        $db = Database::connect();
+        $query  = $db->query("select a.id_prop, a.nama_prop as nama_prop , b.kode_prop, b.pns, c.pnsTB, d.thl_apbn 
     from tblpropinsi a 
     left join (select kode_prop, count(id_poktan) as pns from tb_poktan group by kode_prop) b on a.id_prop = b.kode_prop 
     left join (select kode_prop, count(id_gap) as pnsTB from tb_gapoktan group by kode_prop) c on a.id_prop = c.kode_prop 
     left join (select kode_prop, count(id_kep) as thl_apbn from tb_kep group by kode_prop) d on a.id_prop = d.kode_prop 
     order by nama_prop asc");
-    $results = $query->getResultArray();
-    $data =  [
-        'rkpuprov' => $results,
-       
-    ];
+        $results = $query->getResultArray();
+        $data =  [
+            'rkpuprov' => $results,
 
-    return $data; 
-}
+        ];
+
+        return $data;
+    }
 
     public function getRekKelembagaanPelakuUtamaKab($kode_prop)
     {
@@ -2371,9 +2369,9 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results  = $query->getResultArray();
         $data =  [
             'rkpukab' => $results,
-          
+
         ];
-        return $data; 
+        return $data;
     }
     public function getRekKelembagaanPelakuUtamaKec($kode_kab)
     {
@@ -2394,13 +2392,13 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results  = $query->getResultArray();
         $data =  [
             'rkpukec' => $results,
-            'nomap' => $row2->nomap, 
+            'nomap' => $row2->nomap,
             'nomap_gap' => $row3->nomap_gap,
             'nomap_kep' => $row4->nomap_kep,
         ];
-        return $data; 
+        return $data;
     }
-  public function getRekKelembagaanEkonomiPetaniProv()
+    public function getRekKelembagaanEkonomiPetaniProv()
     {
         $db = Database::connect();
         $query  = $db->query("select *, ifnull(b.thl_apbn,0) as thl_apbn, ifnull(c.kop,0) as kop,ifnull(d.pt,0) as pt,ifnull(e.cv,0) as cv,ifnull(f.kub,0) as kub,ifnull(g.lkma,0) as lkma,ifnull(h.lain,0) as lain,ifnull(i.map,0) as map
@@ -2417,10 +2415,10 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results = $query->getResultArray();
         $data =  [
             'rkepprov' => $results,
-           
+
         ];
-    
-        return $data; 
+
+        return $data;
     }
     public function getRekKelembagaanEkonomiPetaniKab($kode_prop)
     {
@@ -2440,10 +2438,10 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results = $query->getResultArray();
         $data =  [
             'rkepkab' => $results,
-           
+
         ];
-    
-        return $data; 
+
+        return $data;
     }
     public function getRekKelembagaanEkonomiPetaniKec($kode_kab)
     {
@@ -2463,12 +2461,12 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results = $query->getResultArray();
         $data =  [
             'rkepkec' => $results,
-           
+
         ];
-    
-        return $data; 
+
+        return $data;
     }
-    
+
     public function getRekapPoktanPenerimaBantuanProv()
     {
         $db = Database::connect();
@@ -2488,9 +2486,9 @@ public function getRekKelembagaanPelakuUtamaProv()
         $results = $query->getResultArray();
         $data =  [
             'rkpbprov' => $results,
-           
+
         ];
-    
+
         return $data;
     }
     public function getRekapPoktanPenerimaBantuanKab($kode_prop)
@@ -2525,7 +2523,7 @@ public function getRekKelembagaanPelakuUtamaProv()
 
 
 
-public function getRekapPoktanGenLuh()
+    public function getRekapPoktanGenLuh()
     {
         $db = Database::connect();
         $sql = "select *, a.jumlah_poktan as jumpoktan, a.anggota_laki as jum_laki, a.anggota_perempuan as jum_pr, 
@@ -3260,5 +3258,4 @@ public function getRekapPoktanGenLuh()
 
         return $data;
     }
-   
 }

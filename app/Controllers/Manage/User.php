@@ -49,6 +49,7 @@ class User extends BaseController
                 $row[] = $list->name;
                 $row[] = $list->namastatus;
                 $row[] = $list->nama_bpp;
+                $row[] = $list->email;
                 $row[] = $list->satminkal;
                 $row[] = '<button type="button" id="btnHapusUser" data-id=' . $list->id . ' class="btn btn-danger btn-xs">Hapus</button>
                       <button type="button" id="btnEditUser" data-id=' . $list->id . ' class="btn btn-primary btn-xs">Edit</button>
@@ -77,6 +78,7 @@ class User extends BaseController
             'status' => $this->request->getPost('status'),
             'phone' => $this->request->getPost('phone'),
             'mobile' => $this->request->getPost('mobile'),
+            'email' => $this->request->getPost('email'),
             'idprop' => $this->request->getPost('idprop'),
             'kodebakor' => $this->request->getPost('kodebakor'),
             'kodebapel' => $this->request->getPost('kodebapel'),
@@ -110,6 +112,7 @@ class User extends BaseController
             'status' => $this->request->getPost('status'),
             'phone' => $this->request->getPost('phone'),
             'mobile' => $this->request->getPost('mobile'),
+            'email' => $this->request->getPost('email'),
             'idprop' => $this->request->getPost('prov'),
             'kodebakor' => $this->request->getPost('prov'),
             'kodebapel' => $this->request->getPost('kab'),
