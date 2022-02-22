@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\KelembagaanPelakuUtama\KelompokTani;
+
 use App\Controllers\BaseController;
 use App\Models\KelembagaanPelakuUtama\KelompokTani\ListBantuModel;
 
@@ -15,7 +16,7 @@ class ListBantu extends BaseController
     }
     public function listbantu()
     {
-         
+
         if (session()->get('username') == "") {
             return redirect()->to('login');
         }
@@ -27,14 +28,14 @@ class ListBantu extends BaseController
         $listbantu_data = $listbantu_model->getListBantu($ip);
 
         $data = [
-            
+
             'nama_poktan' => $listbantu_data['nama_poktan'],
             'tabel_data' => $listbantu_data['table_data'],
             'title' => 'List Bantu Tani',
             'name' => 'List Bantu Tani',
             'kegiatan' => $kegiatan,
             'id_poktan' => $ip,
-           
+
         ];
 
         return view('KelembagaanPelakuUtama/KelompokTani/listbantu', $data);
@@ -48,21 +49,21 @@ class ListBantu extends BaseController
                 'volume' => $this->request->getPost('volume'),
                 'tahun' => $this->request->getPost('tahun'),
             ]);
-            if($res == false){
+            if ($res == false) {
                 $data = [
                     "value" => false,
                     "message" => 'data tidak lengkap'
                 ];
-            }else{
+            } else {
                 $data = [
                     "value" => true
                 ];
             }
             return json_encode($data);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 "value" => false,
-                "message" => $e->getMessage() 
+                "message" => $e->getMessage()
             ];
             return json_encode($data);
         }
@@ -76,19 +77,19 @@ class ListBantu extends BaseController
 
     public function update($idban)
     {
-        
+
         $id_poktan = $this->request->getPost('id_poktan');
         $kegiatan = $this->request->getPost('kegiatan');
         $volume = $this->request->getPost('volume');
         $tahun = $this->request->getPost('tahun');
-      
+
         $this->model->save([
             'idban' => $idban,
             'id_poktan' => $id_poktan,
             'kegiatan' => $kegiatan,
             'volume' => $volume,
             'tahun' => $tahun,
-            
+
         ]);
 
         //session()->setFlashdata('pesan', 'Data berhasil diubah');
@@ -97,6 +98,6 @@ class ListBantu extends BaseController
     public function delete($idban)
     {
         $this->model->delete($idban);
-       // return redirect()->to('/listpoktan');
+        // return redirect()->to('/listpoktan');
     }
 }

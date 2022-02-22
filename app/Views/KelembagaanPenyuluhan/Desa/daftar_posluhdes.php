@@ -230,7 +230,8 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         $('#tblposluhdes').DataTable({
             dom: 'Bfrtip',
             buttons: [
-                'excel'
+                'excel',
+                'pdf'
             ],
             initComplete: function() {
                 // Apply the search

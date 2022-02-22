@@ -1,71 +1,74 @@
 <?= $this->extend('layout/main_template') ?>
 
 <?= $this->section('content') ?>
-<div class="container-fluid py-4">
-    <div class="row">
-        <!-- Page Heading -->
-        <div class="row text-center mt-3">
-            <h2><?= $title; ?></h2>
-        </div>
-        <hr>
 
-        <div class="row mt-3">
-            <div class="col-lg-2">
-                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalProv">Tambah</button>
-            </div>
-            <table id="tblProv" class="table">
-                <thead>
+<center>
+    <h2> Daftar Jenis Kelompok Lainnya </h2>
+</center>
+
+<div class="col-lg-2">
+    <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalKel">Tambah</button>
+</div>
+<div class="card">
+    <div class="table-responsive">
+        <table id="tblJnsKel" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Jenis Kelompok</th>
+                    <th scope="col">Aksi</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                foreach ($dtkegiatan as $row) {
+                ?>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Kode</th>
-                        <th scope="col">Nama Kab</th>
-                        <th scope="col">Aksi</th>
+                        <td scope="row">
+                            <?= $i++ ?>
+                        </td>
+
+                        <td>
+                            <?= $row['id_kel'] ?>
+                        </td>
+                        <td>
+                            <?= $row['jns_kel'] ?>
+                        </td>
+                        <td>
+                            <button type="button" id="btnEdit" data-id="<?= $row['id_kel'] ?>" class=" btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm" id="btnHapus" data-id="<?= $row['id_kel'] ?>" type="button">Hapus</button>
+
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($dtkab as $row) : ?>
-                        <tr>
-                            <th scope="row"><?= $no++; ?></th>
-                            <td><?= $row['id_dati2']; ?></td>
-                            <td><a class="btn btn-link" href="<?= base_url(); ?>/master/kec/index/<?= $row['id_dati2']; ?>"><?= $row['nama_dati2']; ?></a></td>
-                            <td>
-                                <button type="button" id="btnEditKab" data-id="<?= $row['id_dati2'] ?>" class=" btn btn-warning btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm" id="btnHapusKab" data-id="<?= $row['id_dati2'] ?>" type="button">Hapus</button>
+                <?php
+                }
+                ?>
 
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-        </div>
-
-        <?php echo view('layout/footer'); ?>
-
+            </tbody>
+        </table>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="modalProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
+
+<?php echo view('layout/footer'); ?>
+
+<div class="modal fade" id="modalKel" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Kabupaten</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Provinsi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="<?= base_url('master/kab/save'); ?>">
+                <form method="POST" action="<?= base_url('master/PoktanJnskel/save'); ?>">
                     <div class="form-group">
-                        <label for="idprov" class="col-form-label">Kode Provinsi:</label>
-                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $nmprov[0]['id_prop']; ?>" disabled>
-                        <label for="idprov" class="col-form-label">Kode Kabupaten:</label>
-                        <input type="text" class="form-control" name="idkab" id="idkab">
-                        <label for="recipient-name" class="col-form-label">Nama Kabupaten:</label>
-                        <input type="text" class="form-control" name="nmkab" id="nmkab">
-                        <!-- <input type="hidden" class="form-control" name="idkab1" id="idkab1" value="<?= $dtkab[0]['id_dati2']; ?>"> -->
+                        <label for="recipient-name" class="col-form-label">Nama Jenis Kelompok:</label>
+                        <input type="text" class="form-control" name="jnskelompok" id="jnskelompok">
+                        <input type="hidden" class="form-control" name="created_at" id="created_at" value="<?= date('Y-m-d'); ?>">
                     </div>
 
             </div>
@@ -78,6 +81,8 @@
     </div>
 </div>
 
+<br>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('script') ?>
@@ -85,21 +90,19 @@
 <script>
     $(document).ready(function() {
 
-        $('#tblProv').DataTable();
-        // $(this).find('modalProv')[0].reset();
+        $('#tblJnsKel').DataTable();
+
         $(document).delegate('#btnSave', 'click', function() {
 
-            var nmkab = $('#nmkab').val();
-            var idprov = $('#idprov').val();
-            var idkab = $('#idkab').val();
-
+            var jnskelompok = $('#jnskelompok').val();
+            var created_at = $('#created_at').val();
+            // debugger;
             $.ajax({
-                url: '<?= base_url() ?>/master/kab/save/',
+                url: '<?= base_url('master/PoktanJnskel/save/') ?>',
                 type: 'POST',
                 data: {
-                    'nmkab': nmkab,
-                    'idprov': idprov,
-                    'idkab': idkab
+                    'jnskelompok': jnskelompok,
+                    'created_at': created_at
                 },
                 success: function(result) {
                     if (result == 'success') {
@@ -144,38 +147,35 @@
 
         });
 
-        $(document).delegate('#btnEditKab', 'click', function() {
+        $(document).delegate('#btnEdit', 'click', function() {
             $.ajax({
-                url: '<?= base_url() ?>/master/kab/edit/' + $(this).data('id'),
+                url: '<?= base_url() ?>/master/PoktanJnskel/edit/' + $(this).data('id'),
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(result) {
                     // console.log(result);
-                    res = result[0];
-                    $('#idprov').val(res.id_prop);
-                    $('#idkab').val(res.id_dati2);
-                    $('#nmkab').val(res.nama_dati2);
 
-                    $('#modalProv').modal('show');
+                    $('#jnskelompok').val(result.jns_kel);
+                    $('#created_at').val(result.created_at);
+
+                    $('#modalKel').modal('show');
 
                     $("#btnSave").attr("id", "btnDoEdit");
-                    $("#idprov").attr("disabled", "disabled");
-                    $("#exampleModalLabel").text("Edit Kabupaten");
+                    $("#exampleModalLabel").text("Edit Jenis Kelompok");
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
 
-                        var idprov = $('#idprov').val();
-                        var idkab = $('#idkab').val();
-                        var nmkab = $('#nmkab').val();
-                        var idati2 = res.id_dati2
+                        var idkel = result.id_kel;
+                        var jnskelompok = $('#jnskelompok').val();
+                        var updated_at = $('#created_at').val();
 
                         let formData = new FormData();
-                        formData.append('idprov', idprov);
-                        formData.append('idkab', idkab);
-                        formData.append('nmkab', nmkab);
+                        formData.append('idkel', idkel);
+                        formData.append('jnskelompok', jnskelompok);
+                        formData.append('updated_at', updated_at);
                         debugger;
                         $.ajax({
-                            url: '<?= base_url() ?>/master/kab/update/' + idati2,
+                            url: '<?= base_url() ?>/master/PoktanJnskel/update/' + idkel,
                             type: "POST",
                             data: formData,
                             cache: false,
@@ -183,7 +183,7 @@
                             contentType: false,
                             success: function(result) {
                                 if (result == 'success') {
-                                    $('#modalProv').modal('hide');
+                                    $('#modalKel').modal('hide');
                                     Swal.fire({
                                         title: 'Sukses',
                                         text: "Sukses edit data",
@@ -233,7 +233,7 @@
 
         });
 
-        $(document).delegate('#btnHapusKab', 'click', function() {
+        $(document).delegate('#btnHapus', 'click', function() {
 
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -248,10 +248,10 @@
                 if (result.value) {
                     debugger;
                     $.ajax({
-                        url: '<?= base_url() ?>/master/kab/delete/' + $(this).data('id'),
+                        url: '<?= base_url() ?>/master/PoktanJnskel/delete/' + $(this).data('id'),
                         type: 'GET',
                         data: {
-                            'idkab': $(this).data('id')
+                            'idkel': $(this).data('id')
                         },
                         success: function(result) {
                             if (result == 'success') {
@@ -298,5 +298,12 @@
     });
 </script>
 
-
+<script>
+    function Angka(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
+    }
+</script>
 <?= $this->endSection() ?>

@@ -21,6 +21,10 @@ class KelompokTani extends BaseController
     }
     public function kelompoktani()
     {
+
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         $get_param = $this->request->getGet();
 
         if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
@@ -49,6 +53,9 @@ class KelompokTani extends BaseController
 
     public function listpoktan()
     {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         $get_param = $this->request->getGet();
         $kode_kec = $get_param['kode_kec'];
         $listpoktan_model = new ListPoktanModel();
@@ -59,7 +66,7 @@ class KelompokTani extends BaseController
         /*
         Tanggal : 31 Januari 2022
         Desc: menambahkan list model komoditas
-        Edited By: Bambang, Wahyu, Asyhadi
+        Edited By: Bambang, Asyhadi
         */
         $getmodelbun = new KomoditasBunModel();
         $getmodeltp = new KomoditasTpModel();
@@ -84,6 +91,9 @@ class KelompokTani extends BaseController
     }
     public function save()
     {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         // $listpoktan_model = new ListPoktanModel();
         try {
             $res = $this->model->save([
@@ -116,14 +126,11 @@ class KelompokTani extends BaseController
                 'simluh_jenis_kelompok_hor' => $this->request->getPost('simluh_jenis_kelompok_hor'),
                 'simluh_jenis_kelompok_nak' => $this->request->getPost('simluh_jenis_kelompok_nak'),
                 'simluh_jenis_kelompok_olah' => $this->request->getPost('simluh_jenis_kelompok_olah'),
-
-
                 'simluh_komo_lain_tp' => $this->request->getPost('simluh_komo_lain_tp'),
                 'simluh_komo_lain_bun' => $this->request->getPost('simluh_komo_lain_bun'),
                 'simluh_komo_lain_hor' => $this->request->getPost('simluh_komo_lain_hor'),
                 'simluh_komo_lain_nak' => $this->request->getPost('simluh_komo_lain_nak'),
                 'simluh_komo_lain_olah' => $this->request->getPost('simluh_komo_lain_olah'),
-
                 'simluh_komo_lain_olah' => $this->request->getPost('komTp')
             ]);
 

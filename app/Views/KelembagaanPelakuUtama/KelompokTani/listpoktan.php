@@ -15,7 +15,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 }
 ?>
 <center>
-    <h3>Daftar Kelompok di Tani Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?></h3>
+    <h3>Daftar Kelompok Tani di Kecamatan <?= ucwords(strtolower($nama_kecamatan)) ?></h3>
     <p>Data ditemukan <?= ucwords(strtolower($jum)) ?></p>
 </center>
 <div class="container-fluid py-4">
@@ -57,6 +57,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                 <a class="dropdown-item" href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Tambah Bantuan</a>
                                                 <a class="dropdown-item" href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Komoditas yang diusahakan</a>
                                                 <a class="dropdown-item" href="<?= base_url('/kelaskelompok?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Kelas Kelompok</a>
+                                                <a class="dropdown-item" href="<?= base_url('/listjnskel?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Jenis Kelompok</a>
                                                 <a class="dropdown-item" data-id_poktan="<?= $row['id_poktan'] ?>" id="btnEditPok" href="#"> <i class="fas fa-edit"></i> Ubah</a>
                                                 <a class="dropdown-item" id="btnHapus" data-id_poktan="<?= $row['id_poktan'] ?>" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                             </div>
@@ -616,8 +617,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(result) {
-                    // console.log(result);
-
                     $('#id_poktan').val(result.id_poktan);
                     $('#kode_kec').val(result.kode_kec);
                     $('#kode_desa').val(result.kode_desa);
@@ -631,7 +630,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     $('#status').val(result.status);
                     $('#year2').val(result.simluh_tahun_tap_kelas);
                     $('#simluh_kelas_kemampuan').val(result.simluh_kelas_kemampuan);
-                    $('#nilai_kelas').val(result.nilai_kelas);
+                    $('#nilai_kelas').val(result.simluh_nilai_kelas);
 
                     if (result.simluh_jenis_kelompok_perempuan == "perempuan") {
                         $("#simluh_jenis_kelompok_perempuan").prop("checked", true);
@@ -708,7 +707,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     $('#modal-form').modal('show');
                     $("#btnSave").attr("id", "btnDoEdit");
 
-
+                    debugger;
                     $(document).delegate('#btnDoEdit', 'click', function() {
 
                         var id_poktan = $('#id_poktan').val();
@@ -781,6 +780,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         formData.append('simluh_komo_lain_nak', simluh_komo_lain_nak);
                         formData.append('simluh_komo_lain_olah', simluh_komo_lain_olah);
 
+
                         if (kode_desa == 0) {
                             Swal.fire({
                                 title: 'Error',
@@ -846,6 +846,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                             return false;
                         }
 
+                        debugger;
                         $.ajax({
                             url: '<?= base_url() ?>/KelembagaanPelakuUtama/KelompokTani/KelompokTani/update/' + id_poktan,
                             type: "POST",

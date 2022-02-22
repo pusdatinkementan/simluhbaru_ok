@@ -29,7 +29,7 @@
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $row['id_prop']; ?></td>
-                            <td><a href="<?= base_url(); ?>/master/kab/index/<?= $row['id_prop']; ?>"><?= $row['nama_prop']; ?></a></td>
+                            <td><a class="btn btn-link" href="<?= base_url(); ?>/master/kab/index/<?= $row['id_prop']; ?>"><?= $row['nama_prop']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditProv" data-id="<?= $row['id_prop'] ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusProv" data-id="<?= $row['id_prop'] ?>" type="button">Hapus</button>

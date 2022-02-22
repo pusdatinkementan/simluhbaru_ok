@@ -29,7 +29,7 @@
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $row['id_daerah']; ?></td>
-                            <td><a href="<?= base_url(); ?>/master/desa/index/<?= $row['id_daerah']; ?>"><?= $row['deskripsi']; ?></a></td>
+                            <td><a class="btn btn-link" href="<?= base_url(); ?>/master/desa/index/<?= $row['id_daerah']; ?>"><?= $row['deskripsi']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditKec" data-id="<?= $row['id_daerah'] ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusKec" data-id="<?= $row['id_daerah'] ?>" type="button">Hapus</button>

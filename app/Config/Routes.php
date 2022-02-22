@@ -189,7 +189,7 @@ $routes->get('/kelompoktanikec', 'KelembagaanPelakuUtama/KelompokTani/KelompokTa
 $routes->get('/listpoktan', 'KelembagaanPelakuUtama/KelompokTani/KelompokTani::listpoktan');
 $routes->get('/listpoktananggota', 'KelembagaanPelakuUtama/KelompokTani/ListPoktanAnggota::listpoktananggota');
 $routes->get('/listbantu', 'KelembagaanPelakuUtama/KelompokTani/ListBantu::listbantu');
-$routes->get('/listprogram', 'KelembagaanPelakuUtama/KelompokTani/ListProgram::index');
+$routes->get('/listjnskel', 'KelembagaanPelakuUtama/KelompokTani/ListJnsKel::index');
 $routes->post('/listpoktan/save', 'KelembagaanPelakuUtama/Gapoktan/ListGapoktan::save');
 $routes->get('/komoditasbun', 'KelembagaanPelakuUtama/KelompokTani/JenisKomoditasDiusahakan::komoditasbun');
 
