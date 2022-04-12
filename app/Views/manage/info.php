@@ -18,24 +18,28 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Info</th>
+                        <th scope="col">Judul Info</th>
                         <th scope="col">Tanggal Info</th>
                         <th scope="col">Status</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Dupak Penyuluh Periode Januari - Desember 2021</td>
-                        <td>20 Januari 2022</td>
-                        <td>Aktif</td>
-                        <td>
-                            <button type="button" id="btnEditMenu" data-id="" class=" btn btn-warning btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm" id="btnHapusMenu" data-id="" type="button">Hapus</button>
-
-                        </td>
-                    </tr>
+                    <?php
+                    $no = 1;
+                    foreach ($dt_info as $row) {
+                    ?>
+                        <tr>
+                            <th scope="row"><?= $no++; ?></th>
+                            <td><?= $row['judul_info']; ?></td>
+                            <td><?= $row['tgl_info']; ?></td>
+                            <td><?= $row['status_info']; ?></td>
+                            <td>
+                                <button type="button" id="btnEditMenu" data-id="<?= $row['id_info']; ?>" class=" btn btn-warning btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm" id="btnHapusMenu" data-id="<?= $row['id_info']; ?>" type="button">Hapus</button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
 
@@ -60,7 +64,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Judul Info:</label>
                         <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="hidden" class="form-control" name="judul_info" id="idmenu">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Deskripsi:</label>

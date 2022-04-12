@@ -4,11 +4,15 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\InfoModel;
 
 class Login extends BaseController
 {
+
+    protected $model;
     public function __construct()
     {
+        $this->model = new InfoModel();
         $this->session = service('session');
         $this->config = config('Auth');
         $this->auth = service('authentication');
@@ -24,8 +28,11 @@ class Login extends BaseController
         }
         $data = [
             'title' => 'Login',
-            'config' => $this->config
+            'config' => $this->config,
+            'dtinfo' => $this->model->getInfoByStatus()
         ];
+
+        // dd($data);
 
         return view('login', $data);
     }

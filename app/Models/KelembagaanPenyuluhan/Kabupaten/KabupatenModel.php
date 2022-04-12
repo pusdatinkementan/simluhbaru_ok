@@ -94,6 +94,19 @@ class KabupatenModel extends Model
         return $data;
     }
 
+    public function getBapelresume($kode_kab = '', $kode_prov = '')
+    {
+        $db = Database::connect();
+        $query3  = $db->query("select a.id_gapoktan, CONCAT(a.deskripsi_lembaga_lain,' ',i.nama_dati2) as bapel, kabupaten
+                                from tblbapel a
+								left join tbldati2 i on a.kabupaten=i.id_dati2
+                                where a.kabupaten='" . $kode_kab . "'  
+                                order by kabupaten");
+        $results = ($kode_kab <> '') ? $query3->getRowArray() : $query3->getResultArray();
+
+        return $results;
+    }
+
     public function getFas($kode_kab)
     {
         $db = Database::connect();
@@ -127,14 +140,10 @@ class KabupatenModel extends Model
 
     public function getPenyuluhPNS($kode_kab)
     {
-        if (session()->get('status_user') == '303') {
-            $query = $this->db->query("select * from tbldasar where status='0' ORDER BY nama ASC ");
-        }
 
         $query = $this->db->query("select * from tbldasar where satminkal LIKE '" . $kode_kab . "' and kode_kab='4' and status='0' or 
                                     satminkal LIKE '" . $kode_kab . "' and kode_kab='3' and status='0'
                                     ORDER BY nama ASC ");
-
         $row   = $query->getResultArray();
         return $row;
     }
@@ -185,10 +194,10 @@ class KabupatenModel extends Model
     {
         $db = Database::connect();
         $query = $db->query("select count(id) as jum_pns from tbldasar where satminkal='$kode_kab' 
-                            and kode_kab='3' and status !='1' and status !='2' and status !='3'");
+                            and kode_kab='3' and status !='1' and status !='2' and status !='3' and status != '7'");
         $row   = $query->getRow();
         $query2  = $db->query("select id,nama,noktp,nip, gelar_dpn, gelar_blk from tbldasar where satminkal='$kode_kab' 
-                              and kode_kab='3' and status !='1' and status !='2' and status !='3' order by nama");
+                              and kode_kab='3' and status !='1' and status !='2' and status !='3' and status != '7' order by nama");
         $results = $query2->getResultArray();
 
         $data =  [

@@ -228,8 +228,7 @@
             // Load data for the table's content from an Ajax source
             "ajax": {
                 "url": "<?php echo site_url('manage/user/ajax_user_list') ?>",
-                //"url": "ajax_user_list",
-                "type": "POST"
+                "type": "POST",
             },
             "aLengthMenu": [
                 [5, 10, 50],

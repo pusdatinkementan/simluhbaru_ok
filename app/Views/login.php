@@ -4,7 +4,6 @@ $api = 'https://api.pertanian.go.id/api/simantap/dashboard/list?&api-key=f13914d
 $result = file_get_contents($api, false);
 $json = json_decode($result, true);
 $data = $json[0];
-
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +36,11 @@ $data = $json[0];
                 <!-- Navbar -->
                 <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid">
-
-                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="<?= base_url(); ?>" style="font-size:25px">
-
-                            <img src="<?= base_url('assets/img/logo.png'); ?>" alt="" width="50%" style="max-width:50px"> Sistem Informasi Manajemen Penyuluhan Pertanian
+                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-2 " href="<?= base_url(); ?>" style="font-size:25px">
+                            <img src="<?= base_url('assets/img/logo.png'); ?>" alt="" width="50%" style="max-width:50px"> Sistem Informasi Manajemen Penyuluhan Pertanian <br>
+                            <marquee class="mt-2" behavior="" direction=""> <span class="font-weight-normal" style="font-size:14px"> <?php echo $dtinfo['deskripsi_info']; ?> </span></marquee>
                         </a>
+
                         <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon mt-2">
                                 <span class="navbar-toggler-bar bar1"></span>
@@ -73,12 +72,20 @@ $data = $json[0];
 
                         </div>
                     </div>
+
+                    <div class="container-fluid">
+
+
+                    </div>
                 </nav>
+
                 <!-- End Navbar -->
             </div>
         </div>
+
     </div>
     <main class="main-content  mt-0">
+
         <section>
             <div class="page-header min-vh-75">
                 <div class="container">
@@ -314,7 +321,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpenyuluhp3k']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -336,7 +343,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumkep']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -358,7 +365,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumgapoktanbersama']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -380,7 +387,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpenyuluhswasta']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -402,7 +409,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpoktanp2l']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>

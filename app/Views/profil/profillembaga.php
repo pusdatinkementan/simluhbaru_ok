@@ -22,7 +22,7 @@ $data = $json[0];
     <div class="row">
         <?= $validation->getError(); ?>
         <!-- Page Heading -->
-        <div class="row mt-3 mb-4">
+        <!-- <div class="row mt-3 mb-4">
 
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
@@ -303,9 +303,14 @@ $data = $json[0];
                     </div>
                 </div>
             </div>
+        </div> -->
 
-
-
+        <div id="dataalert" .showclass="alert alert-warning alert-dismissible fade show" role="alert">
+            <span class="alert-icon"><i class="fas fa-bell"></i></span>
+            <span class="alert-text"><strong>Perhatian !</strong> Terdapat data yang tidak lengkap silahkan cek <a href="">disini</a> !</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
 
         <div class="row">
@@ -841,9 +846,84 @@ $data = $json[0];
             </div>
 
         </div>
+        <div class="row mt-3 mb-4">
+            <div class="col-md-4">
+                <div class="card card-frame">
+                    <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Rekapitulasi</span>
+                        <a href="javascript:;" class="card-title h5 d-block text-darker">
+                            Ketenagaan Penyuluhan
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Penyuluh PNS <span class="badge bg-gradient-info"><?= $jum_pns; ?></span>
+                            </li>
+                            <li class="list-group-item">Penyuluh THL APBN <span class="badge bg-gradient-info"><?= $data['jumpenyuluhthlapbn']; ?></span>
+                            </li>
+                            <li class="list-group-item">Penyuluh THL APBD <span class="badge bg-gradient-info"> <?= number_format($data['jumpenyuluhthlapbd']); ?> </span>
+                            </li>
+                            <li class="list-group-item">Penyuluh Swadaya <span class="badge bg-gradient-info"><?= number_format($data['jumpenyuluhswadaya']); ?></span>
+                            </li>
+                            <li class="list-group-item">Penyuluh P3K <span class="badge bg-gradient-info"><?= number_format($data['jumpenyuluhp3k']); ?></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-4">
+                <div class="card card-frame">
+                    <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Rekapitulasi</span>
+                        <a href="javascript:;" class="card-title h5 d-block text-darker">
+                            Kelembagaan Penyuluhan
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                BPP <span class="badge bg-gradient-info"><?= number_format($data['jumbpp']); ?></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-
+            <div class="col-md-4">
+                <div class="card card-frame">
+                    <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Rekapitulasi</span>
+                        <a href="javascript:;" class="card-title h5 d-block text-darker">
+                            Kelembagaan Petani
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Poktan <span class="badge bg-gradient-info"><?= number_format($data['jumpoktan']); ?></span>
+                            </li>
+                            <li class="list-group-item">
+                                Gapoktan <span class="badge bg-gradient-info"><?= number_format($data['jumgapoktan']); ?></span>
+                            </li>
+                            <li class="list-group-item">
+                                Gapoktan Bersama <span class="badge bg-gradient-info"><?= number_format($data['jumgapoktanbersama']); ?></span>
+                            </li>
+                            <li class="list-group-item">
+                                KEP <span class="badge bg-gradient-info"><?= number_format($data['jumkep']); ?></span>
+                            </li>
+                            <li class="list-group-item">
+                                P2L <span class="badge bg-gradient-info"><?= number_format($data['jumpoktanp2l']); ?></span>
+                            </li>
+                            <li class="list-group-item">
+                                Kelembagaan Lain <span class="badge bg-gradient-info"><?= number_format($data['jumkep']); ?></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <?php
         $i = 1;
@@ -1276,6 +1356,7 @@ $data = $json[0];
 
 
     $(document).ready(function() {
+
         $(document).delegate('#btn-edit', 'click', function() {
             //var myModal = new bootstrap.Modal(document.getElementById('modal-edit'), options);
             // alert(id);

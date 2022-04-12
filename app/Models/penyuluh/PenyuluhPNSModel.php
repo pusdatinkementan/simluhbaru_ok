@@ -101,10 +101,36 @@ class PenyuluhPNSModel extends Model
     }
 
 
-    public function getPenyuluhPNSTotal($kode_kab, $level_filter)
+    public function getPenyuluhPNSTotal($kode_kab, $level_filter, $par = array(), $length = "", $start = "0")
     {
         //d($kode_kab);
         $db = Database::connect();
+
+        $where = '';
+        $limit = '';
+        //print_r($_POST);die();
+        if ($length <> '')
+            $limit .= " LIMIT " . $start . ", " . $length . " ";
+        if (count($par) > 0) {
+            if (isset($par['status']))
+                $where .= " AND a.status = '" . $par['status'] . "' ";
+            if (isset($par['jenkel']))
+                $where .= " AND jenis_kelamin = '" . $par['jenkel'] . "' ";
+            if (isset($par['jab']))
+                $where .= " AND jb.id_jab = '" . $par['jab'] . "' ";
+            if (isset($par['pendidikan']))
+                $where .= " AND tingkat_pendidikan = '" . $par['pendidikan'] . "' ";
+            if (isset($par['keahlian']))
+                $where .= " AND keahlian = '" . $par['keahlian'] . "' ";
+            if (!empty($par['kode_kab'])) {
+                if ($par['kode_kab'] == '3')
+                    $where .= " AND kode_kab='3' and a.satminkal = '" . $par['kode_satker'] . "' ";
+                elseif ($par['kode_kab'] == '4')
+                    $where .= " AND kode_kab='4' and kecamatan_tugas = '" . $par['kode_satker'] . "' ";
+            } else
+                $where .= " AND a.satminkal = '" . session()->get('kodebapel') . "' ";
+        } else
+            $where .= " AND a.satminkal = '" . session()->get('kodebapel') . "' ";
 
         if ($level_filter == 2) {
             $query = $db->query("select count(a.id) as jum, nama_dati2 as nama_kab from tbldasar a left join tbldati2 b on b.id_dati2=a.satminkal where satminkal='$kode_kab' and status not IN('1','2','7')");
@@ -165,7 +191,8 @@ class PenyuluhPNSModel extends Model
                                 z.gol_ruang,
                                 zo.nip as nippp,
                                 k.nama_bpp,
-                                i.deskripsi_lembaga_lain AS nama_bapel2
+                                i.deskripsi_lembaga_lain AS nama_bapel2,
+								pp.gol_ruang, jb.nama_jab_baru as jabatan, pp.kode as kodejabatan
                                 from tbldasar a
                                 left join tblsatminkal b on a.satminkal=b.kode
                                 left join tblstatus_penyuluh c on a.status='0' and a.status_kel=c.kode
@@ -194,7 +221,15 @@ class PenyuluhPNSModel extends Model
                                 left join tblgolongan go on a.gol=go.kode
                                 left join tblpak zo on a.id=zo.id
                                 left join tblpp z on zo.gol=z.kode
-                                where a.satminkal='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
+								LEFT JOIN 
+								(SELECT nip ,MIN(gol) AS gol
+								FROM tblpak
+								WHERE gol <> ''
+								GROUP BY nip
+								) pak ON a.nip = pak.nip
+								left JOIN tblpp pp ON pp.kode = pak.gol
+								left JOIN tbljabatan jb ON pp.kodefung = jb.id_jab
+                                where a.status not IN('1','2','7') " . $where . " order by nama " . $limit);
         } elseif ($level_filter == 3) {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
             status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
@@ -266,7 +301,7 @@ class PenyuluhPNSModel extends Model
                                     left join tblgolongan go on a.gol=go.kode
                                     left join tblpak zo on a.id=zo.id
                                     left join tblpp z on zo.gol=z.kode
-                                    where a.tempat_tugas='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
+                                    where a.tempat_tugas='" . $kode_kab . "' and status not IN('1','2','7') " . $where . " order by nama");
         } elseif ($level_filter == 1) {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
         status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
@@ -338,7 +373,7 @@ class PenyuluhPNSModel extends Model
                                 left join tblgolongan go on a.gol=go.kode
                                 left join tblpak zo on a.id=zo.id
                                 left join tblpp z on zo.gol=z.kode
-                                where a.satminkal LIKE '(SUBSTR('" . $kode_kab . "',1,2))%' and status not IN('1','2','7') order by nama");
+                                where a.satminkal LIKE '(SUBSTR('" . $kode_kab . "',1,2))%' and status not IN('1','2','7') " . $where . " order by nama");
         } else {
             $query   = $db->query("select a.id, a.nip, a.nama, a.gelar_dpn, a.gelar_blk, a.tgl_lahir, a.tempat_lahir, a.jenis_kelamin,
         status_kel, a.agama, a.gol_darah, a.keahlian, a.satminkal, a.kode_kab, a.tgl_skcpns, a.peng_kerja_thn, a.peng_kerja_bln,
@@ -381,7 +416,8 @@ class PenyuluhPNSModel extends Model
                                 z.gol_ruang,
                                 zo.nip as nippp,
                                 k.nama_bpp,
-                                i.deskripsi_lembaga_lain AS nama_bapel2
+                                i.deskripsi_lembaga_lain AS nama_bapel2,
+								pp.gol_ruang, pp.nama as jabatan, c.kode as kodejabatan
                                 from tbldasar a
                                 left join tblsatminkal b on a.satminkal=b.kode
                                 left join tblstatus_penyuluh c on a.status='0' and a.status_kel=c.kode
@@ -410,9 +446,16 @@ class PenyuluhPNSModel extends Model
                                 left join tblgolongan go on a.gol=go.kode
                                 left join tblpak zo on a.id=zo.id
                                 left join tblpp z on zo.gol=z.kode
-                                where a.satminkal='" . $kode_kab . "' and status not IN('1','2','7') order by nama");
+								JOIN 
+								(SELECT nip ,MIN(gol) AS gol
+								FROM tblpak
+								WHERE gol <> ''
+								GROUP BY nip
+								) pak ON a.nip = pak.nip
+								JOIN tblpp pp ON pp.kode = pak.gol
+                                where a.satminkal='" . $kode_kab . "' and status not IN('1','2','7') " . $where . " order by nama");
         }
-
+        //  echo $db->getLastQuery();die();
         $results = $query->getResultArray();
 
         $data =  [
@@ -424,9 +467,11 @@ class PenyuluhPNSModel extends Model
         return $data;
     }
 
-    public function getStatus()
+    public function getStatus($isshow = 0)
     {
-        $query = $this->db->query("select * from tblstatus_penyuluh a where kode !='4'");
+        $where = ($isshow == '0') ? '' : ' and is_show="1"';
+
+        $query = $this->db->query("select * from tblstatus_penyuluh a where kode !='4' " . $where);
         $row   = $query->getResultArray();
         return $row;
     }
@@ -636,5 +681,24 @@ class PenyuluhPNSModel extends Model
         where a.id = '" . $id . "'");
         $row = $query->getRow();
         return json_encode($row);
+    }
+
+    function getjenjangjabatan()
+    {
+        $query = $this->db->query("select * FROM tbljabatan where status='1' order by id_jab asc");
+        $row = $query->getResultArray();
+        return $row;
+    }
+    function getPendidikan()
+    {
+        $query = $this->db->query("select * FROM tblsekolah  order by urut asc");
+        $row = $query->getResultArray();
+        return $row;
+    }
+    function getKeahlian()
+    {
+        $query = $this->db->query("select * FROM tblkeahlian  order by id asc");
+        $row = $query->getResultArray();
+        return $row;
     }
 }

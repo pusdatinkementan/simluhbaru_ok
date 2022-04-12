@@ -149,6 +149,8 @@ $routes->get('/rekap_jumlahanggotapoktandesalist', 'profil/Guest::rekapjumlahang
 
 
 $routes->get('/penyuluhpns', 'Penyuluh/PenyuluhPns::penyuluhpns');
+$routes->get('/penyuluhdata', 'Penyuluh/PenyuluhPns::penyuluh_data');
+$routes->post('/penyuluhdata', 'Penyuluh/PenyuluhPns::penyuluh_data');
 $routes->post('/penyuluhpns/showdesaadv', 'Penyuluh/PenyuluhPns::showDesaAdv');
 $routes->get('/penyuluhcpns', 'Penyuluh/PenyuluhCpns::penyuluhcpns');
 $routes->get('/penyuluhthlapbn', 'Penyuluh/PenyuluhTHLAPBN::penyuluhthlAPBN');
@@ -178,6 +180,7 @@ $routes->post('/listgapoktan/save', 'KelembagaanPelakuUtama/Gapoktan/ListGapokta
 $routes->get('/gapoktankec', 'KelembagaanPelakuUtama/Gapoktan/GapoktanKec::gapoktankec');
 
 $routes->get('/gapoktanbersama', 'KelembagaanPelakuUtama/GapoktanBersama/GapoktanBersama::gapoktanbersama');
+$routes->get('/anggotagapber', 'KelembagaanPelakuUtama/GapoktanBersama/AnggotaGapber::index');
 
 $routes->get('/kelembagaanekonomipetani', 'KelembagaanPelakuUtama/KelembagaanEkonomiPetani\KelembagaanEkonomiPetani::kelembagaanekonomipetani');
 $routes->get('/listkep', 'KelembagaanPelakuUtama/KelembagaanEkonomiPetani/KelembagaanEkonomiPetani::listkep');

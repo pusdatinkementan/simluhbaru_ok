@@ -107,7 +107,7 @@ class LembagaModel extends Model
     public function getPenyuluhPNS($kode_kab)
     {
 
-        $query = $this->db->query("select * from tbldasar where satminkal LIKE '" . $kode_kab . "%' and kode_kab='4'
+        $query = $this->db->query("SELECT * FROM tbldasar WHERE status IN('0','6') AND satminkal LIKE '" . $kode_kab . "%' AND kode_kab='4'
                                     ORDER BY nama ASC ");
         $row   = $query->getResultArray();
         return $row;

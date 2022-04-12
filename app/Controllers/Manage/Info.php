@@ -24,10 +24,10 @@ class Info extends BaseController
             return redirect()->to('login');
         }
         // $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        // $menu = $this->model->getMenuAll();
+        //  $menu = $this->model->getMenuAll();
         $data = [
             'title' => 'Manajemen Info',
-            // 'dt' => $menu
+            'dt_info' => $this->model->getInfoAll()
         ];
 
         return view('manage/info', $data);
