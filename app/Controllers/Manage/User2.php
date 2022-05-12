@@ -20,9 +20,6 @@ class User extends BaseController
     }
     public function index()
     {
-        if (session()->get('username') == "") {
-            return redirect()->to('login');
-        }
         $query = $this->model1->getStatusUser();
         $prov = $this->model2->getProv();
         $data = [
@@ -73,7 +70,6 @@ class User extends BaseController
 
     public function saveUser()
     {
-
         $data = [
             'username' => $this->request->getPost('username'),
             'password' => md5($this->request->getPost('password')),
@@ -90,12 +86,7 @@ class User extends BaseController
             'p_oke' => $this->request->getPost('password')
         ];
 
-        try {
-            $this->model1->saveUser($data);
-            return 'success';
-        } catch (\Exception $e) {
-            return 'error';
-        }
+        $this->model1->saveUser($data);
     }
 
     public function edit($id)
@@ -129,12 +120,7 @@ class User extends BaseController
             'p_oke' => $this->request->getPost('password')
         ];
 
-        try {
-            $this->model1->updateUser($id, $data);
-            return 'success';
-        } catch (\Exception $e) {
-            return 'error';
-        }
+        $this->model1->updateUser($id, $data);
     }
 
     public function updatepass($id)
@@ -149,12 +135,7 @@ class User extends BaseController
             'updated_at' => $this->request->getPost('updatedat')
         ];
 
-        try {
-            $this->model1->updateUser($id, $data);
-            return 'success';
-        } catch (\Exception $e) {
-            return 'error';
-        }
+        $this->model1->updateUser($id, $data);
     }
 
     public function delete($id)

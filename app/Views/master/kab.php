@@ -94,7 +94,7 @@
             var idkab = $('#idkab').val();
 
             $.ajax({
-                url: '<?= base_url() ?>/master/kab/save/',
+                url: '<?= base_url("/Master/Kab/save/") ?>',
                 type: 'POST',
                 data: {
                     'nmkab': nmkab,

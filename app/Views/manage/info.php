@@ -63,23 +63,21 @@
                 <form method="POST" action="<?= base_url('manage/menu/save'); ?>">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Judul Info:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="judul_info" id="idmenu">
+                        <input type="text" class="form-control" name="judul_info" id="judul_info">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Deskripsi:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="text" class="form-control" name="desk_info" id="desk_info">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Tanggal:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="text" class="form-control" name="tglinfo" id="tglinfo">
                     </div>
-
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Upload:</label>
+                    <div class="input-group mb-3">
                         <input type="file" class="form-control" id="dok" name="dok">
+                        <label class="input-group-text" for="dok">Upload Dok</label>
+                        <br>
+                        <label for="infosize" class="input-group-text" style="text-align: right;  font-size: 8pt; font-style: italic;">Max Size 2 Mb </label>
                     </div>
 
                     <div class="form-group">
@@ -118,8 +116,13 @@
         $(document).delegate('#btnSave', 'click', function() {
 
             var menu = $('#menu').val();
+            var menu = $('#menu').val();
+            var menu = $('#menu').val();
+            var menu = $('#menu').val();
+            var menu = $('#menu').val();
+
             $.ajax({
-                url: '<?= base_url('manage/menu/save/') ?>',
+                url: '<?= base_url('manage/menu/saveInfo/') ?>',
                 type: 'POST',
                 data: {
                     'menu': menu

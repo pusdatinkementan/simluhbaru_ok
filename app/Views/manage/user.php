@@ -10,7 +10,7 @@
         </div>
         <hr>
 
-        <div class="row" id="filter" style="">
+        <div class="row" id="filter">
 
             <div class="col-md-4">
                 <form method="POST" action="<?php echo base_url('manage/filter'); ?>">
@@ -267,7 +267,7 @@
 
                         debugger;
                         $.ajax({
-                            url: '<?= base_url() ?>/manage/user/updatepass/' + iduser,
+                            url: '<?= base_url(); ?>/manage/user/updatepass/' + iduser.toString(),
                             type: "POST",
                             data: formData,
                             cache: false,
@@ -325,7 +325,7 @@
             var joindate = $('#created_at').val();
 
             $.ajax({
-                url: '<?= base_url() ?>/manage/user/saveUser/',
+                url: '<?= base_url("/Manage/User/saveUser/") ?>',
                 type: 'POST',
                 data: {
                     'username': username,
@@ -342,15 +342,30 @@
                     'kodebpp': kec
                 },
                 success: function(result) {
-                    Swal.fire({
-                        title: 'Sukses',
-                        text: "Sukses tambah data",
-                        type: 'success',
-                    }).then((result) => {
-                        if (result.value) {
-                            location.reload();
-                        }
-                    });
+
+                    if (result == 'success') {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: "Sukses tambah data",
+                            type: 'success',
+                        }).then((result) => {
+
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Gagal tambah data",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function(jqxhr, status, exception) {
                     Swal.fire({
@@ -503,25 +518,35 @@
                         debugger;
 
                         $.ajax({
-                            url: '<?= base_url() ?>/manage/user/update/' + iduser,
+                            url: '<?= base_url(); ?>/manage/user/update/' + iduser,
                             type: "POST",
                             data: formData,
                             cache: false,
                             processData: false,
                             contentType: false,
                             success: function(result) {
+                                if (result == 'success') {
+                                    Swal.fire({
+                                        title: 'Sukses',
+                                        text: "Sukses edit data",
+                                        type: 'success',
+                                    }).then((result) => {
 
-                                Swal.fire({
-                                    title: 'Sukses',
-                                    text: "Sukses edit data",
-                                    type: 'success',
-                                }).then((result) => {
-
-                                    if (result.value) {
-                                        location.reload();
-                                    }
-                                });
-
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: "Gagal edit data",
+                                        type: 'error',
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            location.reload();
+                                        }
+                                    });
+                                }
                             },
                             error: function(jqxhr, status, exception) {
 

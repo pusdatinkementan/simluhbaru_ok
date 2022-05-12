@@ -33,6 +33,19 @@ class Info extends BaseController
         return view('manage/info', $data);
     }
 
+    public function saveInfo()
+    {
+        $data = [
+            'menu_id' => $this->request->getPost('menu_id'),
+            'title' => $this->request->getPost('judul'),
+            'url' => $this->request->getPost('url'),
+            'icon' => $this->request->getPost('icon'),
+            'is_active' => $this->request->getPost('is_active'),
+        ];
+
+        $this->model->saveSubMenu($data);
+    }
+
     public function submenu()
     {
         if (session()->get('username') == "") {

@@ -179,10 +179,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                             </div>
                             <div class="col">
                                 <label>Tanggal Lahir </label>
-                                <div class="input-group mb-2">
-                                    <input type="text" id="data-tgllahir" name="data-tgllahir" class="form-control" placeholder="yyyy-mm-dd" disabled>
+                                <div class="input-group mb-2 select-date2">
+                                    <input type="text" id="data-tgllahir" name="data-tgllahir" class="form-control" placeholder="dd-mm-yyyy" disabled>
                                 </div>
-                                <p class="text-danger"><small>(format yyyy-mm-dd)</small></p>
+                                <p class="text-danger"><small>(format dd-mm-yyyy)</small></p>
                             </div>
 
 
@@ -219,9 +219,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         </div>
                         <div class="modal-body">
                             <div class="py-3 text-center">
-                                <i class="fa-solid fa-share"></i>
-                                <h4 class="text-gradient text-danger mt-4">Data sudah berhasil terkirim ke Dukcapil</h4>
-                                <p>Harap cek status NIK yang sudah di kirim ke duckapil pada daftar data yang dikirimkan</p>
+                                <i class="fa-solid fa-check"></i>
+                                <h4 class="text-gradient text-danger mt-4">Data berhasil tersimpan </h4>
+                                <p>Data akan dilakukan pengecekan NIK ke Dukcapil</p>
+                                <p>Harap cek status NIK yang sudah di kirim ke Dukcapil pada menu hasil pengecekan Dukcapil</p>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -419,11 +420,50 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <script>
     $(document).ready(function() {
-
-        $('#data-tgllahir').keyup(function() {
-            debugger;
-            mdata($('#data-tgllahir').val());
+        $(function() {
+            $('input[name="data-tgllahir"]').daterangepicker({
+                singleDatePicker: true,
+                autoApply: true,
+                locale: {
+                    "format": "DD-MM-YYYY",
+                    "separator": " - ",
+                    "fromLabel": "Dari",
+                    "toLabel": "Sampai",
+                    "customRangeLabel": "Custom",
+                    "weekLabel": "M",
+                    "daysOfWeek": [
+                        "Mg",
+                        "Sn",
+                        "Sl",
+                        "Rb",
+                        "Km",
+                        "Jm",
+                        "Sb"
+                    ],
+                    "monthNames": [
+                        "Januari",
+                        "Februari",
+                        "Maret",
+                        "April",
+                        "Mei",
+                        "Juni",
+                        "Juli",
+                        "Agustus",
+                        "September",
+                        "Oktober",
+                        "November",
+                        "Desember"
+                    ],
+                    firstDay: 1
+                }
+            });
         });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
 
 
         $("form").submit(function(event) {
@@ -437,7 +477,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             if (data_nik.length == 0) {
                 Swal.fire({
                     title: 'Perhatian',
-                    text: "NIK Harus Diisi",
+                    text: "NIK Wajib Diisi",
                     type: 'warning',
                 }).then((result) => {
                     if (result.value) {
@@ -497,12 +537,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 return false;
             }
 
-            var bln = data_tgllahir.substring(5, 7);
+
+
+            var bln = data_tgllahir.substring(3, 5);
+            // alert(bln);
             if (!validasi_tanggal(data_tgllahir)) {
                 alert(bln)
                 Swal.fire({
                     title: 'Perhatian',
-                    text: "Tanggal tidak valid, format (yyyy-mm-dd)",
+                    text: "Tanggal tidak valid, format (dd-mm-yyyy)",
                     type: 'warning',
                 }).then((result) => {
                     if (result.value) {
@@ -513,7 +556,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             } else if (bln > 12 || bln < 1) {
                 Swal.fire({
                     title: 'Perhatian',
-                    text: "Bulan tidak valid, format (yyyy-mm-dd)",
+                    text: "Bulan tidak valid, format (dd-mm-yyyy)",
                     type: 'warning',
                 }).then((result) => {
                     if (result.value) {
@@ -547,52 +590,62 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             dataRaw = JSON.stringify(dataNikJson);
 
             $.ajax({
-                url: "<?= base_url() ?>/validasi/Nikpetani/cekdukcapil/",
+                url: "./Validasi/Nikpetani/cekdukcapil",
                 method: 'POST',
-                processData: false,
-                contentType: 'application/json',
-                dataType: 'JSON',
-                data: dataRaw,
-                enctype: 'multipart/form-data',
+                // dataType: 'JSON',
+                data: {
+                    "NIK": data_nik,
+                    "NAMA_LGKP": data_namalkp,
+                    "JENIS_KLMIN": data_jnskel,
+                    "TMPT_LHR": data_tmplhr,
+                    "TGL_LHR": data_tgllahir
+                },
                 success: function(result) {
-                    console.log(result.content);
+                    // var hasil = result.content;
+                    result = JSON.parse(result);
 
-                    if (result) {
-                        $('#modal-notification').modal('show');
+                    var msg = result.RESPONSE_MESSAGE;
+                    var valid = result.RESPONSE_STATUS;
+                    var namalkp = result.RESPONSE_NAMA_LGKP;
+                    var jnskel = result.RESPONSE_JENIS_KLMIN;
+                    var tmplhr = result.RESPONSE_TMPT_LHR;
+                    var tgllhr = result.RESPONSE_TGL_LHR;
+                    var tglskrg = result.RESPONSE_DATETIME;
 
+
+                    if (valid == 'valid') {
+                        // $('#modal-notification').modal('show');
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Hasil :\n' + msg,
+                            type: 'success'
+                        });
                     } else {
                         Swal.fire({
                             title: 'Gagal',
-                            text: 'NIK tidak berhasil di cek',
+                            text: 'Hasil :\n' + msg,
                             type: 'error'
                         });
                     }
 
                 },
                 error: function(result, error) {
+                    debugger;
                     Swal.fire({
                         title: 'Gagal',
-                        text: 'NIK tidak berhasil di cek',
+                        text: 'NIK tidak berhasil di cek ' + result,
                         type: 'error'
                     });
 
                 }
+
             });
 
         });
 
         function validasi_tanggal(tanggal) {
-            var polaRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
+            var polaRegex = new RegExp(/^\d{2}-\d{2}-\d{4}$/);
             return polaRegex.test(tanggal);
-        }
-
-        function mdata(v) {
-            v = v.replace(/\D/g, ""); //Remove what is not a digit
-            v = v.replace(/(\d{2})(\d)/, "$1/$2");
-            v = v.replace(/(\d{2})(\d)/, "$1/$2");
-
-            v = v.replace(/(\d{2})(\d{2})$/, "$1$2");
-            return v;
         }
 
         $('#cariNIK').on("click", function() {
@@ -667,167 +720,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
         });
 
-        // $('#btnCekdata').on('click', function() {
-        //     var data_nik = $('#data-nik').val();
-        //     var data_namalkp = $('#data-namalkp').val();
-        //     var data_tmplhr = $('#data-tmplhr').val();
-        //     var data_tgllahir = $('#data-tgllahir').val();
-        //     var data_jnskel = $('#data-jnskel').val();
 
-        //     if (data_nik.length == 0) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "NIK Harus Diisi",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     } else if (data_nik.length < 16 || data_nik.length > 16) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "NIK wajib 16 Digit",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     if (data_namalkp.length == 0) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Nama Lengkap Harus Diisi",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     if (data_tmplhr.length == 0) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Tempat Lahir Harus Diisi",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     if (data_tgllahir.length == 0) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Tanggal Lahir Harus Diisi",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     var bln = data_tgllahir.substring(5, 7);
-        //     if (!validasi_tanggal(data_tgllahir)) {
-        //         alert(bln)
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Tanggal tidak valid, format (yyyy-mm-dd)",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     } else if (bln > 12 || bln < 1) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Bulan tidak valid, format (yyyy-mm-dd)",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     if (data_jnskel == 0) {
-        //         Swal.fire({
-        //             title: 'Perhatian',
-        //             text: "Jenis Kelamin Harus Di Pilih ",
-        //             type: 'warning',
-        //         }).then((result) => {
-        //             if (result.value) {
-        //                 return false;
-        //             }
-        //         });
-        //         return false;
-        //     }
-
-        //     var dataNikJson = {
-        //         "NIK": data_nik,
-        //         "NAMA_LGKP": data_namalkp,
-        //         "JENIS_KLMIN": data_jnskel,
-        //         "TMPT_LHR": data_tmplhr,
-        //         "TGL_LHR": data_tgllahir,
-        //         "TRESHOLD": 90,
-        //         "user_id": "11953174202203011dummybppsdmpkementan",
-        //         "password": "123",
-        //         "ip_user": "10.214.41.21"
-        //     };
-
-        //     dataRaw = JSON.stringify(dataNikJson);
-        //     // debugger;
-        //     $.ajax({
-        //         url: "http://172.16.160.84:8000/dukcapil/get_json/bppsdmp_kementan/nik_verifby_elemen",
-        //         method: 'POST',
-        //         processData: false,
-        //         contentType: 'application/json',
-        //         dataType: 'JSON',
-        //         data: dataRaw,
-        //         enctype: 'multipart/form-data',
-        //         success: function(result) {
-        //             console.log(result.content);
-        //             // var json = $.parseJSON(result); // create an object with the key of the array
-        //             // alert(json.html);
-        //             // alert('ok');
-        //             if (result) {
-
-        //                 $('#modal-notification').modal('show');
-
-        //             } else {
-        //                 Swal.fire({
-        //                     title: 'Gagal',
-        //                     text: 'NIK tidak berhasil di cek',
-        //                     type: 'error'
-        //                 });
-        //             }
-
-        //         },
-        //         error: function(result, error) {
-        //             Swal.fire({
-        //                 title: 'Gagal',
-        //                 text: 'NIK tidak berhasil di cek',
-        //                 type: 'error'
-        //             });
-
-        //         }
-        //     });
-
-
-        // });
 
         $(document).delegate('#btnSaveA', 'click', function() {
 

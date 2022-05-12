@@ -17,6 +17,7 @@ use App\Models\KelembagaanPenyuluhan\Provinsi\ProvModel;
 use App\Models\KodeWilayah\KodeWilModel;
 use App\Models\LembagaModel;
 use App\Models\WilayahModel;
+use App\Models\ValidasiModel;
 use Exception;
 
 
@@ -30,7 +31,7 @@ class Lembaga extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->session->start();
-        // helper('autentikasi');
+        helper('autentikasi');
         $this->modelLembaga = new LembagaModel();
         $this->modelProv = new WilayahModel();
         $this->provmodel = new ProvModel();
@@ -43,6 +44,7 @@ class Lembaga extends BaseController
         $this->awmodel = new PenghargaanModel();
         $this->dakmodel = new DAKModel();
         $this->pwmodel = new PotensiWilayahModel();
+        $this->validasimodel = new ValidasiModel();
         session();
     }
 
@@ -51,6 +53,9 @@ class Lembaga extends BaseController
         if (session()->get('username') == "") {
             return redirect()->to('login');
         }
+        $dataPenyuluh = $this->validasimodel->getAllNikUnmatch();
+        $dataPenyuluh2 = $this->validasimodel->getAllNoHpEmpty();
+        $dataPenyuluh3 = $this->validasimodel->getAllNipUnmatch();
 
         $db = \Config\Database::connect();
         $query = $db->query('SELECT * FROM reff_fasilitasi_bpp');
@@ -68,6 +73,7 @@ class Lembaga extends BaseController
 
         if (empty(session()->get('status_user')) || session()->get('status_user') == '99') {
             $kode = session()->get('userid');
+
             $data = [
                 'title' => 'Profil Guest'
             ];
@@ -92,37 +98,14 @@ class Lembaga extends BaseController
                 'pnsprov' => $pnsprov,
                 'jum_pns' => $pns['jum_pns'],
                 'datapns' => $pns['datapns'],
-                'fotoprofil' => $dtlembaga['foto']
-
+                'fotoprofil' => $dtlembaga['foto'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip']
             ];
             return view('profil/profilprov', $data);
-        } elseif (session()->get('status_user') == '301') {
-            $data = [
-                'title' => 'Profil Admin Pusat Penyuluhan',
-                'namauser' => session()->get('nama')
-            ];
-            return view('profil/profiladminpusat', $data);
-        } elseif (session()->get('status_user') == '302') {
-            $data = [
-                'title' => 'Profil Admin Pusat Kelembagaan',
-                'namauser' => session()->get('nama')
-            ];
-            return view('profil/profiladminpusat', $data);
-        } elseif (session()->get('status_user') == '303') {
-            $data = [
-                'title' => 'Profil Admin Pusat Ketenagaan',
-                'namauser' => session()->get('nama')
-            ];
-            return view('profil/profiladminpusat', $data);
-        } elseif (session()->get('status_user') == '4' || session()->get('status_user') == '6') {
-            $data = [
-                'title' => 'Profil',
-                'namauser' => session()->get('nama')
-            ];
-            return view('profil/profilbptp', $data);
         } elseif (session()->get('status_user') == '200') {
             $kode = session()->get('kodebapel');
-
             $dtlembaga = $lembagaModel->getProfil(session()->get('kodebapel'));
             $penyuluhPNS = $kabModel->getPenyuluhPNS(session()->get('kodebapel'));
             $penyuluhTHL = $kabModel->getPenyuluhTHL(session()->get('kodebapel'));
@@ -139,6 +122,7 @@ class Lembaga extends BaseController
             $data = [
                 'title' => 'Profil Lembaga',
                 'dt' => $dtlembaga,
+
                 'penyuluhPNS' => $penyuluhPNS,
                 'penyuluhTHL' => $penyuluhTHL,
                 'namaprov' => $namawil['namaprov'],
@@ -156,11 +140,11 @@ class Lembaga extends BaseController
                 'jum_thl_apbd' => $thl_apbd['jum_thl_apbd'],
                 'jum_p3k' => $p3k['jum_p3k'],
                 'datap3k' => $p3k['datap3k'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip'],
                 'validation' => \Config\Services::validation()
-
             ];
-
-            // dd($data);
 
             return view('profil/profillembaga', $data);
         } elseif (session()->get('status_user') == '300') {
@@ -215,11 +199,20 @@ class Lembaga extends BaseController
                 'idbpp' => $idbpp['idbpp'],
                 'p3k_kec' => $penyuluh['p3k_kec'],
                 'kec' => $kec,
-                'fotoprofil' => $dtlembaga['foto']
+                'fotoprofil' => $dtlembaga['foto'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip']
                 // 'jum_pns' => $pns['jum_pns'],
                 // 'datapns' => $pns['datapns']
             ];
             return view('profil/profilkecamatan', $data);
+        } else {
+            $data = [
+                'title' => 'Profil',
+                'namauser' => session()->get('nama')
+            ];
+            return view('profil/profilbptp', $data);
         }
     }
 
@@ -233,7 +226,7 @@ class Lembaga extends BaseController
 
     public function updateprov($id_bakor)
     {
-
+        // echo 'test';die();
         $nama_bapel = $this->request->getPost('nama_bapel');
         $dasar_hukum = $this->request->getPost('dasar_hukum');
         $no_peraturan = $this->request->getPost('no_peraturan');
@@ -260,7 +253,7 @@ class Lembaga extends BaseController
         $twitter = $this->request->getPost('twitter');
         $instagram = $this->request->getPost('instagram');
         //echo $facebook.' - '.$twitter.' - '.$instagram;
-        //print_r($_POST);die();
+
         $this->provmodel->save([
             'id_bakor' => $id_bakor,
             'nama_bapel' => $nama_bapel,
@@ -314,6 +307,7 @@ class Lembaga extends BaseController
 
     public function update($id_gapoktan)
     {
+        // echo 'test';die();
         $nama_bapel = $this->request->getPost('nama_bapel');
         $dasar_hukum = $this->request->getPost('dasar_hukum');
         $no_peraturan = $this->request->getPost('no_peraturan');

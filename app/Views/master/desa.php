@@ -59,16 +59,15 @@
                 <form method="POST" action="<?= base_url('master/desa/save'); ?>">
                     <div class="form-group">
                         <label for="idprov" class="col-form-label">Kode Provinsi:</label>
-                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtdesa[0]['id_prop'] ?>" disabled>
+                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtkec->id_prop; ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kabupaten:</label>
-                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtdesa[0]['id_dati2'] ?>" disabled>
+                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtkec->id_dati2; ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kecamatan:</label>
-                        <input type="text" class="form-control" name="idkec" id="idkec" value="<?= $dtdesa[0]['id_daerah'] ?>" disabled>
+                        <input type="text" class="form-control" name="idkec" id="idkec" value="<?= $dtkec->id_daerah; ?>" disabled>
                         <label for="iddesa" class="col-form-label">Kode Desa:</label>
                         <input type="text" class="form-control" name="iddesa" id="iddesa">
                         <label for="recipient-name" class="col-form-label">Nama Desa:</label>
                         <input type="text" class="form-control" name="nmdesa" id="nmdesa">
-
                     </div>
 
             </div>
@@ -97,9 +96,9 @@
             var idkab = $('#idkab').val();
             var idkec = $('#idkec').val();
             var iddesa = $('#iddesa').val();
-            // debugger;
+            debugger;
             $.ajax({
-                url: '<?= base_url() ?>/master/desa/save/',
+                url: '<?= base_url("/Master/Desa/simpan/") ?>',
                 type: 'POST',
                 data: {
                     'nmdesa': nmdesa,

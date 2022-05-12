@@ -90,7 +90,7 @@
             var idprov = $('#idprov').val();
 
             $.ajax({
-                url: '<?= base_url() ?>/master/provinsi/save/',
+                url: '<?= base_url("/Master/Provinsi/save/") ?>',
                 type: 'POST',
                 data: {
                     'prov': prov,

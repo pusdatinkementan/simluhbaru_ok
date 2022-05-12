@@ -41,7 +41,7 @@ function format_date($date = "", $output_type = "")
 			for ($i = 0; $i <= 12; $i++) {
 				if ($i == $tanggal[1]) $bulan = $month[$i];
 			}
-			$tanggal_baru = $tanggal[2] . ' ' . $bulan . ' ' . $tanggal[0];
+			$tanggal_baru = $tanggal[2] . ' ' . $tanggal[1] . ' ' . $tanggal[0];
 			break;
 		case 3: // format 20 juni 2013 ke 2013-06-20
 			$tanggal = explode(' ', trim($date));

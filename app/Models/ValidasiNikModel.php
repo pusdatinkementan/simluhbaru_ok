@@ -67,4 +67,21 @@ class ValidasiNikModel extends Model
         ];
         return $data;
     }
+
+    public function saveNIK($data, $id)
+    {
+        // $nik = $data['no_ktp'];
+
+        $db = db_connect();
+        $builder = $db->table('tbl_log');
+        $builder->where('NO_KTP', $id)->update($data);
+
+        // if (isset($nik)) {
+
+        // } else {
+        //     $db = db_connect();
+        //     $builder = $db->table('tbl_log');
+        //     $builder->insert($data);
+        // }
+    }
 }

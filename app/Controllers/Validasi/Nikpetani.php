@@ -46,47 +46,122 @@ class Nikpetani extends BaseController
 
     public function cekdukcapil()
     {
+        $treshold = 90;
+        // $opts = '{
+        //     "NIK": "' . $this->request->getPost("NIK") . '",
+        //     "NAMA_LGKP": "' . $this->request->getPost("NAMA_LGKP") . '",
+        //     "JENIS_KLMIN": "' . $this->request->getPost("JENIS_KLMIN") . '",
+        //     "TMPT_LHR": "' . $this->request->getPost("TMPT_LHR") . '",
+        //     "TGL_LHR": "' . $this->request->getPost("TGL_LHR") . '",
+        //     "TRESHOLD": ' . $treshold . ',
+        //     "user_id": "11953174202203011dummybppsdmpkementan",
+        //     "password": "123",
+        //     "ip_user": "10.214.41.21"
+        // }';
 
-        $postdata = http_build_query(
-            // array(
-            //     'NIK' => $this->input->post('NIK'),
-            //     'NAMA_LGKP' => $this->input->post('NAMA_LGKP'),
-            //     'JENIS_KLMIN' => $this->input->post('JENIS_KLMIN'),
-            //     'TMPT_LHR' => $this->input->post('TMPT_LHR'),
-            //     'TGL_LHR' => $this->input->post('TGL_LHR'),
-            //     'TRESHOLD' => 90,
-            //     'user_id' => '11953174202203011dummybppsdmpkementan',
-            //     'password' => '123',
-            //     'ip_user' => '10.214.41.21'
-            // )
+        $opts = '{
+            "NIK": "3173044607870002",
+            "NAMA_LGKP": "YULIANTI",
+            "JENIS_KLMIN": "Perempuan",
+            "TMPT_LHR": "JAKARTA",
+            "TGL_LHR": "06-07-1987",
+            "TRESHOLD": 90,
+            "user_id": "11953174202203011dummybppsdmpkementan",
+            "password": "123",
+            "ip_user": "10.214.41.21"
+        }';
 
-            array(
-                'NIK' => '3173044607870002',
-                'NAMA_LGKP' => 'YULIANTI',
-                'JENIS_KLMIN' => 'Perempuan',
-                'TMPT_LHR' => 'JAKARTA',
-                'TGL_LHR' => '1987-07-06',
-                'TRESHOLD' => 90,
-                'user_id' => '11953174202203011dummybppsdmpkementan',
-                'password' => '123',
-                'ip_user' => '10.214.41.21'
-            )
-        );
+        // dd($opts);
 
-        $opts = array(
-            'http' =>
-            array(
-                'method'  => 'POST',
-                'header'  => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            )
-        );
+        $curl = curl_init();
 
-        $context  = stream_context_create($opts);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://172.16.160.84:8000/dukcapil/get_json/bppsdmp_kementan/nik_verifby_elemen',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $opts,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Cookie: JSESSIONID=0B92AB9CC1FAF8F4363178E82FC5FCA1'
+            ),
+        ));
 
-        $result = file_get_contents('http://172.16.160.84:8000/dukcapil/get_json/bppsdmp_kementan/nik_verifby_elemen', false, $context);
+        $response = curl_exec($curl);
 
-        $resultJson = json_decode($result, true);
-        print_r($resultJson);
+        curl_close($curl);
+
+        $response = json_decode($response);
+
+        $msg = '';
+        $valid = true;
+        if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '15') {
+            $valid = false;
+            $response->content[0]->RESPON . '\n';
+        } else {
+
+            if (explode(' ', $response->content[0]->NAMA_LGKP)[0] == 'Sesuai') {
+                $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
+            } else {
+                $valid = false;
+                $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
+            }
+
+            if ($response->content[0]->JENIS_KLMIN == 'Sesuai') {
+                $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
+            } else {
+                $valid = false;
+                $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
+            }
+
+            if (explode(' ', $response->content[0]->TMPT_LHR)[0] == 'Sesuai') {
+                $msg .= 'Tempat Lahir' . $response->content[0]->TMPT_LHR . '\n';
+            } else {
+                $valid = false;
+                $msg .= 'Tempat Lahir ' . $response->content[0]->TMPT_LHR . '\n';
+            }
+
+            if ($response->content[0]->TGL_LHR == 'Sesuai') {
+                $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
+            } else {
+                $valid = false;
+                $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
+            }
+        }
+
+        if ($valid == true) {
+            $valid = 'valid';
+        } else {
+            $valid = 'not valid';
+        }
+        //save ke tabel di db
+
+        $data = [
+            'no_ktp' => $this->request->getPost("NIK"),
+            'RESPONSE_JSON' => json_encode($response),
+            'RESPONSE_STATUS' => $valid,
+            'RESPONSE_MESSAGE' => $msg,
+            'RESPONSE_NAMA_LGKP' => $response->content[0]->NAMA_LGKP,
+            'RESPONSE_JENIS_KLMIN' => $response->content[0]->JENIS_KLMIN,
+            'RESPONSE_TMPT_LHR' => $response->content[0]->TMPT_LHR,
+            'RESPONSE_TGL_LHR' => $response->content[0]->TGL_LHR,
+            'RESPONSE_TRESHOLD' => $treshold,
+            'RESPONSE_DATETIME' => date('Y-m-d H:i:s')
+        ];
+        try {
+            $this->model->saveNIK($data, $this->request->getPost("NIK"));
+            // return 'success';
+        } catch (\Exception $e) {
+            print_r($e);
+            // return 'error';
+        }
+
+        $return = json_encode($data);
+
+        return $return;
     }
 }
