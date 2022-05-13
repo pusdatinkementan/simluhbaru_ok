@@ -418,6 +418,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <?= $this->section('script') ?>
 
+<script type="text/javascript" src="<?= base_url('assets/js/nik_parse.js'); ?>"></script>
+<script>
+    const nik = "3204110609970001";
+    nikParse(nik, function(result) {
+        console.log(result); // object
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $(function() {
