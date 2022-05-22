@@ -46,30 +46,30 @@ class Nikpetani extends BaseController
 
     public function cekdukcapil()
     {
-        $treshold = 90;
-        // $opts = '{
-        //     "NIK": "' . $this->request->getPost("NIK") . '",
-        //     "NAMA_LGKP": "' . $this->request->getPost("NAMA_LGKP") . '",
-        //     "JENIS_KLMIN": "' . $this->request->getPost("JENIS_KLMIN") . '",
-        //     "TMPT_LHR": "' . $this->request->getPost("TMPT_LHR") . '",
-        //     "TGL_LHR": "' . $this->request->getPost("TGL_LHR") . '",
-        //     "TRESHOLD": ' . $treshold . ',
-        //     "user_id": "11953174202203011dummybppsdmpkementan",
-        //     "password": "123",
-        //     "ip_user": "10.214.41.21"
-        // }';
-
+        $treshold = 100;
         $opts = '{
-            "NIK": "3173044607870002",
-            "NAMA_LGKP": "YULIANTI",
-            "JENIS_KLMIN": "Perempuan",
-            "TMPT_LHR": "JAKARTA",
-            "TGL_LHR": "06-07-1987",
-            "TRESHOLD": 90,
+            "NIK": "' . $this->request->getPost("NIK") . '",
+            "NAMA_LGKP": "' . $this->request->getPost("NAMA_LGKP") . '",
+            "JENIS_KLMIN": "' . $this->request->getPost("JENIS_KLMIN") . '",
+            "TMPT_LHR": "' . $this->request->getPost("TMPT_LHR") . '",
+            "TGL_LHR": "' . $this->request->getPost("TGL_LHR") . '",
+            "TRESHOLD": ' . $treshold . ',
             "user_id": "11953174202203011dummybppsdmpkementan",
             "password": "123",
             "ip_user": "10.214.41.21"
         }';
+
+        // $opts = '{
+        //     "NIK": "3173044607870002",
+        //     "NAMA_LGKP": "YULIANTI",
+        //     "JENIS_KLMIN": "Perempuan",
+        //     "TMPT_LHR": "JAKARTA",
+        //     "TGL_LHR": "06-07-1987",
+        //     "TRESHOLD": 90,
+        //     "user_id": "11953174202203011dummybppsdmpkementan",
+        //     "password": "123",
+        //     "ip_user": "10.214.41.21"
+        // }';
 
         // dd($opts);
 
@@ -99,37 +99,42 @@ class Nikpetani extends BaseController
 
         $msg = '';
         $valid = true;
-        if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '15') {
-            $valid = false;
-            $response->content[0]->RESPON . '\n';
+        if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '05') {
+            $msg .= $response->content[0]->RESPON;
         } else {
 
-            if (explode(' ', $response->content[0]->NAMA_LGKP)[0] == 'Sesuai') {
-                $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
-            } else {
+            if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '15') {
                 $valid = false;
-                $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
-            }
+                $response->content[0]->RESPON . '\n';
+            } else {
 
-            if ($response->content[0]->JENIS_KLMIN == 'Sesuai') {
-                $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
-            } else {
-                $valid = false;
-                $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
-            }
+                if (explode(' ', $response->content[0]->NAMA_LGKP)[0] == 'Sesuai') {
+                    $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
+                } else {
+                    $valid = false;
+                    $msg .= 'Nama Lengkap ' . $response->content[0]->NAMA_LGKP . '\n';
+                }
 
-            if (explode(' ', $response->content[0]->TMPT_LHR)[0] == 'Sesuai') {
-                $msg .= 'Tempat Lahir' . $response->content[0]->TMPT_LHR . '\n';
-            } else {
-                $valid = false;
-                $msg .= 'Tempat Lahir ' . $response->content[0]->TMPT_LHR . '\n';
-            }
+                if ($response->content[0]->JENIS_KLMIN == 'Sesuai') {
+                    $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
+                } else {
+                    $valid = false;
+                    $msg .= 'Jenis Kelamin ' . $response->content[0]->JENIS_KLMIN . '\n';
+                }
 
-            if ($response->content[0]->TGL_LHR == 'Sesuai') {
-                $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
-            } else {
-                $valid = false;
-                $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
+                if (explode(' ', $response->content[0]->TMPT_LHR)[0] == 'Sesuai') {
+                    $msg .= 'Tempat Lahir' . $response->content[0]->TMPT_LHR . '\n';
+                } else {
+                    $valid = false;
+                    $msg .= 'Tempat Lahir ' . $response->content[0]->TMPT_LHR . '\n';
+                }
+
+                if ($response->content[0]->TGL_LHR == 'Sesuai') {
+                    $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
+                } else {
+                    $valid = false;
+                    $msg .= 'Tanggal Lahir ' . $response->content[0]->TGL_LHR . '\n';
+                }
             }
         }
 
@@ -141,7 +146,7 @@ class Nikpetani extends BaseController
         //save ke tabel di db
 
         $data = [
-            'no_ktp' => $this->request->getPost("NIK"),
+            'NO_KTP' => $this->request->getPost("NIK"),
             'RESPONSE_JSON' => json_encode($response),
             'RESPONSE_STATUS' => $valid,
             'RESPONSE_MESSAGE' => $msg,
@@ -154,14 +159,15 @@ class Nikpetani extends BaseController
         ];
         try {
             $this->model->saveNIK($data, $this->request->getPost("NIK"));
-            // return 'success';
+            //  return 'success';
+            $dt = [
+                'status' => 'sukses',
+                'hasil' => json_encode($data)
+            ];
+            return $dt['hasil'];
         } catch (\Exception $e) {
             print_r($e);
-            // return 'error';
+            return 'error';
         }
-
-        $return = json_encode($data);
-
-        return $return;
     }
 }

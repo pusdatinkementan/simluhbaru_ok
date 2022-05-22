@@ -185,12 +185,11 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                 <p class="text-danger"><small>(format dd-mm-yyyy)</small></p>
                             </div>
 
-
                             <label>Jenis Kelamin (sesuai KTP):</label>
                             <div class="input-group mb-3">
                                 <select class="form-select" id="data-jnskel" name="data-jnskel" disabled>
                                     <option value="">Pilih Jenis Kelamin </option>
-                                    <option value="Laki-laki">Laki-Laki</option>
+                                    <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
@@ -207,7 +206,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 
         <div class="col-md-4">
-            <!-- <button type="button" class="btn btn-block bg-gradient-warning mb-3" data-bs-toggle="modal" data-bs-target="#modal-notification">Notification</button> -->
+
             <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-keyboard="false" data-backdrop="static">
                 <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
                     <div class="modal-content">
@@ -418,14 +417,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <?= $this->section('script') ?>
 
-<script type="text/javascript" src="<?= base_url('assets/js/nik_parse.js'); ?>"></script>
-<script>
-    const nik = "3204110609970001";
-    nikParse(nik, function(result) {
-        console.log(result); // object
-    });
-</script>
-
 <script>
     $(document).ready(function() {
         $(function() {
@@ -481,6 +472,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             var data_tmplhr = $('#data-tmplhr').val();
             var data_tgllahir = $('#data-tgllahir').val();
             var data_jnskel = $('#data-jnskel').val();
+            var angka = new RegExp(/[^0-9]/);
 
             if (data_nik.length == 0) {
                 Swal.fire({
@@ -504,7 +496,46 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     }
                 });
                 return false;
+            } else if (data_nik.substring(12, 16) == '0000') {
+                Swal.fire({
+                    title: 'Perhatian',
+                    text: "NIK tidak valid",
+                    type: 'warning',
+                }).then((result) => {
+                    if (result.value) {
+                        return false;
+                    }
+                });
+                return false;
             }
+            // else {
+            //     nikParse(data_nik, function(result) {
+            //         // console.log(result); // object
+            //         if (result.status == 'error') {
+            //             Swal.fire({
+            //                 title: 'Perhatian',
+            //                 text: result.pesan,
+            //                 type: 'warning',
+            //             }).then((result) => {
+            //                 if (result.value) {
+            //                     return false;
+            //                 }
+            //             });
+            //             return false;
+            //         } else {
+            //             Swal.fire({
+            //                 title: 'Sukses',
+            //                 text: result.pesan,
+            //                 type: 'success',
+            //             }).then((result) => {
+            //                 if (result.value) {
+            //                     return false;
+            //                 }
+            //             });
+            //             return false;
+            //         }
+            //     });
+            // }
 
             if (data_namalkp.length == 0) {
                 Swal.fire({
@@ -544,8 +575,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 });
                 return false;
             }
-
-
 
             var bln = data_tgllahir.substring(3, 5);
             // alert(bln);
@@ -587,6 +616,8 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 return false;
             }
 
+            // return false;
+
             var dataNikJson = {
                 "NIK": data_nik,
                 "NAMA_LGKP": data_namalkp,
@@ -596,7 +627,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             };
 
             dataRaw = JSON.stringify(dataNikJson);
-
+            debugger;
             $.ajax({
                 url: "./Validasi/Nikpetani/cekdukcapil",
                 method: 'POST',
@@ -611,7 +642,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 success: function(result) {
                     // var hasil = result.content;
                     result = JSON.parse(result);
-
                     var msg = result.RESPONSE_MESSAGE;
                     var valid = result.RESPONSE_STATUS;
                     var namalkp = result.RESPONSE_NAMA_LGKP;

@@ -36,8 +36,17 @@ class InfoModel extends Model
         $db = db_connect();
         $builder = $db->table('tbl_info');
         $builder = $builder->where('status_info', 1);
+        $builder = $builder->orderBy('tgl_info', 'DESC');
+        $builder = $builder->limit(5);
         $row = $builder->get();
-        return $row->getRowArray();
+        return $row->getResultArray();
+    }
+
+    public function getCountInfoToday()
+    {
+        $query = $this->db->query("select * from tbl_info where status_info = 1 and DATE(tgl_info) = CURDATE()");
+        $row = $query->getNumRows();
+        return $row;
     }
 
     public function updateInfo($id, $data)

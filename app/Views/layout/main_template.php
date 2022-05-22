@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <style>
         .modal-body {
             max-height: 90vh;
@@ -59,6 +60,8 @@
     <script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
+
+    <script src="<?= site_url('assets/js/nikvalidasi.js'); ?>"></script>
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
@@ -191,14 +194,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
-
-
-
-
-
-
-
-
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 

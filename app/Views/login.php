@@ -37,45 +37,27 @@ $data = $json[0];
                 <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid">
                         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-2 " href="<?= base_url(); ?>" style="font-size:25px">
-                            <img src="<?= base_url('assets/img/logo.png'); ?>" alt="" width="50%" style="max-width:50px"> Sistem Informasi Manajemen Penyuluhan Pertanian <br>
-                            <marquee class="mt-2" behavior="" direction=""> <span class="font-weight-normal" style="font-size:14px"> <?php echo $dtinfo['deskripsi_info']; ?> </span></marquee>
+                            <img src="<?= base_url('assets/img/logo.png'); ?>" alt="" width="50%" style="max-width:50px"> Sistem Informasi Manajemen Penyuluhan Pertanian
                         </a>
 
-                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon mt-2">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navigation">
-                            <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="<?= base_url('dashboard'); ?>">
-                                        &nbsp;
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link me-2" href="<?= base_url('profil '); ?>">
-                                        <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                                        Profile
-                                    </a>
-                                </li> -->
 
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link me-2" href="<?= base_url(); ?>pages/sign-in.html">
-                                        <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                        Masuk
-                                    </a>
-                                </li> -->
-                            </ul>
-
-                        </div>
                     </div>
 
                     <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navigation">
+                            <ul class="navbar-nav mx-auto">
+
+                                <li class="nav-item ">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default">
+                                        <span>Informasi</span>
+                                        <span class="badge badge-md badge-circle badge-floating badge-danger border-white"><?= $dtjuminfo; ?></span>
+                                    </button>
+                                </li>
 
 
+                            </ul>
+
+                        </div>
                     </div>
                 </nav>
 
@@ -83,6 +65,34 @@ $data = $json[0];
             </div>
         </div>
 
+    </div>
+
+    <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-default">Informasi</h6>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php foreach ($dtinfo as $row) {
+                    ?>
+                        <p>
+                        <h5><?= $row['judul_info']; ?><h5>
+                                </p>
+                                <p><?= $row['deskripsi_info']; ?></p>
+                                <hr>
+                            <?php } ?>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <main class="main-content  mt-0">
 

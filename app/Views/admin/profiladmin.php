@@ -152,7 +152,6 @@
                 <div class="modal-body">
                     <form method="POST" enctype="multipart/form-data" action="<?= base_url('profil/Admin/saveFotoProfil'); ?>">
 
-
                         <div class="col-lg-3 mb-lg-0 text-center">
                             <div class="card">
                                 <div class="card-body p-3">

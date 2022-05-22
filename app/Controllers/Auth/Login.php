@@ -29,7 +29,8 @@ class Login extends BaseController
         $data = [
             'title' => 'Login',
             'config' => $this->config,
-            'dtinfo' => $this->model->getInfoByStatus()
+            'dtinfo' => $this->model->getInfoByStatus(),
+            'dtjuminfo' => $this->model->getCountInfoToday()
         ];
 
         // dd($data);

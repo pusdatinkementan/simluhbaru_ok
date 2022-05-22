@@ -35,15 +35,41 @@ class Info extends BaseController
 
     public function saveInfo()
     {
+        if (!$this->validate([
+            // 'nameTxt' => 'required|min_length[10]'
+            'dokumen' => [
+                'rules' => 'max_size[dok,1024]',
+                'errors' => [
+                    //'uploaded' => 'pilih gambar dulu',
+                    'max_size' => 'ukuran dokumen terlalu besar'
+                ]
+            ]
+        ])) {
+
+            return redirect()->to('manage/info')->withInput();
+        }
+
+        //ambil file
+        $dok =  $this->request->getFile('dok');
+        $dokname = $dok->getName();
+        $dok->move('assets/img/info', $dokname);
+
         $data = [
-            'menu_id' => $this->request->getPost('menu_id'),
-            'title' => $this->request->getPost('judul'),
-            'url' => $this->request->getPost('url'),
-            'icon' => $this->request->getPost('icon'),
-            'is_active' => $this->request->getPost('is_active'),
+            'judul_info' => $this->request->getPost('judul'),
+            'deskripsi_info' => $this->request->getPost('desc'),
+            'tgl_info' => $this->request->getPost('tgl'),
+            'file_info' => $dokname,
+            'status_info' => $this->request->getPost('status'),
+            'created_at' => date('Y-m-d h:i:s')
         ];
 
-        $this->model->saveSubMenu($data);
+        try {
+            $this->model->saveInfo($data);
+            return 'success';
+        } catch (\Exception $e) {
+            print_r($e);
+            return 'error';
+        }
     }
 
     public function submenu()

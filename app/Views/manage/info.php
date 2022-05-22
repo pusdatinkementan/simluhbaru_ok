@@ -21,6 +21,7 @@
                         <th scope="col">Judul Info</th>
                         <th scope="col">Tanggal Info</th>
                         <th scope="col">Status</th>
+                        <th scope="col">File</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -34,6 +35,7 @@
                             <td><?= $row['judul_info']; ?></td>
                             <td><?= $row['tgl_info']; ?></td>
                             <td><?= $row['status_info']; ?></td>
+                            <td><a href="<?= base_url('assets/img/info/' . $row['file_info']); ?>"><?= $row['file_info']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditMenu" data-id="<?= $row['id_info']; ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusMenu" data-id="<?= $row['id_info']; ?>" type="button">Hapus</button>
@@ -111,33 +113,97 @@
 
         $('#tblMenu').DataTable();
 
+        $(document).ready(function() {
+            $(function() {
+                $('input[name="tglinfo"]').daterangepicker({
+                    singleDatePicker: true,
+                    autoApply: true,
+                    locale: {
+                        "format": "YYYY-MM-DD",
+                        "separator": " - ",
+                        "fromLabel": "Dari",
+                        "toLabel": "Sampai",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "M",
+                        "daysOfWeek": [
+                            "Mg",
+                            "Sn",
+                            "Sl",
+                            "Rb",
+                            "Km",
+                            "Jm",
+                            "Sb"
+                        ],
+                        "monthNames": [
+                            "Januari",
+                            "Februari",
+                            "Maret",
+                            "April",
+                            "Mei",
+                            "Juni",
+                            "Juli",
+                            "Agustus",
+                            "September",
+                            "Oktober",
+                            "November",
+                            "Desember"
+                        ],
+                        firstDay: 1
+                    }
+                });
+            });
+
+        });
+
         //save
 
         $(document).delegate('#btnSave', 'click', function() {
 
-            var menu = $('#menu').val();
-            var menu = $('#menu').val();
-            var menu = $('#menu').val();
-            var menu = $('#menu').val();
-            var menu = $('#menu').val();
+            var judul_info = $('#judul_info').val();
+            var desk_info = $('#desk_info').val();
+            var tglinfo = $('#tglinfo').val();
+            var dok = $('#dok')[0].files[0];
+            var is_active = $('#is_active').val();
+
+            var formData = new FormData();
+
+            formData.append('judul', judul_info);
+            formData.append('desc', desk_info);
+            formData.append('tgl', tglinfo);
+            formData.append('dok', dok);
+            formData.append('status', is_active);
+
+            debugger;
 
             $.ajax({
-                url: '<?= base_url('manage/menu/saveInfo/') ?>',
+                url: '<?= base_url('manage/info/saveInfo/') ?>',
                 type: 'POST',
-                data: {
-                    'menu': menu
-                },
+                processData: false,
+                contentType: false,
+                data: formData,
                 success: function(result) {
-                    Swal.fire({
-                        title: 'Sukses',
-                        text: "Sukses tambah data",
-                        type: 'success',
-                    }).then((result) => {
+                    if (result == 'success') {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: "Sukses tambah data",
+                            type: 'success',
+                        }).then((result) => {
 
-                        if (result.value) {
-                            location.reload();
-                        }
-                    });
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Gagal tambah data",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    }
                 },
                 error: function(jqxhr, status, exception) {
                     Swal.fire({
