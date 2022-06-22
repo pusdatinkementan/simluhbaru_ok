@@ -14,7 +14,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 }
 ?>
 <center>
-    <h2> Daftar Jenis Kelompok Lainnya </h2>
+    <h2> Daftar Jenis Kelompok Lainnya <br> di Kelompok Tani <?= $tblpoktan['nama_poktan']; ?> </h2>
 </center>
 
 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>

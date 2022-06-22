@@ -35,10 +35,10 @@
                             <td><?= $row['judul_info']; ?></td>
                             <td><?= $row['tgl_info']; ?></td>
                             <td><?= $row['status_info']; ?></td>
-                            <td><a href="<?= base_url('assets/img/info/' . $row['file_info']); ?>"><?= $row['file_info']; ?></a></td>
+                            <td><a href="<?= base_url('assets/dok/info/' . $row['file_info']); ?>"><?= $row['file_info']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditMenu" data-id="<?= $row['id_info']; ?>" class=" btn btn-warning btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm" id="btnHapusMenu" data-id="<?= $row['id_info']; ?>" type="button">Hapus</button>
+                                <button class="btn btn-danger btn-sm" id="btnHapusInfo" data-id="<?= $row['id_info']; ?>" type="button">Hapus</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -94,6 +94,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="btnSave" class="btn bg-gradient-primary">Simpan</button>
+                <button type="button" id="btnTest" class="btn bg-gradient-primary">coba</button>
             </div>
             </form>
         </div>
@@ -112,6 +113,10 @@
     $(document).ready(function() {
 
         $('#tblMenu').DataTable();
+
+        $('#btnTest').on('click', function() {
+            alert('ok');
+        })
 
         $(document).ready(function() {
             $(function() {
@@ -158,6 +163,8 @@
         //save
 
         $(document).delegate('#btnSave', 'click', function() {
+
+            // $('#btnSave').on('click', function() {
 
             var judul_info = $('#judul_info').val();
             var desk_info = $('#desk_info').val();
@@ -299,7 +306,7 @@
 
         });
 
-        $(document).delegate('#btnHapusMenu', 'click', function() {
+        $(document).delegate('#btnHapusInfo', 'click', function() {
 
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -311,14 +318,12 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Hapus Data!'
             }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: '<?= base_url() ?>/manage/menu/delete/' + $(this).data('id'),
-                        type: 'GET',
-                        data: {
-                            'idmenu': $(this).data('id')
-                        },
-                        success: function(result) {
+                $.ajax({
+                    url: '<?= base_url() ?>/manage/info/deleteInfo/' + $('#btnHapusInfo').data('id'),
+                    type: 'GET',
+                    success: function(result) {
+                        debugger;
+                        if (result == 'success') {
                             Swal.fire({
                                 title: 'Sukses',
                                 text: "Sukses hapus data",
@@ -329,8 +334,7 @@
                                     location.reload();
                                 }
                             });
-                        },
-                        error: function(jqxhr, status, exception) {
+                        } else {
                             Swal.fire({
                                 title: 'Error',
                                 text: "Gagal hapus data",
@@ -341,12 +345,21 @@
                                 }
                             });
                         }
-                    });
-                }
+                    },
+                    error: function(jqxhr, status, exception) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Gagal hapus data",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
             });
-
         });
-
     });
 </script>
 

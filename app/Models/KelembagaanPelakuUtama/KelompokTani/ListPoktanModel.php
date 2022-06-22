@@ -37,9 +37,6 @@ class ListPoktanModel extends Model
                                 ORDER BY id_poktan desc");
 
         $results = $query3->getResultArray();
-
-
-
         $data =  [
             'jum' => $row2->jum,
             'nama_kec' => $row->nama_kec,

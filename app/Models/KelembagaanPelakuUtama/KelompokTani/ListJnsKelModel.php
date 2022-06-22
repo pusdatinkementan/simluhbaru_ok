@@ -41,6 +41,15 @@ class ListJnsKelModel extends Model
         return $row;
     }
 
+    public function getPoktanById($id)
+    {
+        $db = Database::connect();
+        $query = "SELECT * FROM tb_poktan WHERE id_poktan = '" . $id . "'";
+        $query = $db->query($query);
+        $row   = $query->getRowArray();
+        return $row;
+    }
+
     public function saveJnskel($data)
     {
         $db = db_connect();

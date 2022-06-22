@@ -26,9 +26,11 @@ class ListJnsKel extends BaseController
         $ip = $get_param['ip'];
         $list = $this->model->getJnsKelByPoktan($ip);
         $kelompok = $this->model->getListJnsKel();
+        $poktan = $this->model->getPoktanById($ip);
 
         $data = [
             'tabel_data' => $list,
+            'tblpoktan' => $poktan,
             'title' => 'List Jenis Kelompok Lainnnya',
             'id_poktan' => $ip,
             'dtkelompok' => $kelompok

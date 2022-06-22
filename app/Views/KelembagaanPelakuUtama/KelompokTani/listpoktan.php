@@ -56,7 +56,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                 <a class="dropdown-item" href="<?= base_url('/listpoktananggota?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Tambah Anggota</a>
                                                 <a class="dropdown-item" href="<?= base_url('/listbantu?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Tambah Bantuan</a>
                                                 <a class="dropdown-item" href="<?= base_url('/komoditasbun?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Komoditas yang diusahakan</a>
-                                                <a class="dropdown-item" href="<?= base_url('/kelaskelompok?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Kelas Kelompok</a>
+                                                <!-- <a class="dropdown-item" href="<?= base_url('/kelaskelompok?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Kelas Kelompok</a> -->
                                                 <a class="dropdown-item" href="<?= base_url('/listjnskel?ip=' . $row['id_poktan']) ?>"><i class="fas fa-plus"></i> Input Jenis Kelompok</a>
                                                 <a class="dropdown-item" data-id_poktan="<?= $row['id_poktan'] ?>" id="btnEditPok" href="#"> <i class="fas fa-edit"></i> Ubah</a>
                                                 <a class="dropdown-item" id="btnHapus" data-id_poktan="<?= $row['id_poktan'] ?>" href="#"><i class="fas fa-trash"></i> Hapus</a>
@@ -185,7 +185,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                         </div>
                                                     </div>
                                                     <div class="col">
-
+                                                        <!-- 
                                                         <label>Jenis Kelompok Lainnya</label>
                                                         <div class="form-check">
                                                             <input class="form-check-input simluh_jenis_kelompok_perempuan" type="checkbox" value="perempuan" name="simluh_jenis_kelompok_perempuan" id="simluh_jenis_kelompok_perempuan">
@@ -234,7 +234,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                                             <label class="form-check-label" for="simluh_jenis_kelompok_umkm">
                                                                 UMKM Model Pengembangan Pangan Pokok Lokal (MP3L)
                                                             </label>
-                                                        </div>
+                                                        </div> -->
 
                                                         <Label> Komoditas Diusahakan</label>
                                                         <div class="form-check">
@@ -397,14 +397,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             var simluh_kelas_kemampuan = $('#simluh_kelas_kemampuan').val();
             var nilai_kelas = $('#nilai_kelas').val();
 
-            var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
-            var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
-            var simluh_jenis_kelompok_upja = $(".simluh_jenis_kelompok_upja")[0].checked ? $(".simluh_jenis_kelompok_upja").val() : "";
-            var simluh_jenis_kelompok_p3a = $(".simluh_jenis_kelompok_p3a")[0].checked ? $(".simluh_jenis_kelompok_p3a").val() : "";
-            var simluh_jenis_kelompok_lmdh = $(".simluh_jenis_kelompok_lmdh")[0].checked ? $(".simluh_jenis_kelompok_lmdh").val() : "";
-            var simluh_jenis_kelompok_penangkar = $(".simluh_jenis_kelompok_penangkar")[0].checked ? $(".simluh_jenis_kelompok_penangkar").val() : "";
-            var simluh_jenis_kelompok_kmp = $(".simluh_jenis_kelompok_kmp")[0].checked ? $(".simluh_jenis_kelompok_kmp").val() : "";
-            var simluh_jenis_kelompok_umkm = $(".simluh_jenis_kelompok_umkm")[0].checked ? $(".simluh_jenis_kelompok_umkm").val() : "";
+            // var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
+            // var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
+            // var simluh_jenis_kelompok_upja = $(".simluh_jenis_kelompok_upja")[0].checked ? $(".simluh_jenis_kelompok_upja").val() : "";
+            // var simluh_jenis_kelompok_p3a = $(".simluh_jenis_kelompok_p3a")[0].checked ? $(".simluh_jenis_kelompok_p3a").val() : "";
+            // var simluh_jenis_kelompok_lmdh = $(".simluh_jenis_kelompok_lmdh")[0].checked ? $(".simluh_jenis_kelompok_lmdh").val() : "";
+            // var simluh_jenis_kelompok_penangkar = $(".simluh_jenis_kelompok_penangkar")[0].checked ? $(".simluh_jenis_kelompok_penangkar").val() : "";
+            // var simluh_jenis_kelompok_kmp = $(".simluh_jenis_kelompok_kmp")[0].checked ? $(".simluh_jenis_kelompok_kmp").val() : "";
+            // var simluh_jenis_kelompok_umkm = $(".simluh_jenis_kelompok_umkm")[0].checked ? $(".simluh_jenis_kelompok_umkm").val() : "";
 
 
             var simluh_jenis_kelompok_tp = $(".simluh_jenis_kelompok_tp")[0].checked ? $(".simluh_jenis_kelompok_tp").val() : "";
@@ -508,14 +508,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     'simluh_tahun_tap_kelas': simluh_tahun_tap_kelas,
                     'simluh_kelas_kemampuan': simluh_kelas_kemampuan,
                     'nilai_kelas': nilai_kelas,
-                    'simluh_jenis_kelompok_perempuan': simluh_jenis_kelompok_perempuan,
-                    'simluh_jenis_kelompok_domisili': simluh_jenis_kelompok_domisili,
-                    'simluh_jenis_kelompok_upja': simluh_jenis_kelompok_upja,
-                    'simluh_jenis_kelompok_p3a': simluh_jenis_kelompok_p3a,
-                    'simluh_jenis_kelompok_lmdh': simluh_jenis_kelompok_lmdh,
-                    'simluh_jenis_kelompok_penangkar': simluh_jenis_kelompok_penangkar,
-                    'simluh_jenis_kelompok_kmp': simluh_jenis_kelompok_kmp,
-                    'simluh_jenis_kelompok_umkm': simluh_jenis_kelompok_umkm,
+                    // 'simluh_jenis_kelompok_perempuan': simluh_jenis_kelompok_perempuan,
+                    // 'simluh_jenis_kelompok_domisili': simluh_jenis_kelompok_domisili,
+                    // 'simluh_jenis_kelompok_upja': simluh_jenis_kelompok_upja,
+                    // 'simluh_jenis_kelompok_p3a': simluh_jenis_kelompok_p3a,
+                    // 'simluh_jenis_kelompok_lmdh': simluh_jenis_kelompok_lmdh,
+                    // 'simluh_jenis_kelompok_penangkar': simluh_jenis_kelompok_penangkar,
+                    // 'simluh_jenis_kelompok_kmp': simluh_jenis_kelompok_kmp,
+                    // 'simluh_jenis_kelompok_umkm': simluh_jenis_kelompok_umkm,
                     'simluh_jenis_kelompok_tp': simluh_jenis_kelompok_tp,
                     'simluh_jenis_kelompok_bun': simluh_jenis_kelompok_bun,
                     'simluh_jenis_kelompok_hor': simluh_jenis_kelompok_hor,
@@ -632,46 +632,46 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     $('#simluh_kelas_kemampuan').val(result.simluh_kelas_kemampuan);
                     $('#nilai_kelas').val(result.simluh_nilai_kelas);
 
-                    if (result.simluh_jenis_kelompok_perempuan == "perempuan") {
-                        $("#simluh_jenis_kelompok_perempuan").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_perempuan").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_domisili == "domisili") {
-                        $("#simluh_jenis_kelompok_domisili").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_domisili").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_upja == "upja") {
-                        $("#simluh_jenis_kelompok_upja").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_upja").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_p3a == "p3a") {
-                        $("#simluh_jenis_kelompok_p3a").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_p3a").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_lmdh == "lmdh") {
-                        $("#simluh_jenis_kelompok_lmdh").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_lmdh").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_penangkar == "penangkar") {
-                        $("#simluh_jenis_kelompok_penangkar").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_penangkar").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_kmp == "kmp") {
-                        $("#simluh_jenis_kelompok_kmp").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_kmp").prop("checked", false);
-                    }
-                    if (result.simluh_jenis_kelompok_umkm == "umkm") {
-                        $("#simluh_jenis_kelompok_umkm").prop("checked", true);
-                    } else {
-                        $("#simluh_jenis_kelompok_umkm").prop("checked", false);
-                    }
+                    // if (result.simluh_jenis_kelompok_perempuan == "perempuan") {
+                    //     $("#simluh_jenis_kelompok_perempuan").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_perempuan").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_domisili == "domisili") {
+                    //     $("#simluh_jenis_kelompok_domisili").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_domisili").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_upja == "upja") {
+                    //     $("#simluh_jenis_kelompok_upja").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_upja").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_p3a == "p3a") {
+                    //     $("#simluh_jenis_kelompok_p3a").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_p3a").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_lmdh == "lmdh") {
+                    //     $("#simluh_jenis_kelompok_lmdh").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_lmdh").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_penangkar == "penangkar") {
+                    //     $("#simluh_jenis_kelompok_penangkar").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_penangkar").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_kmp == "kmp") {
+                    //     $("#simluh_jenis_kelompok_kmp").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_kmp").prop("checked", false);
+                    // }
+                    // if (result.simluh_jenis_kelompok_umkm == "umkm") {
+                    //     $("#simluh_jenis_kelompok_umkm").prop("checked", true);
+                    // } else {
+                    //     $("#simluh_jenis_kelompok_umkm").prop("checked", false);
+                    // }
 
                     if (result.simluh_jenis_kelompok_tp == "tp") {
                         $("#simluh_jenis_kelompok_tp").prop("checked", true);
@@ -725,14 +725,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         var simluh_kelas_kemampuan = $('#simluh_kelas_kemampuan').val();
                         var nilai_kelas = $('#nilai_kelas').val();
 
-                        var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
-                        var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
-                        var simluh_jenis_kelompok_upja = $(".simluh_jenis_kelompok_upja")[0].checked ? $(".simluh_jenis_kelompok_upja").val() : "";
-                        var simluh_jenis_kelompok_p3a = $(".simluh_jenis_kelompok_p3a")[0].checked ? $(".simluh_jenis_kelompok_p3a").val() : "";
-                        var simluh_jenis_kelompok_lmdh = $(".simluh_jenis_kelompok_lmdh")[0].checked ? $(".simluh_jenis_kelompok_lmdh").val() : "";
-                        var simluh_jenis_kelompok_penangkar = $(".simluh_jenis_kelompok_penangkar")[0].checked ? $(".simluh_jenis_kelompok_penangkar").val() : "";
-                        var simluh_jenis_kelompok_kmp = $(".simluh_jenis_kelompok_kmp")[0].checked ? $(".simluh_jenis_kelompok_kmp").val() : "";
-                        var simluh_jenis_kelompok_umkm = $(".simluh_jenis_kelompok_umkm")[0].checked ? $(".simluh_jenis_kelompok_umkm").val() : "";
+                        // var simluh_jenis_kelompok_perempuan = $(".simluh_jenis_kelompok_perempuan")[0].checked ? $(".simluh_jenis_kelompok_perempuan").val() : "";
+                        // var simluh_jenis_kelompok_domisili = $(".simluh_jenis_kelompok_domisili")[0].checked ? $(".simluh_jenis_kelompok_domisili").val() : "";
+                        // var simluh_jenis_kelompok_upja = $(".simluh_jenis_kelompok_upja")[0].checked ? $(".simluh_jenis_kelompok_upja").val() : "";
+                        // var simluh_jenis_kelompok_p3a = $(".simluh_jenis_kelompok_p3a")[0].checked ? $(".simluh_jenis_kelompok_p3a").val() : "";
+                        // var simluh_jenis_kelompok_lmdh = $(".simluh_jenis_kelompok_lmdh")[0].checked ? $(".simluh_jenis_kelompok_lmdh").val() : "";
+                        // var simluh_jenis_kelompok_penangkar = $(".simluh_jenis_kelompok_penangkar")[0].checked ? $(".simluh_jenis_kelompok_penangkar").val() : "";
+                        // var simluh_jenis_kelompok_kmp = $(".simluh_jenis_kelompok_kmp")[0].checked ? $(".simluh_jenis_kelompok_kmp").val() : "";
+                        // var simluh_jenis_kelompok_umkm = $(".simluh_jenis_kelompok_umkm")[0].checked ? $(".simluh_jenis_kelompok_umkm").val() : "";
 
                         var simluh_jenis_kelompok_tp = $(".simluh_jenis_kelompok_tp")[0].checked ? $(".simluh_jenis_kelompok_tp").val() : "";
                         var simluh_jenis_kelompok_bun = $(".simluh_jenis_kelompok_bun")[0].checked ? $(".simluh_jenis_kelompok_bun").val() : "";
@@ -761,14 +761,14 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         formData.append('simluh_tahun_tap_kelas', simluh_tahun_tap_kelas);
                         formData.append('simluh_kelas_kemampuan', simluh_kelas_kemampuan);
                         formData.append('nilai_kelas', nilai_kelas);
-                        formData.append('simluh_jenis_kelompok_perempuan', simluh_jenis_kelompok_perempuan);
-                        formData.append('simluh_jenis_kelompok_domisili', simluh_jenis_kelompok_domisili);
-                        formData.append('simluh_jenis_kelompok_upja', simluh_jenis_kelompok_upja);
-                        formData.append('simluh_jenis_kelompok_p3a', simluh_jenis_kelompok_p3a);
-                        formData.append('simluh_jenis_kelompok_lmdh', simluh_jenis_kelompok_lmdh);
-                        formData.append('simluh_jenis_kelompok_penangkar', simluh_jenis_kelompok_penangkar);
-                        formData.append('simluh_jenis_kelompok_kmp', simluh_jenis_kelompok_kmp);
-                        formData.append('simluh_jenis_kelompok_umkm', simluh_jenis_kelompok_umkm);
+                        // formData.append('simluh_jenis_kelompok_perempuan', simluh_jenis_kelompok_perempuan);
+                        // formData.append('simluh_jenis_kelompok_domisili', simluh_jenis_kelompok_domisili);
+                        // formData.append('simluh_jenis_kelompok_upja', simluh_jenis_kelompok_upja);
+                        // formData.append('simluh_jenis_kelompok_p3a', simluh_jenis_kelompok_p3a);
+                        // formData.append('simluh_jenis_kelompok_lmdh', simluh_jenis_kelompok_lmdh);
+                        // formData.append('simluh_jenis_kelompok_penangkar', simluh_jenis_kelompok_penangkar);
+                        // formData.append('simluh_jenis_kelompok_kmp', simluh_jenis_kelompok_kmp);
+                        // formData.append('simluh_jenis_kelompok_umkm', simluh_jenis_kelompok_umkm);
                         formData.append('simluh_jenis_kelompok_tp', simluh_jenis_kelompok_tp);
                         formData.append('simluh_jenis_kelompok_bun', simluh_jenis_kelompok_bun);
                         formData.append('simluh_jenis_kelompok_hor', simluh_jenis_kelompok_hor);

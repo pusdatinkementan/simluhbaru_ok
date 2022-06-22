@@ -29,23 +29,15 @@ class ListGapoktanModel extends Model
         $query2 = $db->query("SELECT count(id_gap) as jum FROM tb_gapoktan where kode_kec ='" . $kode_kec . "'");
         $row2   = $query2->getRow();
 
-        $query4   = $db->query("select  a.id_gap,a.kode_desa,a.kode_kec,a.nama_gapoktan,a.ketua_gapoktan,a.simluh_bendahara,a.alamat,b.id_desa, b.nm_desa,c.jumpok,d.id_dati2,e.id_daerah,a.simluh_sk_pengukuhan
-                                from tb_gapoktan a
+        $query4   = $db->query("select  a.id_gap,a.kode_desa,a.kode_kec,a.nama_gapoktan,a.ketua_gapoktan,a.simluh_bendahara,a.alamat,b.id_desa, b.nm_desa,c.jumpok,d.id_dati2,e.id_daerah,a.simluh_sk_pengukuhan, a.simluh_tahun_bentuk, a.sk_pengukuhan, a.simluh_usaha_saprodi, a.simluh_usaha_pemasaran,a.simluh_usaha_simpan_pinjam,a.simluh_usaha_pemasaran,a.simluh_usaha_jasa_lain, a.simluh_usaha_tani, a.simluh_usaha_olah from tb_gapoktan a
                                 left join tbldesa b on a.kode_desa=b.id_desa 
-                                left join (SELECT id_gap,kode_desa, COUNT(id_poktan) as jumpok from tb_poktan GROUP BY id_gap,kode_desa) c on a.id_gap=c.id_gap and b.id_desa=c.kode_desa and c.id_gap !=''
+                                left join (SELECT id_gap,kode_desa, COUNT(id_poktan) as jumpok from tb_poktan WHERE status != '2' GROUP BY id_gap,kode_desa) c on a.id_gap=c.id_gap and b.id_desa=c.kode_desa and c.id_gap !=''
                                 left join tbldati2 d on a.kode_kab=d.id_dati2 
                                 left join tbldaerah e on a.kode_kec=e.id_daerah
                                 where kode_kec='" . $kode_kec . "'
                                 ORDER BY kode_desa");
 
         $results = $query4->getResultArray();
-
-
-
-        //  $query3 = $db->query("SELECT count(id_poktan) as jumpok FROM tb_poktan where id_gap ='id_gap'  and id_gap !=''");
-        //  $row3   = $query3->getRow();
-
-
 
         $data =  [
             'jum' => $row2->jum,

@@ -9,7 +9,7 @@ class InfoModel extends Model
 {
     protected $table      = 'tbl_info';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_info';
     protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
@@ -31,6 +31,7 @@ class InfoModel extends Model
         $row = $builder->get();
         return $row->getResultArray();
     }
+
     public function getInfoByStatus()
     {
         $db = db_connect();
@@ -46,6 +47,17 @@ class InfoModel extends Model
     {
         $query = $this->db->query("select * from tbl_info where status_info = 1 and DATE(tgl_info) = CURDATE()");
         $row = $query->getNumRows();
+        return $row;
+    }
+
+    public function getInfoByMonth()
+    {
+        $query = $this->db->query("select * from tbl_info where status_info = 1 and MONTH(tgl_info) = MONTH(CURDATE())");
+        $row = [
+            'databln' => $query->getResultArray(),
+            'jumbln' => $query->getNumRows()
+        ];
+        // dd($row);
         return $row;
     }
 

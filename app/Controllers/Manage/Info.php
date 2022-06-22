@@ -35,24 +35,24 @@ class Info extends BaseController
 
     public function saveInfo()
     {
-        if (!$this->validate([
-            // 'nameTxt' => 'required|min_length[10]'
-            'dokumen' => [
-                'rules' => 'max_size[dok,1024]',
-                'errors' => [
-                    //'uploaded' => 'pilih gambar dulu',
-                    'max_size' => 'ukuran dokumen terlalu besar'
-                ]
-            ]
-        ])) {
+        // if (!$this->validate([
+        //     // 'nameTxt' => 'required|min_length[10]'
+        //     'dokumen' => [
+        //         'rules' => 'max_size[dok,1024]',
+        //         'errors' => [
+        //             //'uploaded' => 'pilih gambar dulu',
+        //             'max_size' => 'ukuran dokumen terlalu besar'
+        //         ]
+        //     ]
+        // ])) {
 
-            return redirect()->to('manage/info')->withInput();
-        }
+        //     return redirect()->to('manage/info')->withInput();
+        // }
 
         //ambil file
         $dok =  $this->request->getFile('dok');
         $dokname = $dok->getName();
-        $dok->move('assets/img/info', $dokname);
+        $dok->move('assets/dok/info', $dokname);
 
         $data = [
             'judul_info' => $this->request->getPost('judul'),
@@ -133,11 +133,15 @@ class Info extends BaseController
         $this->model->updateSubmenu($id, $data);
     }
 
-    public function deleteSubmenu($id)
+    public function deleteInfo($id)
     {
-        $this->model->deleteSubMenu($id);
-        session()->setFlashdata('pesan', 'Data berhasil dihapus');
-        // return redirect()->to('master/jabatan');
+        try {
+            $this->model->deleteInfo($id);
+            return 'success';
+        } catch (\Exception $e) {
+            // print_r($e);
+            return 'error';
+        }
     }
 
     public function save()

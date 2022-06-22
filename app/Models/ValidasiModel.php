@@ -10,7 +10,7 @@ class ValidasiModel extends Model
 
     public function getAllNikUnmatch()
     {
-        //echo session()->get('kodebapel');
+        echo session()->get('idprop');
         if (empty(session()->get('status_user')) || session()->get('status_user') == '99') {
             // $session = session()->get('userid');
         } elseif (session()->get('status_user') == '1') {
@@ -26,6 +26,9 @@ class ValidasiModel extends Model
         } elseif (session()->get('status_user') == '2') {
             $queryCount = $this->db->query("SELECT count(*) as jmlnoktp FROM tbldasar WHERE LENGTH(TRIM(noktp)) <> 16 AND `status` not IN('1','2') ");
             $query = $this->db->query("SELECT * FROM tbldasar WHERE LENGTH(TRIM(noktp)) <> 16 AND `status` not IN('1','2') ");
+        } else {
+            $queryCount = $this->db->query("SELECT count(*) as jmlnoktp FROM tbldasar WHERE LENGTH(TRIM(noktp)) <> 16 AND  `status` = '6' ");
+            $query = $this->db->query("SELECT * FROM tbldasar WHERE LENGTH(TRIM(noktp)) <> 16 AND `status` = '6' ");
         }
 
         //dd($queryCount);
@@ -57,6 +60,9 @@ class ValidasiModel extends Model
         } elseif (session()->get('status_user') == '2') {
             $queryCount = $this->db->query("SELECT count(*) as jmlnohp FROM tbldasar WHERE hp = '' AND `status` not IN('1','2') ");
             $query = $this->db->query("SELECT * FROM tbldasar WHERE hp = '' AND `status` not IN('1','2') ");
+        } else {
+            $queryCount = $this->db->query("SELECT count(*) as jmlnohp FROM tbldasar WHERE hp = '' AND `status` = '6'");
+            $query = $this->db->query("SELECT * FROM tbldasar WHERE hp = '' AND `status` = '6'");
         }
 
         $result = $query->getResultArray();
@@ -86,6 +92,9 @@ class ValidasiModel extends Model
         } elseif (session()->get('status_user') == '2') {
             $queryCount = $this->db->query("SELECT count(*) as jmlnip FROM tbldasar WHERE LENGTH(TRIM(nip)) <> 18");
             $query = $this->db->query("SELECT * FROM tbldasar WHERE LENGTH(TRIM(nip)) <> 18 ");
+        } else {
+            $queryCount = $this->db->query("SELECT count(*) as jmlnip FROM tbldasar WHERE LENGTH(TRIM(nip)) <> 18 AND `status` = '6'");
+            $query = $this->db->query("SELECT * FROM tbldasar WHERE LENGTH(TRIM(nip)) <> 18 AND `status` = '6'  ");
         }
 
         $result = $query->getResultArray();

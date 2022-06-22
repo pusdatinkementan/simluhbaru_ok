@@ -77,14 +77,36 @@ $data = $json[0];
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?php foreach ($dtinfo as $row) {
-                    ?>
-                        <p>
-                        <h5><?= $row['judul_info']; ?><h5>
-                                </p>
-                                <p><?= $row['deskripsi_info']; ?></p>
-                                <hr>
-                            <?php } ?>
+
+                    <div class="card">
+                        <div class="card-header pb-0 px-3">
+                            <h6 class="mb-0">Hari ini</h6>
+                        </div>
+                        <div class="card-body pt-4 p-3">
+                            <ul class="list-group">
+                                <?php foreach ($dtinfo as $row) {
+                                ?>
+                                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="mb-3 text-sm"><?= $row['judul_info']; ?></h6>
+                                            <span class="mb-2 text-xs">Tanggal: <span class="text-dark font-weight-bold ms-sm-2"><?php echo longdate_indo(substr($row['tgl_info'], 0, 10)); ?></span></span>
+                                            <span class="mb-2 text-xs">Isi: <span class="text-dark font-weight-bold ms-sm-2"><?= $row['deskripsi_info']; ?></span></span>
+                                            <span class="mb-2 text-xs">File : <span class="text-dark ms-sm-2 font-weight-bold"><a href="<?= base_url('assets/dok/info/' . $row['file_info']) ?>">Download</a></span></span>
+
+                                        </div>
+                                        <!-- <div class="ms-auto text-end">
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete</a>
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                        </div> -->
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
 
                 <div class="modal-footer">

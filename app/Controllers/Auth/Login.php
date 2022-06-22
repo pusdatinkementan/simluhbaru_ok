@@ -17,6 +17,7 @@ class Login extends BaseController
         $this->config = config('Auth');
         $this->auth = service('authentication');
         $this->session->start();
+        helper('tglindo');
         session();
     }
 
@@ -30,11 +31,10 @@ class Login extends BaseController
             'title' => 'Login',
             'config' => $this->config,
             'dtinfo' => $this->model->getInfoByStatus(),
-            'dtjuminfo' => $this->model->getCountInfoToday()
+            'dtjuminfo' => $this->model->getCountInfoToday(),
+            'dtbln' => $this->model->getInfoByMonth(),
         ];
-
-        // dd($data);
-
+        // d($data['dtbln']['databln'][0]['judul_info']);
         return view('login', $data);
     }
 

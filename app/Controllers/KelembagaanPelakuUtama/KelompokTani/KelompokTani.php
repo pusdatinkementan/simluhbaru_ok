@@ -110,17 +110,14 @@ class KelompokTani extends BaseController
                 'simluh_tahun_tap_kelas' => $this->request->getPost('simluh_tahun_tap_kelas'),
                 'simluh_kelas_kemampuan' => $this->request->getPost('simluh_kelas_kemampuan'),
                 'simluh_nilai_kelas' => $this->request->getPost('nilai_kelas'),
-
-                'simluh_jenis_kelompok_perempuan' => $this->request->getPost('simluh_jenis_kelompok_perempuan'),
-                'simluh_jenis_kelompok_domisili' => $this->request->getPost('simluh_jenis_kelompok_domisili'),
-                'simluh_jenis_kelompok_upja' => $this->request->getPost('simluh_jenis_kelompok_upja'),
-                'simluh_jenis_kelompok_p3a' => $this->request->getPost('simluh_jenis_kelompok_p3a'),
-                'simluh_jenis_kelompok_lmdh' => $this->request->getPost('simluh_jenis_kelompok_lmdh'),
-                'simluh_jenis_kelompok_penangkar' => $this->request->getPost('simluh_jenis_kelompok_penangkar'),
-                'simluh_jenis_kelompok_kmp' => $this->request->getPost('simluh_jenis_kelompok_kmp'),
-                'simluh_jenis_kelompok_umkm' => $this->request->getPost('simluh_jenis_kelompok_umkm'),
-
-
+                // 'simluh_jenis_kelompok_perempuan' => $this->request->getPost('simluh_jenis_kelompok_perempuan'),
+                // 'simluh_jenis_kelompok_domisili' => $this->request->getPost('simluh_jenis_kelompok_domisili'),
+                // 'simluh_jenis_kelompok_upja' => $this->request->getPost('simluh_jenis_kelompok_upja'),
+                // 'simluh_jenis_kelompok_p3a' => $this->request->getPost('simluh_jenis_kelompok_p3a'),
+                // 'simluh_jenis_kelompok_lmdh' => $this->request->getPost('simluh_jenis_kelompok_lmdh'),
+                // 'simluh_jenis_kelompok_penangkar' => $this->request->getPost('simluh_jenis_kelompok_penangkar'),
+                // 'simluh_jenis_kelompok_kmp' => $this->request->getPost('simluh_jenis_kelompok_kmp'),
+                // 'simluh_jenis_kelompok_umkm' => $this->request->getPost('simluh_jenis_kelompok_umkm'),
                 'simluh_jenis_kelompok_tp' => $this->request->getPost('simluh_jenis_kelompok_tp'),
                 'simluh_jenis_kelompok_bun' => $this->request->getPost('simluh_jenis_kelompok_bun'),
                 'simluh_jenis_kelompok_hor' => $this->request->getPost('simluh_jenis_kelompok_hor'),
@@ -179,14 +176,14 @@ class KelompokTani extends BaseController
         $nilai_kelas = $this->request->getPost('nilai_kelas');
         $simluh_tahun_tap_kelas = $this->request->getPost('simluh_tahun_tap_kelas');
 
-        $simluh_jenis_kelompok_perempuan = $this->request->getPost('simluh_jenis_kelompok_perempuan');
-        $simluh_jenis_kelompok_domisili = $this->request->getPost('simluh_jenis_kelompok_domisili');
-        $simluh_jenis_kelompok_upja = $this->request->getPost('simluh_jenis_kelompok_upja');
-        $simluh_jenis_kelompok_p3a = $this->request->getPost('simluh_jenis_kelompok_p3a');
-        $simluh_jenis_kelompok_lmdh = $this->request->getPost('simluh_jenis_kelompok_lmdh');
-        $simluh_jenis_kelompok_penangkar = $this->request->getPost('simluh_jenis_kelompok_penangkar');
-        $simluh_jenis_kelompok_kmp = $this->request->getPost('simluh_jenis_kelompok_kmp');
-        $simluh_jenis_kelompok_umkm = $this->request->getPost('simluh_jenis_kelompok_umkm');
+        // $simluh_jenis_kelompok_perempuan = $this->request->getPost('simluh_jenis_kelompok_perempuan');
+        // $simluh_jenis_kelompok_domisili = $this->request->getPost('simluh_jenis_kelompok_domisili');
+        // $simluh_jenis_kelompok_upja = $this->request->getPost('simluh_jenis_kelompok_upja');
+        // $simluh_jenis_kelompok_p3a = $this->request->getPost('simluh_jenis_kelompok_p3a');
+        // $simluh_jenis_kelompok_lmdh = $this->request->getPost('simluh_jenis_kelompok_lmdh');
+        // $simluh_jenis_kelompok_penangkar = $this->request->getPost('simluh_jenis_kelompok_penangkar');
+        // $simluh_jenis_kelompok_kmp = $this->request->getPost('simluh_jenis_kelompok_kmp');
+        // $simluh_jenis_kelompok_umkm = $this->request->getPost('simluh_jenis_kelompok_umkm');
 
         $simluh_jenis_kelompok_tp = $this->request->getPost('simluh_jenis_kelompok_tp');
         $simluh_jenis_kelompok_bun = $this->request->getPost('simluh_jenis_kelompok_bun');
@@ -216,14 +213,14 @@ class KelompokTani extends BaseController
             'simluh_kelas_kemampuan' => $simluh_kelas_kemampuan,
             'simluh_nilai_kelas' => $nilai_kelas,
 
-            'simluh_jenis_kelompok_perempuan' => $simluh_jenis_kelompok_perempuan,
-            'simluh_jenis_kelompok_domisili' => $simluh_jenis_kelompok_domisili,
-            'simluh_jenis_kelompok_upja' => $simluh_jenis_kelompok_upja,
-            'simluh_jenis_kelompok_p3a' => $simluh_jenis_kelompok_p3a,
-            'simluh_jenis_kelompok_lmdh' => $simluh_jenis_kelompok_lmdh,
-            'simluh_jenis_kelompok_penangkar' => $simluh_jenis_kelompok_penangkar,
-            'simluh_jenis_kelompok_kmp' => $simluh_jenis_kelompok_kmp,
-            'simluh_jenis_kelompok_umkm' => $simluh_jenis_kelompok_umkm,
+            // 'simluh_jenis_kelompok_perempuan' => $simluh_jenis_kelompok_perempuan,
+            // 'simluh_jenis_kelompok_domisili' => $simluh_jenis_kelompok_domisili,
+            // 'simluh_jenis_kelompok_upja' => $simluh_jenis_kelompok_upja,
+            // 'simluh_jenis_kelompok_p3a' => $simluh_jenis_kelompok_p3a,
+            // 'simluh_jenis_kelompok_lmdh' => $simluh_jenis_kelompok_lmdh,
+            // 'simluh_jenis_kelompok_penangkar' => $simluh_jenis_kelompok_penangkar,
+            // 'simluh_jenis_kelompok_kmp' => $simluh_jenis_kelompok_kmp,
+            // 'simluh_jenis_kelompok_umkm' => $simluh_jenis_kelompok_umkm,
 
             'simluh_jenis_kelompok_tp' => $simluh_jenis_kelompok_tp,
             'simluh_jenis_kelompok_bun' => $simluh_jenis_kelompok_bun,

@@ -32,7 +32,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="cekpetani">Cek Data Petani</button>
 
-<button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Anggota Kelompok</button>
+
+<!-- Tombol tambah anggota poktan sementara di disable  -->
+
+<!-- <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Anggota Kelompok</button> -->
 
 <div class="card">
     <div class="table-responsive">
@@ -58,8 +61,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Total Luas<br>Lahan Yang<br>Dimiliki (Ha)</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Kategori Petani</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Titik Koordinat</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Aksi</th>
-
+                    <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Aksi</th> -->
                     <th class="text-secondary opacity-7"></th>
                 </tr>
             </thead>
@@ -75,7 +77,23 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                         </td>
 
                         <td class="align-middle text-sm">
-                            <p class="text-xs font-weight-bold mb-0"><?= $row['nama_anggota'] ?></p>
+                            <div class="dropdown show">
+                                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <?= $row['nama_anggota'] ?>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" data-id_anggota="<?= $row['id_anggota'] ?>" id="btnEditAnggota" href="#"> <i class="fas fa-edit"></i> Ubah</a>
+                                    <a class="dropdown-item" id="btnHapus" data-id_anggota="<?= $row['id_anggota'] ?>" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                    <!-- <button type="button" data-id_anggota="<?= $row['id_anggota'] ?>" id="btnEditAnggota" class="btn bg-gradient-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Ubah
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm" id="btnHapus" data-id_anggota="<?= $row['id_anggota'] ?>" type="button">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button> -->
+
+                                </div>
+                            </div>
                         </td>
                         <td class="align-middle text-sm">
                             <p class="text-xs font-weight-bold mb-0"><?= $row['no_ktp'] ?></p>
@@ -129,16 +147,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                             <p class="text-xs font-weight-bold mb-0"><?= $row['titik_koordinat_lahan'] ?></p>
                         </td>
 
-                        <td class="align-middle text-center text-sm">
-                            <button type="button" data-id_anggota="<?= $row['id_anggota'] ?>" id="btnEditAnggota" class="btn bg-gradient-warning btn-sm">
-                                <i class="fas fa-edit"></i> Ubah
-                            </button>
-
-
-                            <button class="btn btn-danger btn-sm" id="btnHapus" data-id_anggota="<?= $row['id_anggota'] ?>" type="button">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                        </td>
                     </tr>
                 <?php
                 }
@@ -387,7 +395,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                         <input type="hidden" id="id_poktan" name="id_poktan" value="<?= $id_poktan; ?>">
                                         <div class="text-center">
                                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" id="btnSaveA" class="btn bg-gradient-info">Simpan Data</button>
+                                            <button type="button" id="btnSaveAnggotaPoktan" class="btn bg-gradient-info">Simpan Data</button>
                                             <!-- <button type="button" id="btnSaveA" class="btn btn-round bg-gradient-warning btn-sm">Simpan Data</button> -->
                                         </div>
                                     </div>
@@ -631,7 +639,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
             $.ajax({
                 url: "./Validasi/Nikpetani/cekdukcapil",
                 method: 'POST',
-                // dataType: 'JSON',
+                dataType: 'JSON',
                 data: {
                     "NIK": data_nik,
                     "NAMA_LGKP": data_namalkp,
@@ -641,28 +649,34 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                 },
                 success: function(result) {
                     // var hasil = result.content;
-                    result = JSON.parse(result);
-                    var msg = result.RESPONSE_MESSAGE;
-                    var valid = result.RESPONSE_STATUS;
-                    var namalkp = result.RESPONSE_NAMA_LGKP;
-                    var jnskel = result.RESPONSE_JENIS_KLMIN;
-                    var tmplhr = result.RESPONSE_TMPT_LHR;
-                    var tgllhr = result.RESPONSE_TGL_LHR;
-                    var tglskrg = result.RESPONSE_DATETIME;
-
+                    // result = JSON.parse(result).hasil;
+                    var msg = result.hasil.RESPONSE_MESSAGE;
+                    var valid = result.hasil.RESPONSE_STATUS;
+                    var namalkp = result.hasil.RESPONSE_NAMA_LGKP;
+                    var jnskel = result.hasil.RESPONSE_JENIS_KLMIN;
+                    var tmplhr = result.hasil.RESPONSE_TMPT_LHR;
+                    var tgllhr = result.hasil.RESPONSE_TGL_LHR;
+                    var tglskrg = result.hasil.RESPONSE_DATETIME;
 
                     if (valid == 'valid') {
                         // $('#modal-notification').modal('show');
                         Swal.fire({
                             title: 'Sukses',
-                            text: 'Hasil :\n' + msg,
+                            text: 'Hasil : ' + msg,
                             type: 'success'
+                        }).then(function() {
+                            showModalTambahPoktan();
                         });
                     } else {
                         Swal.fire({
                             title: 'Gagal',
-                            text: 'Hasil :\n' + msg,
+                            text: 'Hasil : ' + msg,
                             type: 'error'
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#exampleModal').modal('hide');
+                                // return false;
+                            }
                         });
                     }
 
@@ -681,10 +695,17 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
         });
 
+        function showModalTambahPoktan() {
+            $("#exampleModal").removeClass("fade").modal("hide");
+            $('#modal-form').addClass("fade").modal("show");
+        }
+
         function validasi_tanggal(tanggal) {
             var polaRegex = new RegExp(/^\d{2}-\d{2}-\d{4}$/);
             return polaRegex.test(tanggal);
         }
+
+        // cek NIK di database simluh 
 
         $('#cariNIK').on("click", function() {
 
@@ -758,9 +779,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
         });
 
+        // Save Data Petani Ke Database
 
-
-        $(document).delegate('#btnSaveA', 'click', function() {
+        $(document).delegate('#btnSaveAnggotaPoktan', 'click', function() {
 
             var kode_kec = $('#kode_kec').val();
             var kode_desa = $('#kode_desa').val();
@@ -1157,7 +1178,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 
                     $('#modal-form').modal('show');
-                    $("#btnSaveA").attr("id", "btnDoEdit");
+                    $("#btnSaveAnggotaPoktan").attr("id", "btnDoEdit");
 
                     $(document).delegate('#btnDoEdit', 'click', function() {
 
@@ -1434,8 +1455,6 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                             });
                             return false;
                         }
-
-
 
 
                         $.ajax({

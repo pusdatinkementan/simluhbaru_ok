@@ -54,10 +54,12 @@ class Nikpetani extends BaseController
             "TMPT_LHR": "' . $this->request->getPost("TMPT_LHR") . '",
             "TGL_LHR": "' . $this->request->getPost("TGL_LHR") . '",
             "TRESHOLD": ' . $treshold . ',
-            "user_id": "11953174202203011dummybppsdmpkementan",
-            "password": "123",
-            "ip_user": "10.214.41.21"
+            "user_id": "1289172202206071bppsdmkementan",
+            "password": "gTa7q8j",
+            "ip_user": "10.160.84.10"
         }';
+        // print_r($opts);
+        // die();
 
         // $opts = '{
         //     "NIK": "3173044607870002",
@@ -76,7 +78,8 @@ class Nikpetani extends BaseController
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://172.16.160.84:8000/dukcapil/get_json/bppsdmp_kementan/nik_verifby_elemen',
+            // CURLOPT_URL => 'http://172.16.160.128:8000/dukcapil/get_json/bppsdmp_kementan/nik_verifby_elemen',
+            CURLOPT_URL => 'http://172.16.160.128:8000/dukcapil/get_json/badan_penyuluhan_sdm/nik_verifby_elemen',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -87,11 +90,13 @@ class Nikpetani extends BaseController
             CURLOPT_POSTFIELDS => $opts,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Cookie: JSESSIONID=0B92AB9CC1FAF8F4363178E82FC5FCA1'
+                'Cookie: JSESSIONID=9C88C7068F7789ED7F03CE08B596BA04; SRVNAME=app08-nutanix'
             ),
         ));
 
         $response = curl_exec($curl);
+        // print_r($response);
+        // die();
 
         curl_close($curl);
 
@@ -99,11 +104,12 @@ class Nikpetani extends BaseController
 
         $msg = '';
         $valid = true;
-        if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '05') {
+        if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '5') {
             $msg .= $response->content[0]->RESPON;
+            $valid = false;
         } else {
 
-            if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '15') {
+            if (isset($response->content[0]->RESPONSE_CODE) && $response->content[0]->RESPONSE_CODE == '2') {
                 $valid = false;
                 $response->content[0]->RESPON . '\n';
             } else {
@@ -162,9 +168,9 @@ class Nikpetani extends BaseController
             //  return 'success';
             $dt = [
                 'status' => 'sukses',
-                'hasil' => json_encode($data)
+                'hasil' => $data
             ];
-            return $dt['hasil'];
+            return json_encode($dt);
         } catch (\Exception $e) {
             print_r($e);
             return 'error';
