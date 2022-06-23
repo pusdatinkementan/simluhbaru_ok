@@ -18,24 +18,30 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Info</th>
+                        <th scope="col">Judul Info</th>
                         <th scope="col">Tanggal Info</th>
                         <th scope="col">Status</th>
+                        <th scope="col">File</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Dupak Penyuluh Periode Januari - Desember 2021</td>
-                        <td>20 Januari 2022</td>
-                        <td>Aktif</td>
-                        <td>
-                            <button type="button" id="btnEditMenu" data-id="" class=" btn btn-warning btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm" id="btnHapusMenu" data-id="" type="button">Hapus</button>
-
-                        </td>
-                    </tr>
+                    <?php
+                    $no = 1;
+                    foreach ($dt_info as $row) {
+                    ?>
+                        <tr>
+                            <th scope="row"><?= $no++; ?></th>
+                            <td><?= $row['judul_info']; ?></td>
+                            <td><?= $row['tgl_info']; ?></td>
+                            <td><?= $row['status_info']; ?></td>
+                            <td><a href="<?= base_url('assets/dok/info/' . $row['file_info']); ?>"><?= $row['file_info']; ?></a></td>
+                            <td>
+                                <button type="button" id="btnEditMenu" data-id="<?= $row['id_info']; ?>" class=" btn btn-warning btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm" id="btnHapusInfo" data-id="<?= $row['id_info']; ?>" type="button">Hapus</button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
 
@@ -59,23 +65,21 @@
                 <form method="POST" action="<?= base_url('manage/menu/save'); ?>">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Judul Info:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="text" class="form-control" name="judul_info" id="judul_info">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Deskripsi:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="text" class="form-control" name="desk_info" id="desk_info">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Tanggal:</label>
-                        <input type="text" class="form-control" name="menu" id="menu">
-                        <input type="hidden" class="form-control" name="idmenu" id="idmenu">
+                        <input type="text" class="form-control" name="tglinfo" id="tglinfo">
                     </div>
-
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Upload:</label>
+                    <div class="input-group mb-3">
                         <input type="file" class="form-control" id="dok" name="dok">
+                        <label class="input-group-text" for="dok">Upload Dok</label>
+                        <br>
+                        <label for="infosize" class="input-group-text" style="text-align: right;  font-size: 8pt; font-style: italic;">Max Size 2 Mb </label>
                     </div>
 
                     <div class="form-group">
@@ -90,6 +94,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="btnSave" class="btn bg-gradient-primary">Simpan</button>
+                <button type="button" id="btnTest" class="btn bg-gradient-primary">coba</button>
             </div>
             </form>
         </div>
@@ -109,28 +114,103 @@
 
         $('#tblMenu').DataTable();
 
+        $('#btnTest').on('click', function() {
+            alert('ok');
+        })
+
+        $(document).ready(function() {
+            $(function() {
+                $('input[name="tglinfo"]').daterangepicker({
+                    singleDatePicker: true,
+                    autoApply: true,
+                    locale: {
+                        "format": "YYYY-MM-DD",
+                        "separator": " - ",
+                        "fromLabel": "Dari",
+                        "toLabel": "Sampai",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "M",
+                        "daysOfWeek": [
+                            "Mg",
+                            "Sn",
+                            "Sl",
+                            "Rb",
+                            "Km",
+                            "Jm",
+                            "Sb"
+                        ],
+                        "monthNames": [
+                            "Januari",
+                            "Februari",
+                            "Maret",
+                            "April",
+                            "Mei",
+                            "Juni",
+                            "Juli",
+                            "Agustus",
+                            "September",
+                            "Oktober",
+                            "November",
+                            "Desember"
+                        ],
+                        firstDay: 1
+                    }
+                });
+            });
+
+        });
+
         //save
 
         $(document).delegate('#btnSave', 'click', function() {
 
-            var menu = $('#menu').val();
-            $.ajax({
-                url: '<?= base_url('manage/menu/save/') ?>',
-                type: 'POST',
-                data: {
-                    'menu': menu
-                },
-                success: function(result) {
-                    Swal.fire({
-                        title: 'Sukses',
-                        text: "Sukses tambah data",
-                        type: 'success',
-                    }).then((result) => {
+            // $('#btnSave').on('click', function() {
 
-                        if (result.value) {
-                            location.reload();
-                        }
-                    });
+            var judul_info = $('#judul_info').val();
+            var desk_info = $('#desk_info').val();
+            var tglinfo = $('#tglinfo').val();
+            var dok = $('#dok')[0].files[0];
+            var is_active = $('#is_active').val();
+
+            var formData = new FormData();
+
+            formData.append('judul', judul_info);
+            formData.append('desc', desk_info);
+            formData.append('tgl', tglinfo);
+            formData.append('dok', dok);
+            formData.append('status', is_active);
+
+            debugger;
+
+            $.ajax({
+                url: '<?= base_url('manage/info/saveInfo/') ?>',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(result) {
+                    if (result == 'success') {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: "Sukses tambah data",
+                            type: 'success',
+                        }).then((result) => {
+
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Gagal tambah data",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    }
                 },
                 error: function(jqxhr, status, exception) {
                     Swal.fire({
@@ -226,7 +306,7 @@
 
         });
 
-        $(document).delegate('#btnHapusMenu', 'click', function() {
+        $(document).delegate('#btnHapusInfo', 'click', function() {
 
             Swal.fire({
                 title: 'Apakah anda yakin',
@@ -238,14 +318,12 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Hapus Data!'
             }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: '<?= base_url() ?>/manage/menu/delete/' + $(this).data('id'),
-                        type: 'GET',
-                        data: {
-                            'idmenu': $(this).data('id')
-                        },
-                        success: function(result) {
+                $.ajax({
+                    url: '<?= base_url() ?>/manage/info/deleteInfo/' + $('#btnHapusInfo').data('id'),
+                    type: 'GET',
+                    success: function(result) {
+                        debugger;
+                        if (result == 'success') {
                             Swal.fire({
                                 title: 'Sukses',
                                 text: "Sukses hapus data",
@@ -256,8 +334,7 @@
                                     location.reload();
                                 }
                             });
-                        },
-                        error: function(jqxhr, status, exception) {
+                        } else {
                             Swal.fire({
                                 title: 'Error',
                                 text: "Gagal hapus data",
@@ -268,12 +345,21 @@
                                 }
                             });
                         }
-                    });
-                }
+                    },
+                    error: function(jqxhr, status, exception) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Gagal hapus data",
+                            type: 'error',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
             });
-
         });
-
     });
 </script>
 

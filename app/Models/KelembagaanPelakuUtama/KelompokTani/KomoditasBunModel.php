@@ -23,7 +23,7 @@ class KomoditasBunModel extends Model
         FROM tb_komoditas a
         left join tb_poktan_usaha_bun b on a.kode_komoditas = b.kode_komoditas_bun 
         left join tb_poktan c on b.id_poktan = c.id_poktan
-        where b.id_poktan = '$ip'");
+        where b.id_poktan = '" . $ip . "'");
         $results = $query->getResultArray();
         $data =  [
             'kebun' => $results,

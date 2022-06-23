@@ -62,7 +62,18 @@ class KecamatanModel extends Model
 
         return $data;
     }
+	
+	public function getBppresume($kode_kab=''){
+		 $db = Database::connect();
+        $query3  = $db->query("select a.id, a.nama_bpp, kecamatan
+                                from tblbpp a
+                                where a.satminkal='$kode_kab' and a.kecamatan !='0'  
+                                order by nama_bpp");
+        $results = $query3->getResultArray();
 
+        return $results;
+	}
+	
     public function getProfilKec($kode_kec,  $kode_bpp)
     {
         $db = Database::connect();

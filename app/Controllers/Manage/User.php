@@ -20,6 +20,9 @@ class User extends BaseController
     }
     public function index()
     {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         $query = $this->model1->getStatusUser();
         $prov = $this->model2->getProv();
         $data = [
@@ -49,9 +52,11 @@ class User extends BaseController
                 $row[] = $list->name;
                 $row[] = $list->namastatus;
                 $row[] = $list->nama_bpp;
+                $row[] = $list->email;
                 $row[] = $list->satminkal;
                 $row[] = '<button type="button" id="btnHapusUser" data-id=' . $list->id . ' class="btn btn-danger btn-xs">Hapus</button>
-                      <button type="button" id="btnEditUser" data-id=' . $list->id . ' class="btn btn-primary btn-xs">Edit</button>';
+                      <button type="button" id="btnEditUser" data-id=' . $list->id . ' class="btn btn-primary btn-xs">Edit</button>
+                      <button type="button" id="btnResetUser" data-id=' . $list->id . ' class="btn btn-warning btn-xs">Reset</button>';
                 $data[] = $row;
             }
 
@@ -68,6 +73,7 @@ class User extends BaseController
 
     public function saveUser()
     {
+
         $data = [
             'username' => $this->request->getPost('username'),
             'password' => md5($this->request->getPost('password')),
@@ -76,6 +82,7 @@ class User extends BaseController
             'status' => $this->request->getPost('status'),
             'phone' => $this->request->getPost('phone'),
             'mobile' => $this->request->getPost('mobile'),
+            'email' => $this->request->getPost('email'),
             'idprop' => $this->request->getPost('idprop'),
             'kodebakor' => $this->request->getPost('kodebakor'),
             'kodebapel' => $this->request->getPost('kodebapel'),
@@ -83,7 +90,12 @@ class User extends BaseController
             'p_oke' => $this->request->getPost('password')
         ];
 
-        $this->model1->saveUser($data);
+        try {
+            $this->model1->saveUser($data);
+            return 'success';
+        } catch (\Exception $e) {
+            return 'error';
+        }
     }
 
     public function edit($id)
@@ -109,6 +121,7 @@ class User extends BaseController
             'status' => $this->request->getPost('status'),
             'phone' => $this->request->getPost('phone'),
             'mobile' => $this->request->getPost('mobile'),
+            'email' => $this->request->getPost('email'),
             'idprop' => $this->request->getPost('prov'),
             'kodebakor' => $this->request->getPost('prov'),
             'kodebapel' => $this->request->getPost('kab'),
@@ -116,7 +129,32 @@ class User extends BaseController
             'p_oke' => $this->request->getPost('password')
         ];
 
-        $this->model1->updateUser($id, $data);
+        try {
+            $this->model1->updateUser($id, $data);
+            return 'success';
+        } catch (\Exception $e) {
+            return 'error';
+        }
+    }
+
+    public function updatepass($id)
+    {
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+
+        $data = [
+            'password' => md5($this->request->getPost('newpass')),
+            'p_oke' => $this->request->getPost('newpass'),
+            'updated_at' => $this->request->getPost('updatedat')
+        ];
+
+        try {
+            $this->model1->updateUser($id, $data);
+            return 'success';
+        } catch (\Exception $e) {
+            return 'error';
+        }
     }
 
     public function delete($id)

@@ -19,6 +19,7 @@ class Penyuluh extends BaseController
         $this->auth = service('authentication');
         $this->model1 = new ValidasiModel();
         $this->model2 = new PenyuluhPNSModel();
+        ini_set("memory_limit", -1);
     }
 
     public function index()

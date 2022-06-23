@@ -3,59 +3,150 @@
 <?= $this->section('content') ?>
 <?php $seskab = session()->get('kodebapel'); ?>
 <center>
-    <h3> Data Penyuluh PNS Kabupaten <?= ucwords(strtolower($nama_kabupaten)) ?> </h3>
-	<p>Ditemukan <?= $jml_data ?> data</p>
+    <h3> Data Penyuluh PNS <?= ucwords(strtolower(session()->get('daerah'))) ?> </h3>
+    <p>Ditemukan data</p>
 </center>
 <div class="container-fluid py-4">
-    <div class="row"> 
+    <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-        <form method="POST" action="<?= base_url('Penyuluh/PenyuluhPns/viewfilter'); ?>">    
-            <div class="col-md-12">
-            <label>Provinsi</label>
-            
-               <div class="input-group mb-3">
-                    <select name="filter_prov" id="filter_prov" class="form-control">
-                        <?php if(count($list_prov) > 1) {?>
-                            <option value="">Pilih Provinsi</option>
-                        <?php } ?>
-                        <?php foreach($list_prov as $row){
-                            echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
-                        } ?>
-                    </select>
-               </div>
-              <label>Kabupaten</label>
-                <div class="input-group mb-3">
-                    <select name="filter_kab" id="filter_kab" class="form-control">
-                        <?php if(count($list_kab) > 1) {?>
-                            <option value="">Pilih Kabupaten</option>
-                        <?php } ?>
-                        <?php foreach($list_kab as $row){
-                            echo '<option value="' . $row["id_dati2"] . '">' . $row["nama_dati2"] . '</option>';
-                        } ?>
-                    </select>
-               </div>
-              <label>Kecamatan</label>
-                <div class="input-group mb-3">
-                    <select name="filter_kec" id="filter_kec" class="form-control">
-                        <?php if(count($list_kec) > 1) {?>
-                            <option value="">Pilih Kecamatan</option>
-                        <?php } ?>
-                        <?php foreach($list_kec as $row){
-                            echo '<option value="' . $row["id_daerah"] . '">' . $row["deskripsi"] . '</option>';
-                        } ?>
-                    </select>
-               </div>
-                </div>   
-               <button type="submit" name="filter_submit" class="btn bg-gradient-warning">Filter</button>
-               </form>      
-            </div>    
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button><br>
-            
+
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-9" style="text-align:right">
+                    <!--<button class="btn bg-gradient-success btn-sm" onclick="showfilter()"  name="pencarian" >&nbsp; <i class="fas fa-search"></i> Filter</button>		-->
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm"><i class="fas fa-plus"></i> Tambah Data Penyuluh</button>
+                </div>
+            </div>
+
+            <div class="row" id="filter">
+                <!--
+					<div class="col-md-4">
+						<form method="POST" action="<?= base_url('Penyuluh/PenyuluhPns/viewfilter'); ?>">
+						<label>Provinsi</label>
+						
+						<div class="input-group mb-3">
+								<select name="filter_prov" id="filter_prov" class="form-control">
+									<?php if (count($list_prov) > 1) { ?>
+										<option value="">Pilih Provinsi</option>
+									<?php } ?>
+									<?php foreach ($list_prov as $row) {
+                                        echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
+                                    } ?>
+								</select>
+						</div>
+					</div>
+					<div class="col-md-4">    
+						<label>Kabupaten</label>
+							<div class="input-group mb-3">
+								<select name="filter_kab" id="filter_kab" class="form-control">
+									<?php if (count($list_kab) > 1) { ?>
+										<option value="">Pilih Kabupaten</option>
+									<?php } ?>
+									<?php foreach ($list_kab as $row) {
+                                        echo '<option value="' . $row["id_dati2"] . '">' . $row["nama_dati2"] . '</option>';
+                                    } ?>
+								</select>
+						</div>
+					</div>
+			-->
+                <div class="col-md-2">
+                    <label>Pilih Unit Kerja</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_unit" id="filter_unit" class="form-control">
+                            <option value="">Semua Unit Kerja</option>
+                            <?php foreach ($opsi as $k => $v) {
+                                echo '<option value="' . $k . '">' . $v . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Tingkat Pendidikan Akhir</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_pendidikan" id="filter_pendidikan" class="form-control">
+                            <option value="">Semua Pendidikan Akhir</option>
+                            <?php foreach ($pendidikan as $r) {
+                                echo '<option value="' . $r['nama'] . '">' . $r['nama'] . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Bidang Keahlian</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_keahlian" id="filter_keahlian" class="form-control">
+                            <option value="">Semua Bidang Keahlian</option>
+                            <?php foreach ($keahlian as $r) {
+                                echo '<option value="' . $r['id'] . '">' . $r['nama'] . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Pilih Jenis Kelamin</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_jenkel" id="filter_jenkel" class="form-control">
+                            <option value="">Semua Jenis Kelamin</option>
+                            <option value="1">Laki-Laki</option>
+                            <option value="2">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Pilih Jenjang Jabatan</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_jab" id="filter_jab" class="form-control">
+                            <option value="">Semua Jenjang Jabatan</option>
+                            <?php foreach ($jenjang as $row) {
+                                echo '<option value="' . $row["id_jab"] . '">' . $row["alias"] . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>Pilih Status</label>
+                    <div class="input-group mb-3">
+                        <select name="filter_status" id="filter_status" class="form-control">
+                            <option value="">Semua</option>
+                            <?php
+                            foreach ($status_search as $row) {
+                                echo '<option value="' . $row["kode"] . '">' . $row["nama_status"] . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+                <!--
+					<div class="col-md-4">     
+						 <button type="submit" name="filter_submit" class="btn bg-gradient-warning btn-sm">Filter</button>
+					</div>
+					-->
+                </form>
+            </div>
+
+            <br>
+
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblpns" class="table align-items-center mb-0">
                         <thead>
+                            <tr>
+                                <td class="text-uppercase text-secondary text-xxs"></td>
+                                <td class="text-uppercase text-secondary text-xxs">NIK</td>
+                                <td class="text-uppercase text-secondary text-xxs">NIP</td>
+                                <td class="text-uppercase text-secondary text-xxs">Nama</td>
+                                <td class="text-uppercase text-secondary text-xxs">UnitKerja</td>
+                                <td class="text-uppercase text-secondary text-xxs">TempatTugas</td>
+                                <td class="text-uppercase text-secondary text-xxs">Status</td>
+                                <td class="text-uppercase text-secondary text-xxs">JabatanTerakhir</td>
+                                <td class="text-uppercase text-secondary text-xxs">TerakhirUpdate</td>
+                            </tr>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">NIK</th>
@@ -66,66 +157,14 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jabatan<br>Terakhir</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terakhir<br>Update</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Data<br>Dasar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($tabel_data as $row) {
+                            // foreach ($tabel_data as $row) {
                             ?>
-                                <tr>
-                                    <td class="align-middle rupiah text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $i++ ?></p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><a href="<?= base_url('profil/penyuluh/detail/' . $row['nip']) ?>"><?= $row['noktp'] ?></a></p>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nip'] ?></p>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['gelar_dpn'] ?> <?= $row['nama'] ?> <?= $row['gelar_blk'] ?></p>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['nama_bpp'] ?><?= $row['nama_bapel2'] ?></p>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0">Kec.<?= ucwords(strtolower($row['kecamatan_tugas'])) ?></p>
-                                    </td>
 
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['status_kel'] ?></p>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['namajab'] ?> / <?= $row['gol_ruang'] ?></p>
-                                        </p>
-                                        </p>
-                                    </td>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"><?= $row['tgl_update'] ?></p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <a href="#">
-                                            <button type="button" id="btnEdit" data-id="<?= $row['id']; ?>" class="btn bg-gradient-warning btn-sm">
-                                                <i class="fas fa-edit"></i> Ubah
-                                            </button>
-                                        </a>
-                                        <button class="btn bg-gradient-danger btn-sm" id="btnHapus" data-id="<?= $row['id']; ?>" type="button">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                        </a>
-                                        <a href="#">
-                                            <button type="button" id="btnEditStatus" data-id="<?= $row['id']; ?>" class="btn bg-gradient-info btn-sm">
-                                                <i class="fas fa-edit"></i> Manajemen Status
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
                         </tbody>
                     </table>
 
@@ -152,20 +191,8 @@
                                                         <input type="hidden" name="tgl_pensiun" id="tgl_pensiun">
                                                         <input type="hidden" name="bulan_pensiun" id="bulan_pensiun">
                                                         <input type="hidden" name="tahun_pensiun" id="tahun_pensiun">
-                                                        <?php
-                                                        foreach ($tabel_data as $cek1) {
-                                                        ?>
-                                                            <input type="hidden" name="unit_kerja_kab" id="unit_kerja_kab" value="<?= $cek1['nama_bapel']; ?>">
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                        <?php
-                                                        foreach ($tabel_data as $cek) {
-                                                        ?>
-                                                            <input type="hidden" name="batas_pensiun" id="batas_pensiun" value="<?= $cek['bts_pensi']; ?>">
-                                                        <?php
-                                                        }
-                                                        ?>
+
+
                                                         <label>NIP (18 Digit)</label>
                                                         <div class="input-group mb-3">
                                                             <input type="text" id="nip" name="nip" class="form-control" placeholder="Penulisan NIP disambung (tanpa tanda pemisah)" maxlength="18" oninput="NipOnly(this)">
@@ -188,7 +215,7 @@
                                                         <label>Tempat, Tanggal Lahir</label>
                                                         <div class="input-group mb-1">
                                                             <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control tempat_lahir" placeholder="Tempat Lahir">
-                                                        
+
                                                             <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control" placeholder="Tanggal Lahir">
                                                         </div>
                                                         <label>Jenis Kelamin</label>
@@ -251,7 +278,7 @@
                                                             <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Nama Sekolah/Universitas" aria-label="Password" aria-describedby="password-addon">
                                                         </div>
                                                     </div>
-													<div class="col">
+                                                    <div class="col">
                                                         <label>Tgl SK CPNS</label>
                                                         <div class="input-group mb-3 select-date2">
                                                             <input type="text" id="tgl_skcpns" name="tgl_skcpns" class="form-control" placeholder="Tgl SK Pns">
@@ -306,9 +333,9 @@
                                                                 <label class="form-check-label" for="inlineRadio2">Kecamatan</label>
                                                             </div>
                                                         </div>
-                                                        
-                                                    
-														<div id="form22">
+
+
+                                                        <div id="form22">
                                                             <label>Kecamatan 1</label>
                                                             <div class="input-group mb-3">
                                                                 <select name="kecamatan_tugas1" id="kecamatan_tugas1" class="form-control input-lg kecamatan_tugas1">
@@ -512,7 +539,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-														<div id="form9">
+                                                        <div id="form9">
                                                             <label>Wilayah Kerja 7</label>
                                                             <div class="input-group mb-3">
                                                                 <select class="form-select" id="wil_kerja7" name="wil_kerja7" next-id="8" aria-label="Default select example">
@@ -543,10 +570,10 @@
                                                                     <option value="">--Pilih Desa--</option>
                                                                 </select>
                                                             </div>
-                                                        </div>	
+                                                        </div>
                                                     </div>
-                                                    
-                                                    
+
+
                                                     <div class="text-center">
                                                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
                                                         <button type="button" id="btnSave" class="btn bg-gradient-info">Simpan Data</button>
@@ -585,9 +612,10 @@
                                                         </div>
                                                         <label>Nama Penyuluh</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="text" name="gelar_dpn" id="gelar_dpnn" class="form-control gelar_dpn" disabled>
-                                                            <input type="text" name="nama" id="namaa" class="form-control nama" disabled>
-                                                            <input type="text" name="gelar_blk" id="gelar_blkk" class="form-control gelar_blk" disabled>
+                                                            <input type="text" name="namalengkap" id="namalengkap" class="form-control namalengkap" disabled>
+                                                            <input type="hidden" name="gelar_dpn" id="gelar_dpnn" class="form-control gelar_dpn" disabled>
+                                                            <input type="hidden" name="nama" id="namaa" class="form-control nama" disabled>
+                                                            <input type="hidden" name="gelar_blk" id="gelar_blkk" class="form-control gelar_blk" disabled>
                                                         </div>
                                                         <label>Per tanggal</label>
                                                         <div class="input-group mb-3">
@@ -631,43 +659,136 @@
 
     <?= $this->endSection() ?>
     <?= $this->section('script') ?>
-	
-	
-	
+
+
+
 
 
 
 
     <script>
+        var flag_filter = false;
+
+        function showfilter() {
+            if (flag_filter) {
+                flag_filter = false;
+                $('#filter').hide("slow");
+            } else {
+                flag_filter = true;
+                $('#filter').show("slow");
+            }
+        }
+
         $(document).ready(function() {
 
-            $('#tblpns').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					 'excel'
-				]
-			});
-            
+            var input_id = 0;
+            $('#tblpns thead td').each(function() {
+                var title = $(this).text();
+                if (title != '') {
+                    $(this).html('<input id="input_search_' + input_id + '" type="text" style="width: 100%" placeholder="Search ' + title + '" />');
+                }
+                input_id++;
+            });
+
+
+            var dataTable = $('#tblpns').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel'
+                ],
+                processing: true,
+                serverSide: true,
+                serverMethod: 'post',
+                paging: true,
+                searching: false,
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                pageLength: 10,
+                ordering: true,
+
+
+                "ajax": {
+                    url: '<?php echo site_url('/penyuluhdata'); ?>',
+                    type: 'POST',
+
+                    data: function(data) {
+                        var fstatus = $('#filter_status').val();
+                        var funit = $('#filter_unit').val();
+                        var fjenkel = $('#filter_jenkel').val();
+                        var fjab = $('#filter_jab').val();
+                        var fpend = $('#filter_pendidikan').val();
+                        var fahli = $('#filter_keahlian').val();
+
+                        // Append to data
+                        data.funit = funit;
+                        data.fstatus = fstatus;
+                        data.fjenkel = fjenkel;
+                        data.fjab = fjab;
+                        data.fpend = fpend;
+                        data.fahli = fahli;
+                    },
+
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Indonesian.json"
+                    },
+                },
+                initComplete: function() {
+                    // Apply the search
+                    this.api().columns().every(function() {
+                        var that = this;
+
+                        $('#input_search_' + this.index()).on('keyup change clear', function() {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            });
+
+            $('#filter_status').change(function() {
+                dataTable.draw();
+            });
+            $('#filter_unit').change(function() {
+                dataTable.draw();
+            });
+            $('#filter_jenkel').change(function() {
+                dataTable.draw();
+            });
+            $('#filter_jab').change(function() {
+                dataTable.draw();
+            });
+            $('#filter_pendidikan').change(function() {
+                dataTable.draw();
+            });
+            $('#filter_keahlian').change(function() {
+                dataTable.draw();
+            });
+
             $('#filter_prov').change(function() { // Jika Select Box id provinsi dipilih
-			var provinsi = $(this).val(); // Ciptakan variabel provinsi
-			$.ajax({
-                async: false,
-				type: 'POST', // Metode pengiriman data menggunakan POST
-				url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkab/' + provinsi, // File yang akan memproses data
-				//data: 'provinsi=' + provinsi, // Data yang akan dikirim ke file pemroses
-				success: function(response) { // Jika berhasil
-                    response = JSON.parse(response)
-                    var html = '<option value="">-- SEMUA --</option>';
-                    for(var i=0;i<response.length;i++){
-                        html = html + '<option value="'+response[i].id_kab+'">'+response[i].nama_kab+'</option>'
+                var provinsi = $(this).val(); // Ciptakan variabel provinsi
+                $.ajax({
+                    async: false,
+                    type: 'POST', // Metode pengiriman data menggunakan POST
+                    url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkab/' + provinsi, // File yang akan memproses data
+                    //data: 'provinsi=' + provinsi, // Data yang akan dikirim ke file pemroses
+                    success: function(response) { // Jika berhasil
+                        response = JSON.parse(response)
+                        var html = '<option value="">-- SEMUA --</option>';
+                        for (var i = 0; i < response.length; i++) {
+                            html = html + '<option value="' + response[i].id_kab + '">' + response[i].nama_kab + '</option>'
+                        }
+                        $('#filter_kab').html(html); // Berikan hasil ke id kota
+
                     }
-					$('#filter_kab').html(html); // Berikan hasil ke id kota
-					
-				    }
                 });
             });
 
-            <?php if ($getPostProv != ''){ ?>
+            <?php if ($getPostProv != '') { ?>
                 $('#filter_prov').val('<?php echo $getPostProv; ?>').change();
             <?php } ?>
 
@@ -676,40 +797,40 @@
             // }
 
             $('#filter_kab').change(function() { // Jika Select Box id provinsi dipilih
-                    var kabupaten = $(this).val(); // Ciptakan variabel provinsi
-                    $.ajax({
-                        async: false,
-                        type: 'POST', // Metode pengiriman data menggunakan POST
-                        url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkec/' + kabupaten, // File yang akan memproses data
-                        //data: 'kabupaten=' + kabupaten, // Data yang akan dikirim ke file pemroses
-                        success: function(response) { // Jika berhasil
-                            response = JSON.parse(response)
-                            var html = '<option value="">-- SEMUA --</option>';
-                            for(var i=0;i<response.length;i++){
-                                html = html + '<option value="'+response[i].id_kec+'">'+response[i].nama_kec+'</option>'
-                            }
-                            $('#filter_kec').html(html); // Berikan hasil ke id kota
-                            
+                var kabupaten = $(this).val(); // Ciptakan variabel provinsi
+                $.ajax({
+                    async: false,
+                    type: 'POST', // Metode pengiriman data menggunakan POST
+                    url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkec/' + kabupaten, // File yang akan memproses data
+                    //data: 'kabupaten=' + kabupaten, // Data yang akan dikirim ke file pemroses
+                    success: function(response) { // Jika berhasil
+                        response = JSON.parse(response)
+                        var html = '<option value="">-- SEMUA --</option>';
+                        for (var i = 0; i < response.length; i++) {
+                            html = html + '<option value="' + response[i].id_kec + '">' + response[i].nama_kec + '</option>'
                         }
-                    });
-                });
+                        $('#filter_kec').html(html); // Berikan hasil ke id kota
 
-                
+                    }
+                });
+            });
+
+
             //if ($("#filter_kab").val() != '') {
-            <?php if ($getPostKab != ''){ ?>
+            <?php if ($getPostKab != '') { ?>
                 $('#filter_kab').val('<?php echo $getPostKab; ?>').change();
             <?php } ?>
-                //}
-
-                
-                //if ($("#filter_kec").val() != '') {
-                    $('#filter_kec').val('<?php echo $getPostKec; ?>');
-                // //}   
-                
-              
+            //}
 
 
-                
+            //if ($("#filter_kec").val() != '') {
+            $('#filter_kec').val('<?php echo $getPostKec; ?>');
+            // //}   
+
+
+
+
+
 
             $(document).delegate('#btnSave', 'click', function() {
 
@@ -844,7 +965,7 @@
                     });
                     return false;
                 }
-		if (tempat_lahir.length == 0) {
+                if (tempat_lahir.length == 0) {
                     Swal.fire({
                         title: 'Error',
                         text: "Tempat Lahir tidak boleh kosong",
@@ -1197,7 +1318,7 @@
                             var nama_sekolah = $('#nama_sekolah').val();
                             var noktp = $('#noktp').val();
 
-if (nip.length == 0 || noktp.length == 0) {
+                            if (nip.length == 0 || noktp.length == 0) {
                                 Swal.fire({
                                     title: 'Error',
                                     text: "NIP/NIK tidak boleh kosong",
@@ -1257,18 +1378,18 @@ if (nip.length == 0 || noktp.length == 0) {
                                 });
                                 return false;
                             }
-if (tempat_lahir.length == 0) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: "Tempat Lahir tidak boleh kosong",
-                        type: 'error',
-                    }).then((result) => {
-                        if (result.value) {
-                            return false;
-                        }
-                    });
-                    return false;
-                }
+                            if (tempat_lahir.length == 0) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Tempat Lahir tidak boleh kosong",
+                                    type: 'error',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
 
                             if (tgl_lahir == 0) {
                                 Swal.fire({
@@ -1440,15 +1561,15 @@ if (tempat_lahir.length == 0) {
                             $("select#wil_kerja10").html('<option value="">--Pilih Desa--</option>');*/
                         } else {
                             $("select#wil_kerja").html(htmla += response);
-                           /*$("select#wil_kerja2").html(htmla += response);
-                            $("select#wil_kerja3").html(htmla += response);
-                            $("select#wil_kerja4").html(htmla += response);
-                            $("select#wil_kerja5").html(htmla += response);
-                            $("select#wil_kerja6").html(htmla += response);
-                            $("select#wil_kerja7").html(htmla += response);
-                            $("select#wil_kerja8").html(htmla += response);
-                            $("select#wil_kerja9").html(htmla += response);
-                            $("select#wil_kerja10").html(htmla += response);*/
+                            /*$("select#wil_kerja2").html(htmla += response);
+                             $("select#wil_kerja3").html(htmla += response);
+                             $("select#wil_kerja4").html(htmla += response);
+                             $("select#wil_kerja5").html(htmla += response);
+                             $("select#wil_kerja6").html(htmla += response);
+                             $("select#wil_kerja7").html(htmla += response);
+                             $("select#wil_kerja8").html(htmla += response);
+                             $("select#wil_kerja9").html(htmla += response);
+                             $("select#wil_kerja10").html(htmla += response);*/
 
                             $('#wil_kerja').val(wil_kerjaa);
                             $('#wil_kerja2').val(wil_kerjaa2);
@@ -1466,58 +1587,58 @@ if (tempat_lahir.length == 0) {
                 });
                 return false;
             });
-            
+
             const awal = $('#wil_kerja').val();
             var wil_kerja_awal = [];
-                wil_kerja_awal[0] = awal;
-            
+            wil_kerja_awal[0] = awal;
+
             var jum_wil = 1;
 
-            var wil_kerja_notin = ""; 
+            var wil_kerja_notin = "";
 
-            for(let i = 1; i < 10; i++){
-                var wilkerid = (i == 1 ? 'wil_kerja' : 'wil_kerja'+i.toString());
-                var wilkeridb = 'wil_kerja'+(i+1).toString();
-                $('#'+wilkerid).on('change', function(e) {
+            for (let i = 1; i < 10; i++) {
+                var wilkerid = (i == 1 ? 'wil_kerja' : 'wil_kerja' + i.toString());
+                var wilkeridb = 'wil_kerja' + (i + 1).toString();
+                $('#' + wilkerid).on('change', function(e) {
 
                     const next_id = this.getAttribute("next-id");
-                    
+
                     //wil_kerja_notin = awal;
 
-                    wil_kerja_awal[i-1] = this.value;
+                    wil_kerja_awal[i - 1] = this.value;
 
                     jum_wil = i;
 
                     //wil_kerja_notin = id;
 
-                    for(let idx = 0; idx < i; idx++){
-                        if(idx == 0) {
+                    for (let idx = 0; idx < i; idx++) {
+                        if (idx == 0) {
                             wil_kerja_notin = wil_kerja_awal[idx];
                         } else {
-                            wil_kerja_notin += ','+wil_kerja_awal[idx];
+                            wil_kerja_notin += ',' + wil_kerja_awal[idx];
                         }
                     }
-                    for(let idx = i+1; idx < 11; idx++){
-                        $('#wil_kerja'+idx).html('<option value="">--Pilih--</option>');
-                        $('#wil_kerja'+idx).val();
+                    for (let idx = i + 1; idx < 11; idx++) {
+                        $('#wil_kerja' + idx).html('<option value="">--Pilih--</option>');
+                        $('#wil_kerja' + idx).val();
                     }
 
                     //wil_kerja_notin = wil_kerja_awal[i];
 
                     $.ajax({
-                        //url: "<? //= base_url() ?>/Penyuluh/PenyuluhPns/showDesaAdv/",
+
                         url: "<?= base_url() ?>/penyuluhpns/showdesaadv",
                         type: 'POST',
                         data: {
-                                'wil_kerja_notin': wil_kerja_notin,
-                                'jum_wil': jum_wil
-                            },
+                            'wil_kerja_notin': wil_kerja_notin,
+                            'jum_wil': jum_wil
+                        },
                         success: function(response) {
                             var htmla = '<option value="">Pilih Desa</option>';
                             if (response == '') {
-                                $("select#wil_kerja"+next_id).html('<option value="">--Pilih Desa--</option>');
+                                $("select#wil_kerja" + next_id).html('<option value="">--Pilih Desa--</option>');
                             } else {
-                                $("select#wil_kerja"+next_id).html(htmla += response); 
+                                $("select#wil_kerja" + next_id).html(htmla += response);
                             }
                         },
                         dataType: "html"
@@ -1546,6 +1667,7 @@ if (tempat_lahir.length == 0) {
                         $('#namaa').val(result.nama);
                         $('#gelar_dpnn').val(result.gelar_dpn);
                         $('#gelar_blkk').val(result.gelar_blk);
+                        $('#namalengkap').val(result.gelar_dpn + ' ' + result.nama + ' ' + result.gelar_blk);
                         $('#statuss').val(result.status);
                         $('#tgl_status').val(result.tgl_status);
                         $('#ket_status').val(result.ket_status);
@@ -1563,6 +1685,9 @@ if (tempat_lahir.length == 0) {
                             var nama = $('#namaa').val();
                             var gelar_dpn = $('#gelar_dpnn').val();
                             var gelar_blk = $('#gelar_blkk').val();
+                            var namalengkap = gelar_dpn + ' ' + nama + ' ' + gelar_blk;
+
+                            //var namalengkap = namalengkap2.trim();
                             var status = $('#statuss').val();
                             var tgl_status = $('#tgl_status').val();
                             var ket_status = $('#ket_status').val();
@@ -1574,6 +1699,7 @@ if (tempat_lahir.length == 0) {
                             formData.append('nama', nama);
                             formData.append('gelar_dpn', gelar_dpn);
                             formData.append('gelar_blk', gelar_blk);
+                            formData.append('namalengkap', namalengkap);
                             formData.append('status', status);
                             formData.append('tgl_status', tgl_status);
                             formData.append('ket_status', ket_status);

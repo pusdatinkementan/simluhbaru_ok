@@ -10,13 +10,80 @@
     <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="POST" action="<?= base_url('Penyuluh/PenyuluhCpns/viewfilter'); ?>">
+                    <label>Provinsi</label>
+                    
+                    <div class="input-group mb-3">
+                            <select name="filter_prov" id="filter_prov" class="form-control">
+                                <?php if(count($list_prov) > 1) {?>
+                                    <option value="">Pilih Provinsi</option>
+                                <?php } ?>
+                                <?php foreach($list_prov as $row){
+                                    echo '<option value="' . $row["id_prop"] . '">' . $row["nama_prop"] . '</option>';
+                                } ?>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-md-4">    
+                    <label>Kabupaten</label>
+                        <div class="input-group mb-3">
+                            <select name="filter_kab" id="filter_kab" class="form-control">
+                                <?php if(count($list_kab) > 1) {?>
+                                    <option value="">Pilih Kabupaten</option>
+                                <?php } ?>
+                                <?php foreach($list_kab as $row){
+                                    echo '<option value="' . $row["id_dati2"] . '">' . $row["nama_dati2"] . '</option>';
+                                } ?>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-md-4">      
+                    <label>Kecamatan</label>
+                        <div class="input-group mb-3">
+                            <select name="filter_kec" id="filter_kec" class="form-control">
+                                <?php if(count($list_kec) > 1) {?>
+                                    <option value="">Pilih Kecamatan</option>
+                                <?php } ?>
+                                <?php foreach($list_kec as $row){
+                                    echo '<option value="' . $row["id_daerah"] . '">' . $row["deskripsi"] . '</option>';
+                                } ?>
+                            </select>
+                    </div>
+                </div>
+            </div>    
+            <div class="row">    
+                <div class="col-md-2">       
+                    <button type="submit" name="filter_submit" class="btn bg-gradient-warning btn-sm">Filter</button>
+                    </form>     
+               </div>
+               <div class="col-md-7">
+               </div>    
+               <div class="col-md-3">   
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button>
+                </div>
+            </div>      
 	
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm">+ Tambah Data</button><br>
+            <br>
            
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblcpns" class="table align-items-center mb-0">
                         <thead>
+                            <tr>
+                                <td class="text-uppercase text-secondary text-xxs"></td>
+                                <td class="text-uppercase text-secondary text-xxs">NIK</td>
+                                <td class="text-uppercase text-secondary text-xxs">NIP</td>
+                                <td class="text-uppercase text-secondary text-xxs">Nama</td>
+                                <td class="text-uppercase text-secondary text-xxs">UnitKerja</td>
+                                <td class="text-uppercase text-secondary text-xxs">TempatTugas</td>
+                                <td class="text-uppercase text-secondary text-xxs">Status</td>
+                                <td class="text-uppercase text-secondary text-xxs">JabatanTerakhir</td>
+                                <td class="text-uppercase text-secondary text-xxs">TerakhirUpdate</td>
+                                <td class="text-uppercase text-secondary text-xxs"></td>
+                            </tr>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">NIK</th>
@@ -593,12 +660,94 @@
     <script>
         $(document).ready(function() {
 
+            var input_id = 0;
+            $('#tblcpns thead td').each( function () {
+                var title = $(this).text();
+                if(title != ''){
+                    $(this).html( '<input id="input_search_'+input_id+'" type="text" style="width: 100%" placeholder="Search '+title+'" />' );
+                }
+                input_id++;
+            } );
+            
 			 $('#tblcpns').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					'excel'
-				]
+				],
+                initComplete: function () {
+                    // Apply the search
+                    this.api().columns().every( function () {
+                        var that = this;
+        
+                        $( '#input_search_' + this.index() ).on( 'keyup change clear', function () {
+                            if ( that.search() !== this.value ) {
+                                that
+                                    .search( this.value )
+                                    .draw();
+                            }
+                        } );
+                    } );
+                }
 			});
+
+            $('#filter_prov').change(function() { // Jika Select Box id provinsi dipilih
+			var provinsi = $(this).val(); // Ciptakan variabel provinsi
+			$.ajax({
+                async: false,
+				type: 'POST', // Metode pengiriman data menggunakan POST
+				url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkab/' + provinsi, // File yang akan memproses data
+				//data: 'provinsi=' + provinsi, // Data yang akan dikirim ke file pemroses
+				success: function(response) { // Jika berhasil
+                    response = JSON.parse(response)
+                    var html = '<option value="">-- SEMUA --</option>';
+                    for(var i=0;i<response.length;i++){
+                        html = html + '<option value="'+response[i].id_kab+'">'+response[i].nama_kab+'</option>'
+                    }
+					$('#filter_kab').html(html); // Berikan hasil ke id kota
+					
+				    }
+                });
+            });
+
+            <?php if ($getPostProv != ''){ ?>
+                $('#filter_prov').val('<?php echo $getPostProv; ?>').change();
+            <?php } ?>
+
+            // if ($("#filter_prov").val() != '') {
+            //     $("#filter_prov option:selected").html();
+            // }
+
+            $('#filter_kab').change(function() { // Jika Select Box id provinsi dipilih
+                    var kabupaten = $(this).val(); // Ciptakan variabel provinsi
+                    $.ajax({
+                        async: false,
+                        type: 'POST', // Metode pengiriman data menggunakan POST
+                        url: '<?= base_url() ?>/Penyuluh/PenyuluhPns/getlistkec/' + kabupaten, // File yang akan memproses data
+                        //data: 'kabupaten=' + kabupaten, // Data yang akan dikirim ke file pemroses
+                        success: function(response) { // Jika berhasil
+                            response = JSON.parse(response)
+                            var html = '<option value="">-- SEMUA --</option>';
+                            for(var i=0;i<response.length;i++){
+                                html = html + '<option value="'+response[i].id_kec+'">'+response[i].nama_kec+'</option>'
+                            }
+                            $('#filter_kec').html(html); // Berikan hasil ke id kota
+                            
+                        }
+                    });
+                });
+
+                
+            //if ($("#filter_kab").val() != '') {
+            <?php if ($getPostKab != ''){ ?>
+                $('#filter_kab').val('<?php echo $getPostKab; ?>').change();
+            <?php } ?>
+                //}
+
+                
+                //if ($("#filter_kec").val() != '') {
+                    $('#filter_kec').val('<?php echo $getPostKec; ?>');
+                // //}   
+                
 
             $(document).delegate('#btnSave', 'click', function() {
 

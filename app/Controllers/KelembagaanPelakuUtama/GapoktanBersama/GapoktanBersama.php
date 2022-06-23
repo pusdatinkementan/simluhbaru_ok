@@ -27,7 +27,7 @@ class GapoktanBersama extends BaseController
         $kode_model = new KodeWilModel2;
         $gapoktanbersama_model = new GapoktanBersamaModel;
         $gapoktanbersama_data = $gapoktanbersama_model->getGapoktanBersamaTotal(session()->get('kodebapel'));
-        $kode_data = $kode_model->getKodeWil2(session()->get('kodebapel'));   
+        $kode_data = $kode_model->getKodeWil2(session()->get('kodebapel'));
         $usaha_tani = $gapoktanbersama_model->getUsahaTani();
         $usaha_olah = $gapoktanbersama_model->getUsahaOlah();
 
@@ -129,7 +129,7 @@ class GapoktanBersama extends BaseController
         $simluh_usaha_simpan_pinjam = $this->request->getPost('simluh_usaha_simpan_pinjam');
         $simluh_usaha_jasa_lain = $this->request->getPost('simluh_usaha_jasa_lain');
         $simluh_usaha_jasa_lain_desc = $this->request->getPost('simluh_usaha_jasa_lain_desc');
-        
+
         $simluh_alsin_traktor = $this->request->getPost('simluh_alsin_traktor');
         $simluh_alsin_hand_tractor = $this->request->getPost('simluh_alsin_hand_tractor');
         $simluh_alsin_pompa_air = $this->request->getPost('simluh_alsin_pompa_air');

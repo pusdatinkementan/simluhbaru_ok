@@ -7,9 +7,9 @@ use \Config\Database;
 
 class InfoModel extends Model
 {
-    protected $table      = 'user_menu';
+    protected $table      = 'tbl_info';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_info';
     protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
@@ -23,54 +23,67 @@ class InfoModel extends Model
     // protected $validationMessages = [];
     // protected $skipValidation     = false;
 
-    public function getMenuAll()
+    public function getInfoAll()
     {
-        $query = $this->db->query("SELECT * FROM user_menu");
-        $row = $query->getResultArray();
+        $db = db_connect();
+        $builder = $db->table('tbl_info');
+        $builder = $builder->orderBy('tgl_info', 'DESC');
+        $row = $builder->get();
+        return $row->getResultArray();
+    }
+
+    public function getInfoByStatus()
+    {
+        $db = db_connect();
+        $builder = $db->table('tbl_info');
+        $builder = $builder->where('status_info', 1);
+        $builder = $builder->orderBy('tgl_info', 'DESC');
+        $builder = $builder->limit(5);
+        $row = $builder->get();
+        return $row->getResultArray();
+    }
+
+    public function getCountInfoToday()
+    {
+        $query = $this->db->query("select * from tbl_info where status_info = 1 and DATE(tgl_info) = CURDATE()");
+        $row = $query->getNumRows();
         return $row;
     }
 
-    public function getSubMenuAll()
+    public function getInfoByMonth()
     {
-        $query = $this->db->query("SELECT `user_sub_menu`.*, `user_menu`.`menu`
-        FROM `user_sub_menu` JOIN `user_menu`
-        ON `user_sub_menu`.`menu_id` = `user_menu`.`id`");
-        $row = $query->getResultArray();
+        $query = $this->db->query("select * from tbl_info where status_info = 1 and MONTH(tgl_info) = MONTH(CURDATE())");
+        $row = [
+            'databln' => $query->getResultArray(),
+            'jumbln' => $query->getNumRows()
+        ];
+        // dd($row);
         return $row;
     }
 
-    public function getSubMenuById($id)
-    {
-        $query = $this->db->query("SELECT `user_sub_menu`.*, `user_menu`.`menu`
-        FROM `user_sub_menu` JOIN `user_menu`
-        ON `user_sub_menu`.`menu_id` = `user_menu`.`id` WHERE `user_sub_menu`.`id` = $id");
-        $row = $query->getRow();
-        return json_encode($row);
-    }
-
-    public function updateSubmenu($id, $data)
+    public function updateInfo($id, $data)
     {
         $db = db_connect();
-        $builder = $db->table('user_sub_menu');
-        $builder->where('id', $id)->update($data);
+        $builder = $db->table('tbl_info');
+        $builder->where('id_info', $id)->update($data);
     }
 
-    public function saveSubMenu($data)
+    public function saveInfo($data)
     {
         $db = db_connect();
-        $builder = $db->table('user_sub_menu');
+        $builder = $db->table('tbl_info');
         $builder->insert($data);
     }
 
-    public function deleteSubMenu($id)
+    public function deleteInfo($id)
     {
         $db = db_connect();
-        $builder = $db->table('user_sub_menu');
-        $builder->where('id', $id)->delete();
+        $builder = $db->table('tbl_info');
+        $builder->where('id_info', $id)->delete();
         // $builder->delete($id);
     }
 
-    public function getMenuById($id)
+    public function getInfoById($id)
     {
         $query = $this->db->query("SELECT * FROM user_menu WHERE id = '" . $id . "'");
         $row = $query->getRow();

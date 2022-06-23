@@ -5,9 +5,74 @@
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Page Heading -->
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">NIK Penyuluh Kosong</p>
+                                <h5 class="font-weight-bolder mb-0">
+                                    <a href="<?= base_url(); ?>/validasi/penyuluh/nik"><?= $jmlnoktp; ?></a>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                                <!-- <i class="fas fa-check" aria-hidden="true"></i> -->
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">No HP Penyuluh Kosong</p>
+                                <h5 class="font-weight-bolder mb-0">
+                                    <a href="<?= base_url(); ?>/validasi/penyuluh/nohp"> <?= $jmlnohp; ?> </a>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">NIP Penyuluh tidak valid</p>
+                                <h5 class="font-weight-bolder mb-0">
+                                    <a href="<?= base_url(); ?>/validasi/penyuluh/nip"> <?= $jmlnip; ?> </a>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-4">
 
             <nav class="col-lg-12">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -35,7 +100,7 @@
                                                     <tr>
                                                         <td>Status</td>
                                                         <td>:</td>
-                                                        <td><?= $dt['status']; ?></td>
+                                                        <td>Admin Pusat</td>
                                                     </tr>
                                                     <tr>
                                                         <td>username</td>
@@ -86,7 +151,6 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" enctype="multipart/form-data" action="<?= base_url('profil/Admin/saveFotoProfil'); ?>">
-
 
                         <div class="col-lg-3 mb-lg-0 text-center">
                             <div class="card">

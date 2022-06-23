@@ -29,7 +29,7 @@
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $row['id_daerah']; ?></td>
-                            <td><a href="<?= base_url(); ?>/master/desa/index/<?= $row['id_daerah']; ?>"><?= $row['deskripsi']; ?></a></td>
+                            <td><a class="btn btn-link" href="<?= base_url(); ?>/master/desa/index/<?= $row['id_daerah']; ?>"><?= $row['deskripsi']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditKec" data-id="<?= $row['id_daerah'] ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusKec" data-id="<?= $row['id_daerah'] ?>" type="button">Hapus</button>
@@ -60,9 +60,9 @@
                 <form method="POST" action="<?= base_url('master/kab/save'); ?>">
                     <div class="form-group">
                         <label for="idprov" class="col-form-label">Kode Provinsi:</label>
-                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtkec[0]['id_prop'] ?>" disabled>
+                        <input type="text" class="form-control" name="idprov" id="idprov" value="<?= $dtkab[0]['id_prop'] ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kabupaten:</label>
-                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtkec[0]['id_dati2'] ?>" disabled>
+                        <input type="text" class="form-control" name="idkab" id="idkab" value="<?= $dtkab[0]['id_dati2'] ?>" disabled>
                         <label for="idprov" class="col-form-label">Kode Kecamatan:</label>
                         <input type="text" class="form-control" name="idkec" id="idkec">
                         <label for="recipient-name" class="col-form-label">Nama Kecamatan:</label>
@@ -97,7 +97,7 @@
             var idkec = $('#idkec').val();
             // debugger;
             $.ajax({
-                url: '<?= base_url() ?>/master/kec/saveKecamatan/',
+                url: '<?= base_url("/Master/Kec/saveKecamatan/") ?>',
                 type: 'POST',
                 data: {
                     'nmkec': nmkec,

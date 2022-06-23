@@ -13,14 +13,15 @@ class ListGapoktan extends BaseController
     }
     public function listgapoktan()
     {
-        
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         $get_param = $this->request->getGet();
 
         $kode_kec = $get_param['kode_kec'];
         $listgapoktan_model = new ListGapoktanModel();
         $desa = $listgapoktan_model->getDesa($kode_kec);
         $listgapoktan_data = $listgapoktan_model->getListGapoktanTotal($kode_kec);
-        
 
         $data = [
 
@@ -30,10 +31,8 @@ class ListGapoktan extends BaseController
             'title' => 'List Gabungan Kelompok Tani',
             'name' => 'List Gabungan Kelompok Tani',
             'desa' => $desa
-
         ];
-
+        // dd($data);
         return view('KelembagaanPelakuUtama/Gapoktan/listgapoktan', $data);
     }
-
 }

@@ -19,6 +19,10 @@ class Gapoktan extends BaseController
     {
         $get_param = $this->request->getGet();
 
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+
         if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
             $kode = '00';
         } elseif (session()->get('status_user') == '1') {
@@ -50,7 +54,9 @@ class Gapoktan extends BaseController
     }
     public function listgapoktan()
     {
-
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
         $get_param = $this->request->getGet();
         $kode_kec = $get_param['kode_kec'];
         $listgapoktan_model = new ListGapoktanModel();
@@ -73,11 +79,9 @@ class Gapoktan extends BaseController
             'kode_prop' => $kode_data['kode_prop'],
             'usahatani' => $usaha_tani,
             'usahaolah' => $usaha_olah
-
-
-
-
         ];
+
+        // dd($data);
 
         return view('KelembagaanPelakuUtama/Gapoktan/listgapoktan', $data);
     }

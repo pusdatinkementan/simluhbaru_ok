@@ -130,10 +130,12 @@ class WilayahModel extends Model
 
     public function getDesaByIdKec($id)
     {
-
-        $query = $this->db->query("SELECT tblpropinsi.nama_prop,tbldati2.nama_dati2,tbldaerah.deskripsi, tbldesa.* FROM `tbldesa` left join tblpropinsi on tbldesa.id_prop = tblpropinsi.id_prop left JOIN tbldaerah on tbldesa.id_daerah = tbldaerah.id_daerah LEFT join tbldati2 on tbldesa.id_dati2 = tbldati2.id_dati2 where tbldesa.id_daerah = '" . $id . "'");
+        $query = $this->db->query("SELECT tblpropinsi.nama_prop,tbldati2.nama_dati2,tbldaerah.deskripsi, tbldesa.* FROM `tbldesa` left join tblpropinsi on tbldesa.id_prop = tblpropinsi.id_prop left JOIN tbldaerah on tbldesa.id_daerah = tbldaerah.id_daerah LEFT join tbldati2 on tbldesa.id_dati2 = tbldati2.id_dati2 where tbldesa.id_desa LIKE '" . $id . "%'");
         $row = $query->getResultArray();
-        // dd($row);
+        // if (empty($row)) {
+        //     $row = array('sts' => 'not found');
+        // };
+        //dd($row);
         return $row;
     }
 
@@ -167,6 +169,7 @@ class WilayahModel extends Model
 
     public function getKab($id)
     {
+
         $query = $this->db->query("SELECT * FROM tbldati2 WHERE id_dati2 LIKE '" . $id . "%' ORDER BY id_dati2");
         $row = $query->getResultArray();
 

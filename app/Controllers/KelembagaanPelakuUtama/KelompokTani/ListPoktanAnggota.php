@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Controllers\KelembagaanPelakuUtama\KelompokTani;
+
 use App\Controllers\BaseController;
 use App\Models\KelembagaanPelakuUtama\KelompokTani\ListPoktanAnggotaModel;
 use App\Models\KodeWilayah\KodeWilModel;
 use App\Models\KodeWilayah\KodeWilModel2;
 
 class ListPoktanAnggota extends BaseController
-{  public function __construct()
+{
+    public function __construct()
     {
         if (empty(session()->get('status_user')) || session()->get('status_user') == '2') {
             $kode = '00';
@@ -18,15 +20,17 @@ class ListPoktanAnggota extends BaseController
         } elseif (session()->get('status_user') == '300') {
             $kode = session()->get('kodebpp');
         }
-        
-    $this->lpa_model = new ListPoktanAnggotaModel();
+
+        $this->lpa_model = new ListPoktanAnggotaModel();
     }
     public function listpoktananggota()
-    {   if (session()->get('username') == "") {
-        return redirect()->to('login');
-    }
-        
-    
+    {
+
+        if (session()->get('username') == "") {
+            return redirect()->to('login');
+        }
+
+
         $kode_kab = $this->session->get('kodebapel');
         $get_param = $this->request->getGet();
         $ip = $get_param['ip'];
@@ -41,18 +45,18 @@ class ListPoktanAnggota extends BaseController
         $kode_data2 = $kodewil_model->getKodeWil2($kode_kab);
 
         $data = [
-            
+
             'nama_poktan' => $listpoktananggota_data['nama_poktan'],
             'tabel_data' => $listpoktananggota_data['table_data'],
             'title' => 'List Kelompok Tani',
             'name' => 'List Kelompok Tani',
             'komoditas' => $komoditas,
-             'komoditas2' => $komoditas2,
-             'komoditas3' => $komoditas3,
-             'id_poktan' => $ip,
-             'kode_kec' => $kode_data['kode_kec'],
-             'kode_prop' => $kode_data['kode_prop'],
-             'kode_desa' => $kode_data2['kode_desa']
+            'komoditas2' => $komoditas2,
+            'komoditas3' => $komoditas3,
+            'id_poktan' => $ip,
+            'kode_kec' => $kode_data['kode_kec'],
+            'kode_prop' => $kode_data['kode_prop'],
+            'kode_desa' => $kode_data2['kode_desa']
         ];
 
         return view('KelembagaanPelakuUtama/KelompokTani/listpoktananggota', $data);
@@ -89,21 +93,21 @@ class ListPoktanAnggota extends BaseController
                 'titik_koordinat_lahan' => $this->request->getPost('titik_koordinat_lahan'),
                 'kategori_petani_penggarap' => $this->request->getPost('kategori_petani_penggarap'),
             ]);
-            if($res == false){
+            if ($res == false) {
                 $data = [
                     "value" => false,
                     "message" => 'data tidak lengkap'
                 ];
-            }else{
+            } else {
                 $data = [
                     "value" => true
                 ];
             }
             return json_encode($data);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 "value" => false,
-                "message" => $e->getMessage() 
+                "message" => $e->getMessage()
             ];
             return json_encode($data);
         }
@@ -117,7 +121,7 @@ class ListPoktanAnggota extends BaseController
 
     public function update($id_anggota)
     {
-        
+
         $id_poktan = $this->request->getPost('id_poktan');
         $kode_kec = $this->request->getPost('kode_kec');
         $kode_desa = $this->request->getPost('kode_desa');
@@ -145,9 +149,9 @@ class ListPoktanAnggota extends BaseController
         $luas_lahan_ternak_dimiliki = $this->request->getPost('luas_lahan_ternak_dimiliki');
         $titik_koordinat_lahan = $this->request->getPost('titik_koordinat_lahan');
         $kategori_petani_penggarap = $this->request->getPost('kategori_petani_penggarap');
-        
+
         $this->lpa_model->save([
-            
+
             'id_anggota' => $id_anggota,
             'id_poktan' => $id_poktan,
             'kode_kec' => $kode_kec,
@@ -176,7 +180,7 @@ class ListPoktanAnggota extends BaseController
             'luas_lahan_ternak_dimiliki' => $luas_lahan_ternak_dimiliki,
             'titik_koordinat_lahan' => $titik_koordinat_lahan,
             'kategori_petani_penggarap' => $kategori_petani_penggarap,
-            
+
         ]);
 
         //session()->setFlashdata('pesan', 'Data berhasil diubah');
@@ -185,7 +189,6 @@ class ListPoktanAnggota extends BaseController
     public function delete($id_anggota)
     {
         $this->lpa_model->delete($id_anggota);
-       // return redirect()->to('/listpoktan');
+        // return redirect()->to('/listpoktan');
     }
-
 }

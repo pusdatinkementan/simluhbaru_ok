@@ -29,7 +29,7 @@
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $row['id_dati2']; ?></td>
-                            <td><a href="<?= base_url(); ?>/master/kec/index/<?= $row['id_dati2']; ?>"><?= $row['nama_dati2']; ?></a></td>
+                            <td><a class="btn btn-link" href="<?= base_url(); ?>/master/kec/index/<?= $row['id_dati2']; ?>"><?= $row['nama_dati2']; ?></a></td>
                             <td>
                                 <button type="button" id="btnEditKab" data-id="<?= $row['id_dati2'] ?>" class=" btn btn-warning btn-sm">Edit</button>
                                 <button class="btn btn-danger btn-sm" id="btnHapusKab" data-id="<?= $row['id_dati2'] ?>" type="button">Hapus</button>
@@ -94,7 +94,7 @@
             var idkab = $('#idkab').val();
 
             $.ajax({
-                url: '<?= base_url() ?>/master/kab/save/',
+                url: '<?= base_url("/Master/Kab/save/") ?>',
                 type: 'POST',
                 data: {
                     'nmkab': nmkab,

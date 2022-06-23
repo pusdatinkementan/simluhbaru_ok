@@ -111,6 +111,8 @@
              </div>
          </div>
      </div>
+
+
      <?php echo view('layout/footer'); ?>
  </div>
  <style>

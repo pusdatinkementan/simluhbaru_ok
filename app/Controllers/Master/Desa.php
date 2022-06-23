@@ -19,14 +19,14 @@ class Desa extends BaseController
         if (session()->get('username') == "") {
             return redirect()->to('login');
         }
-        //$penyuluhModel = new MasterModel();
-        $kec = $this->model->getDesaByIdKec($id);
 
-        //  dd($kec);
+        $desa = $this->model->getDesaByIdKec($id);
+        $kec = $this->model->getKecById($id);
 
         $data = [
             'title' => 'Desa',
-            'dtdesa' => $kec
+            'dtdesa' => $desa,
+            'dtkec' => json_decode($kec)
         ];
 
         // dd($data);
@@ -34,7 +34,7 @@ class Desa extends BaseController
         return view('master/desa', $data);
     }
 
-    public function save()
+    public function simpan()
     {
         try {
             $data = [
@@ -44,7 +44,6 @@ class Desa extends BaseController
                 'id_desa' => $this->request->getPost('iddesa'),
                 'nm_desa' => $this->request->getPost('nmdesa')
             ];
-
             $this->model->saveDesa($data);
             return 'success';
         } catch (\Exception $e) {

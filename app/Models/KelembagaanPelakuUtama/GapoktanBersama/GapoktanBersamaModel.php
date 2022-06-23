@@ -7,17 +7,18 @@ use \Config\Database;
 
 class GapoktanBersamaModel extends Model
 {
-  
+
     protected $table      = 'tb_gapoktan_bersama';
     protected $primaryKey = 'id_gapber';
 
     protected $useTimestamps = false;
-    protected $allowedFields = [ 'kode_prop', 'kode_kab',
-     'kode_kec', 'kode_desa', 'nama_gapoktan', 'ketua_gapoktan', 'alamat', 'simluh_sk_pengukuhan','simluh_tahun_bentuk','simluh_bendahara','simluh_usaha_tani','simluh_usaha_olah',
-    'simluh_sekretaris', 'simluh_usaha_saprodi','simluh_usaha_pemasaran','simluh_usaha_simpan_pinjam','simluh_usaha_jasa_lain','simluh_usaha_jasa_lain_desc',
-    'simluh_alsin_traktor','simluh_alsin_hand_tractor','simluh_alsin_pompa_air','simluh_alsin_penggiling_padi','simluh_alsin_pengering','simluh_alsin_chooper','simluh_alsin_lain_desc','simluh_alsin_lain'];
-    
-  
+    protected $allowedFields = [
+        'kode_prop', 'kode_kab',
+        'kode_kec', 'kode_desa', 'nama_gapoktan', 'ketua_gapoktan', 'alamat', 'simluh_sk_pengukuhan', 'simluh_tahun_bentuk', 'simluh_bendahara', 'simluh_usaha_tani', 'simluh_usaha_olah',
+        'simluh_sekretaris', 'simluh_usaha_saprodi', 'simluh_usaha_pemasaran', 'simluh_usaha_simpan_pinjam', 'simluh_usaha_jasa_lain', 'simluh_usaha_jasa_lain_desc',
+        'simluh_alsin_traktor', 'simluh_alsin_hand_tractor', 'simluh_alsin_pompa_air', 'simluh_alsin_penggiling_padi', 'simluh_alsin_pengering', 'simluh_alsin_chooper', 'simluh_alsin_lain_desc', 'simluh_alsin_lain'
+    ];
+
 
 
     public function getGapoktanBersamaTotal($kode_kab)
@@ -25,10 +26,10 @@ class GapoktanBersamaModel extends Model
         $db = Database::connect();
         $query = $db->query("select nama_dati2 as nama_kab from tbldati2 where id_dati2='$kode_kab'");
         $row   = $query->getRow();
-        
+
         $query2 = $db->query("SELECT count(id_gapber) as jum FROM tb_gapoktan_bersama where kode_kab ='$kode_kab'");
         $row2   = $query2->getRow();
-        
+
         $query3   = $db->query("select id_gapber,kode_desa,kode_kec,nama_gapoktan,ketua_gapoktan,simluh_bendahara,alamat, b.nm_desa ,c.id_daerah,d.id_dati2
                                 from tb_gapoktan_bersama a
                                 left join tbldesa b on a.kode_desa=b.id_desa 
@@ -71,7 +72,7 @@ class GapoktanBersamaModel extends Model
                                 left join tbldaerah b on a.kode_kec=b.id_daerah
                                 where id_gapber= '" . $id_gapber . "' 
                                 ORDER BY nama_gapoktan ");
-                                $row = $query->getRow();
-                                return json_encode($row);
+        $row = $query->getRow();
+        return json_encode($row);
     }
 }

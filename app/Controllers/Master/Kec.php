@@ -21,11 +21,15 @@ class Kec extends BaseController
         }
         //$penyuluhModel = new MasterModel();
         $kec = $this->model->getKecByIdKab($id);
+        $kab = $this->model->getKab($id);
 
         $data = [
             'title' => 'Kecamatan',
-            'dtkec' => $kec
+            'dtkec' => $kec,
+            'dtkab' => $kab
         ];
+
+        // dd($data);
 
         return view('master/kec', $data);
     }

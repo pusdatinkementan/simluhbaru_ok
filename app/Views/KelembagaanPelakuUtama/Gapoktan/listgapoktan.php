@@ -24,7 +24,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
     <div class="row">
         <!-- Map -->
         <div class="col-xs-12 col-md-12 col-lg-12 mb-4">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm ">+ Tambah Data</button>
+            <button type="button" id="addData" data-bs-toggle="modal" data-bs-target="#modal-form" class="btn bg-gradient-success btn-sm ">+ Tambah Data</button>
             <div class="card">
                 <div class="table-responsive">
                     <table id="tblGapoktan" class="table align-items-center mb-0">
@@ -33,9 +33,15 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Desa</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Gapoktan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Kode Gapoktan</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Ketua</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Nama Bendahara</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Alamat Sekretariat</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Tahun Pembentukan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">No SK Pengukuhan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Unit Usaha</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Usaha Tani</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Usaha Pengolahan</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Anggota Poktan</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder" style="text-align: center;">Aksi</th>
 
@@ -58,6 +64,9 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['nama_gapoktan'] ?></p>
                                     </td>
                                     <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $row['id_gap'] ?></p>
+                                    </td>
+                                    <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['ketua_gapoktan'] ?></p>
                                     </td>
                                     <td class="align-middle text-sm">
@@ -66,13 +75,54 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                     <td class="align-middle text-sm">
                                         <p class="text-xs font-weight-bold mb-0"><?= $row['alamat'] ?></p>
                                     </td>
-                                    <td class="align-middle rupiah text-sm">
-                                        <a href="<?= ('listgapoktandesa?kode_desa=' . $row['id_desa']) ?>">
-                                            <p class="text-xs font-weight-bold mb-0"><?= $row['jumpok'] ?></p>
-                                    </td></a>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $row['simluh_tahun_bentuk'] ?></p>
+                                    </td>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $row['sk_pengukuhan'] ?></p>
+                                    </td>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0">
+                                        <ul><?= $row['simluh_usaha_saprodi'] ?></ul>
+                                        <ul><?= $row['simluh_usaha_pemasaran'] ?></ul>
+                                        <ul><?= $row['simluh_usaha_simpan_pinjam'] ?></ul>
+                                        <ul><?= $row['simluh_usaha_pemasaran'] ?></ul>
+                                        <ul><?= $row['simluh_usaha_jasa_lain'] ?></ul>
+                                        </p>
+                                    </td>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0">
+                                            <?php
+                                            foreach ($usahatani as $row3) {
+                                                if ($row['simluh_usaha_tani'] == $row3['id_kom_general']) {
+                                                    echo '<ul>' . $row3["nama_komoditas"] . '</ul>';
+                                                }
+                                            }
+                                            ?>
+                                        </p>
+                                    </td>
+                                    <td class="align-middle text-sm">
+                                        <p class="text-xs font-weight-bold mb-0">
+                                            <?php
+                                            foreach ($usahaolah as $row4) {
+                                                if ($row['simluh_usaha_olah'] == $row4['id_kom_general']) {
+                                                    echo '<ul>' . $row4["nama_komoditas"] . '</ul>';
+                                                }
+                                            }
+                                            ?></p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <a class="btn btn-link" href="<?= ('listgapoktandesa?kode_desa=' . $row['id_desa']) . '&kodegap=' . $row['id_gap'] ?>">
+                                            <?php if ($row['jumpok'] == '') {
+                                                echo '0';
+                                            } else {
+                                                echo $row['jumpok'];
+                                            } ?>
+
+                                        </a>
+                                    </td>
 
                                     <td class="align-middle text-center text-sm">
-
                                         <button type="button" data-id_gap="<?= $row['id_gap'] ?>" id="btnEditGap" class="btn bg-gradient-warning btn-sm">
                                             <i class="fas fa-edit"></i> Ubah
                                         </button>
@@ -95,7 +145,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
                                 <div class="modal-body p-0">
                                     <div class="card card-plain">
                                         <div class="card-header pb-0 text-left">
-                                            <h4 class="font-weight-bolder text-warning text-gradient">Tambah Data</h4>
+                                            <h4 id="tambahdata" class="font-weight-bolder text-warning text-gradient">Tambah Data</h4>
                                         </div>
                                         <div class="card-body">
                                             <form method="POST" action="<?= base_url('KelembagaanPelakuUtama/Gapoktan/Gapoktan/save'); ?>">
@@ -288,6 +338,10 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
 <script>
     $(document).ready(function() {
+
+        $('#addData').click(function() {
+            $('#tambahdata').text('Tambah Data') //set new text   
+        });
 
         $('#tblGapoktan').DataTable({
             dom: 'Bfrtip',
@@ -537,6 +591,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
         });
 
         $(document).delegate('#btnEditGap', 'click', function() {
+            $("#tambahdata").html('Edit');
             $.ajax({
                 url: '<?= base_url() ?>/KelembagaanPelakuUtama/Gapoktan/Gapoktan/edit/' + $(this).data('id_gap'),
                 type: 'GET',
@@ -777,6 +832,7 @@ if (empty(session()->get('status_user')) || session()->get('status_user') == '2'
 
             $('.modal').on('hidden.bs.modal', function() {
                 $(this).find('form')[0].reset();
+                $("#tambahdata").text('');
             });
         });
     });

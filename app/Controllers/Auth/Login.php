@@ -4,31 +4,37 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\InfoModel;
 
 class Login extends BaseController
 {
+
+    protected $model;
     public function __construct()
     {
+        $this->model = new InfoModel();
         $this->session = service('session');
         $this->config = config('Auth');
         $this->auth = service('authentication');
-		 $this->session->start();       
-		session();
-
-        
+        $this->session->start();
+        helper('tglindo');
+        session();
     }
 
 
     public function index()
     {
-		if (session()->get('username') <> "") {
+        if (session()->get('username') <> "") {
             return redirect()->to('/lembaga');
         }
         $data = [
             'title' => 'Login',
-            'config' => $this->config
+            'config' => $this->config,
+            'dtinfo' => $this->model->getInfoByStatus(),
+            'dtjuminfo' => $this->model->getCountInfoToday(),
+            'dtbln' => $this->model->getInfoByMonth(),
         ];
-
+        // d($data['dtbln']['databln'][0]['judul_info']);
         return view('login', $data);
     }
 

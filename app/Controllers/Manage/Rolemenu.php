@@ -113,7 +113,8 @@ class RoleMenu extends BaseController
 
     public function edit($id)
     {
-        $menu = $this->model->getMenuById($id);
+        $menu = $this->model->getRoleById($id);
+        //dd($menu);
         echo $menu;
     }
 
@@ -131,5 +132,14 @@ class RoleMenu extends BaseController
         $this->model->delete($id);
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
         // return redirect()->to('master/jabatan');
+    }
+
+    public function updateRoleAccess($id)
+    {
+        $menu = $this->request->getPost('menu_id');
+        $this->model->save([
+            'role_id' => $id,
+            'menu_id' => $menu
+        ]);
     }
 }

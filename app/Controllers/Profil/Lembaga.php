@@ -17,6 +17,7 @@ use App\Models\KelembagaanPenyuluhan\Provinsi\ProvModel;
 use App\Models\KodeWilayah\KodeWilModel;
 use App\Models\LembagaModel;
 use App\Models\WilayahModel;
+use App\Models\ValidasiModel;
 use Exception;
 
 
@@ -43,17 +44,19 @@ class Lembaga extends BaseController
         $this->awmodel = new PenghargaanModel();
         $this->dakmodel = new DAKModel();
         $this->pwmodel = new PotensiWilayahModel();
-		session();
-
-        
+        $this->validasimodel = new ValidasiModel();
+        session();
     }
 
     public function index()
     {
-		if (session()->get('username') == "") {
+        if (session()->get('username') == "") {
             return redirect()->to('login');
         }
-        
+        $dataPenyuluh = $this->validasimodel->getAllNikUnmatch();
+        $dataPenyuluh2 = $this->validasimodel->getAllNoHpEmpty();
+        $dataPenyuluh3 = $this->validasimodel->getAllNipUnmatch();
+
         $db = \Config\Database::connect();
         $query = $db->query('SELECT * FROM reff_fasilitasi_bpp');
         $query->getResultArray();
@@ -95,14 +98,14 @@ class Lembaga extends BaseController
                 'pnsprov' => $pnsprov,
                 'jum_pns' => $pns['jum_pns'],
                 'datapns' => $pns['datapns'],
-                'fotoprofil' => $dtlembaga['foto']
-
+                'fotoprofil' => $dtlembaga['foto'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip']
             ];
             return view('profil/profilprov', $data);
-        } elseif (session()->get('status_user') == '4') {
         } elseif (session()->get('status_user') == '200') {
             $kode = session()->get('kodebapel');
-
             $dtlembaga = $lembagaModel->getProfil(session()->get('kodebapel'));
             $penyuluhPNS = $kabModel->getPenyuluhPNS(session()->get('kodebapel'));
             $penyuluhTHL = $kabModel->getPenyuluhTHL(session()->get('kodebapel'));
@@ -114,12 +117,11 @@ class Lembaga extends BaseController
             $pns = $kabModel->getTotalPNS(session()->get('kodebapel'));
             $thl = $kabModel->getTotalTHLAPBN(session()->get('kodebapel'));
             $thl_apbd = $kabModel->getTotalTHLAPBD(session()->get('kodebapel'));
-			$p3k = $kabModel->getTotalp3k(session()->get('kodebapel'));
+            $p3k = $kabModel->getTotalp3k(session()->get('kodebapel'));
 
             $data = [
                 'title' => 'Profil Lembaga',
                 'dt' => $dtlembaga,
-
                 'penyuluhPNS' => $penyuluhPNS,
                 'penyuluhTHL' => $penyuluhTHL,
                 'namaprov' => $namawil['namaprov'],
@@ -135,10 +137,12 @@ class Lembaga extends BaseController
                 'jum_thl' => $thl['jum_thl'],
                 'datathl_apbd' => $thl_apbd['datathl_apbd'],
                 'jum_thl_apbd' => $thl_apbd['jum_thl_apbd'],
-				'jum_p3k' => $p3k['jum_p3k'],
+                'jum_p3k' => $p3k['jum_p3k'],
                 'datap3k' => $p3k['datap3k'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip'],
                 'validation' => \Config\Services::validation()
-
             ];
 
             return view('profil/profillembaga', $data);
@@ -194,11 +198,20 @@ class Lembaga extends BaseController
                 'idbpp' => $idbpp['idbpp'],
                 'p3k_kec' => $penyuluh['p3k_kec'],
                 'kec' => $kec,
-                'fotoprofil' => $dtlembaga['foto']
+                'fotoprofil' => $dtlembaga['foto'],
+                'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+                'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+                'jmlnip' => $dataPenyuluh3['jmlnip']
                 // 'jum_pns' => $pns['jum_pns'],
                 // 'datapns' => $pns['datapns']
             ];
             return view('profil/profilkecamatan', $data);
+        } else {
+            $data = [
+                'title' => 'Profil',
+                'namauser' => session()->get('nama')
+            ];
+            return view('profil/profilbptp', $data);
         }
     }
 
@@ -212,7 +225,7 @@ class Lembaga extends BaseController
 
     public function updateprov($id_bakor)
     {
-		
+        // echo 'test';die();
         $nama_bapel = $this->request->getPost('nama_bapel');
         $dasar_hukum = $this->request->getPost('dasar_hukum');
         $no_peraturan = $this->request->getPost('no_peraturan');
@@ -235,11 +248,11 @@ class Lembaga extends BaseController
         $hp_kasie = $this->request->getPost('hp_kasie');
         $eselon3_luh = $this->request->getPost('eselon3_luh');
         $nama_koord_penyuluh = $this->request->getPost('nama_koord_penyuluh');
-		$facebook = $this->request->getPost('facebook');
-		$twitter = $this->request->getPost('twitter');
-		$instagram = $this->request->getPost('instagram');
-		//echo $facebook.' - '.$twitter.' - '.$instagram;
-		//print_r($_POST);die();
+        $facebook = $this->request->getPost('facebook');
+        $twitter = $this->request->getPost('twitter');
+        $instagram = $this->request->getPost('instagram');
+        //echo $facebook.' - '.$twitter.' - '.$instagram;
+
         $this->provmodel->save([
             'id_bakor' => $id_bakor,
             'nama_bapel' => $nama_bapel,
@@ -264,14 +277,14 @@ class Lembaga extends BaseController
             'hp_kasie' => $hp_kasie,
             'eselon3_luh' => $eselon3_luh,
             'nama_koord_penyuluh' => $nama_koord_penyuluh,
-			'instagram' => $instagram,
-			'twitter' => $twitter,
-			'facebook' => $facebook
-			
+            'instagram' => $instagram,
+            'twitter' => $twitter,
+            'facebook' => $facebook
+
         ]);
-		//$db = Database::connect();
-		//echo $db->getLastQuery();die();
-	
+        //$db = Database::connect();
+        //echo $db->getLastQuery();die();
+
         return redirect()->to('/lembaga');
     }
 
@@ -293,6 +306,7 @@ class Lembaga extends BaseController
 
     public function update($id_gapoktan)
     {
+        // echo 'test';die();
         $nama_bapel = $this->request->getPost('nama_bapel');
         $dasar_hukum = $this->request->getPost('dasar_hukum');
         $no_peraturan = $this->request->getPost('no_peraturan');
@@ -331,9 +345,9 @@ class Lembaga extends BaseController
         $koord_lainya_nip = $this->request->getPost('koord_lainya_nip');
         $koord_lainya_nama = $this->request->getPost('koord_lainya_nama');
         $kode_koord_penyuluh = $this->request->getPost('kode_koord_penyuluh');
-		$facebook = $this->request->getPost('facebook');
-		$twitter = $this->request->getPost('twitter');
-		$instagram = $this->request->getPost('instagram');
+        $facebook = $this->request->getPost('facebook');
+        $twitter = $this->request->getPost('twitter');
+        $instagram = $this->request->getPost('instagram');
         $this->model->save([
             'id_gapoktan' => $id_gapoktan,
             'nama_bapel' => $nama_bapel,
@@ -374,9 +388,9 @@ class Lembaga extends BaseController
             'koord_lainya_nip' => $koord_lainya_nip,
             'koord_lainya_nama' => $koord_lainya_nama,
             'kode_koord_penyuluh' => $kode_koord_penyuluh,
-			'instagram' => $instagram,
-			'twitter' => $twitter,
-			'facebook' => $facebook
+            'instagram' => $instagram,
+            'twitter' => $twitter,
+            'facebook' => $facebook
         ]);
 
         return redirect()->to('/lembaga');
@@ -433,9 +447,9 @@ class Lembaga extends BaseController
             'industri_penyuluhan' => $this->request->getVar('industri_penyuluhan'),
             'luas_lahan_bp3k' => $this->request->getVar('luas_lahan_bp3k'),
             'luas_lahan_petani' => $this->request->getVar('luas_lahan_petani'),
-			'instagram' => $this->request->getVar('instagram'),
-			'twitter' => $this->request->getVar('twitter'),
-			'facebook' => $this->request->getVar('facebook')
+            'instagram' => $this->request->getVar('instagram'),
+            'twitter' => $this->request->getVar('twitter'),
+            'facebook' => $this->request->getVar('facebook')
         ]);
 
 

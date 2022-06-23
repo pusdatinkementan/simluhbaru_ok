@@ -4,11 +4,13 @@ namespace App\Controllers\profil;
 
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
+use App\Models\ValidasiModel;
 
 class Admin extends BaseController
 {
     protected $session;
     protected $adminmodel;
+    protected $validasimodel;
 
     function __construct()
     {
@@ -16,6 +18,7 @@ class Admin extends BaseController
         $this->session->start();
         helper('autentikasi');
         $this->adminmodel = new AdminModel();
+        $this->validasimodel = new ValidasiModel();
     }
 
     public function index()
@@ -26,9 +29,16 @@ class Admin extends BaseController
 
         $dtAdmin = $this->adminmodel->getProfil(session()->get('status_user'));
 
+        $dataPenyuluh = $this->validasimodel->getAllNikUnmatch();
+        $dataPenyuluh2 = $this->validasimodel->getAllNoHpEmpty();
+        $dataPenyuluh3 = $this->validasimodel->getAllNipUnmatch();
+
         $data = [
             'title' => 'Profil Admin',
             'dt' => $dtAdmin,
+            'jmlnoktp' => $dataPenyuluh['jmlnoktp'],
+            'jmlnohp' => $dataPenyuluh2['jmlnohp'],
+            'jmlnip' => $dataPenyuluh3['jmlnip'],
             'validation' => \Config\Services::validation()
         ];
 

@@ -4,7 +4,6 @@ $api = 'https://api.pertanian.go.id/api/simantap/dashboard/list?&api-key=f13914d
 $result = file_get_contents($api, false);
 $json = json_decode($result, true);
 $data = $json[0];
-
 ?>
 
 <!DOCTYPE html>
@@ -37,48 +36,88 @@ $data = $json[0];
                 <!-- Navbar -->
                 <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid">
-
-                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="<?= base_url(); ?>" style="font-size:25px">
-
+                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-2 " href="<?= base_url(); ?>" style="font-size:25px">
                             <img src="<?= base_url('assets/img/logo.png'); ?>" alt="" width="50%" style="max-width:50px"> Sistem Informasi Manajemen Penyuluhan Pertanian
                         </a>
-                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon mt-2">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </span>
-                        </button>
+
+
+                    </div>
+
+                    <div class="container-fluid">
                         <div class="collapse navbar-collapse" id="navigation">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="<?= base_url('dashboard'); ?>">
-                                        &nbsp;
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link me-2" href="<?= base_url('profil '); ?>">
-                                        <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                                        Profile
-                                    </a>
-                                </li> -->
 
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link me-2" href="<?= base_url(); ?>pages/sign-in.html">
-                                        <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                        Masuk
-                                    </a>
-                                </li> -->
+                                <li class="nav-item ">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default">
+                                        <span>Informasi</span>
+                                        <span class="badge badge-md badge-circle badge-floating badge-danger border-white"><?= $dtjuminfo; ?></span>
+                                    </button>
+                                </li>
+
+
                             </ul>
 
                         </div>
                     </div>
                 </nav>
+
                 <!-- End Navbar -->
             </div>
         </div>
+
+    </div>
+
+    <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-default">Informasi</h6>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header pb-0 px-3">
+                            <h6 class="mb-0">Hari ini</h6>
+                        </div>
+                        <div class="card-body pt-4 p-3">
+                            <ul class="list-group">
+                                <?php foreach ($dtinfo as $row) {
+                                ?>
+                                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="mb-3 text-sm"><?= $row['judul_info']; ?></h6>
+                                            <span class="mb-2 text-xs">Tanggal: <span class="text-dark font-weight-bold ms-sm-2"><?php echo longdate_indo(substr($row['tgl_info'], 0, 10)); ?></span></span>
+                                            <span class="mb-2 text-xs">Isi: <span class="text-dark font-weight-bold ms-sm-2"><?= $row['deskripsi_info']; ?></span></span>
+                                            <span class="mb-2 text-xs">File : <span class="text-dark ms-sm-2 font-weight-bold"><a href="<?= base_url('assets/dok/info/' . $row['file_info']) ?>">Download</a></span></span>
+
+                                        </div>
+                                        <!-- <div class="ms-auto text-end">
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete</a>
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                        </div> -->
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <main class="main-content  mt-0">
+
         <section>
             <div class="page-header min-vh-75">
                 <div class="container">
@@ -314,7 +353,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpenyuluhp3k']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -336,7 +375,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumkep']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -358,7 +397,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumgapoktanbersama']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -380,7 +419,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpenyuluhswasta']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>
@@ -402,7 +441,7 @@ $data = $json[0];
                                                     <?= number_format($data['jumpoktanp2l']); ?>
                                                 </h5>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-4 text-end">
                                             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
                                                 <i class="fas fa-user"></i>

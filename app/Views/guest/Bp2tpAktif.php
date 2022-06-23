@@ -17,7 +17,7 @@
     <p class="text-xs font-weight-bold mb-0">Per : <?= $tanggal_today . '-' . $bulan_today . '-' . $tahun_today; ?></p>
 
     <div class="table-responsive">
-        <table class="table align-items-center mb-0">
+        <table class="table align-items-center mb-0" id="tblPenyuluhBp2tp">
             <thead>
                 <tr>
                     <td width=10 class="text-uppercase text-secondary text-xxs font-weight-bolder">No</td>
@@ -37,7 +37,7 @@
             <tbody>
                 <?php
                 $i = 1;
-                foreach ($bp2tp as $row => $item) {
+                foreach ($bp2tp['bp2tp'] as $row => $item) {
                     $tgllahir = $item['tgl_lahir'];
                     $ambilthnlhr = substr($tgllahir, 0, 4);
                     $ambilblnlhr = substr($tgllahir, 5, 2);
@@ -127,6 +127,11 @@
 
 
 <?= $this->section('script') ?>
+<script>
+    $(document).ready(function() {
 
+        $('#tblPenyuluhBp2tp').DataTable();
 
+    });
+</script>
 <?= $this->endSection() ?>
